@@ -17,14 +17,14 @@ class NewtonObject extends GameObject {
 
   @override
   Vector2 calculateInteraction(GameObject other) {
-    double distance_squared = pow(
+    double distanceSquared = pow(
             pow(other.position.x - position.x, 2) +
                 pow(other.position.y - position.y, 2),
             3 / 2)
         .toDouble();
     return -Vector2(
             other.position.x - position.x, other.position.y - position.y) /
-        distance_squared *
+        distanceSquared *
         mass;
   }
 
