@@ -11,5 +11,5 @@ abstract class GameObject {
     required this.mass,
   });
 
-  Vector2 calculateInteraction(Duration dt, GameObject other);
+  Vector2 calculateInteraction(GameObject other);
 }

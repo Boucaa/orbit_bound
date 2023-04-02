@@ -38,6 +38,7 @@ dependencies:
   vector_math: ^2.1.4
   bloc: ^8.1.1
   equatable: ^2.0.5
+  flutter_bloc: ^8.1.2
 
 dev_dependencies:
   flutter_test:
