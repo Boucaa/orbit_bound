@@ -36,6 +36,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         const Duration(milliseconds: 16),
         (timer) => add(Tick()),
       );
+      emit(state.copyWith(isRunning: true));
+    });
+    on<Stop>((event, emit) {
+      tickTimer?.cancel();
+      emit(state.copyWith(isRunning: false));
     });
     on<Tick>((event, emit) {
       final objects = state.objects;

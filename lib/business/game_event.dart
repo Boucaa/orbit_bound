@@ -10,3 +10,5 @@ abstract class GameEvent extends Equatable {
 class Tick extends GameEvent {}
 
 class Start extends GameEvent {}
+
+class Stop extends GameEvent {}
