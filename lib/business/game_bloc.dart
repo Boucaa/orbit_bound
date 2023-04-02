@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/model/game_object.dart';
@@ -54,47 +55,54 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       tickTimer?.cancel();
       emit(state.copyWith(isRunning: false));
     });
-    on<Tick>((event, emit) {
-      final time = DateTime.now();
-      final timeDiff = time.difference(state.lastTick).inMicroseconds;
-      // _log.fine('Tick: $timeDiff');
-      final objects = state.objects;
-      final dx = objects[0].position.x - objects[1].position.x;
-      final dy = objects[0].position.y - objects[1].position.y;
-      final e = 0.5 *
-              (pow(objects[0].velocity.x, 2) - pow(objects[0].velocity.y, 2)) -
-          100 / pow(pow(dx, 2) + pow(dy, 2), 0.5);
-      _log.fine('Energy: $e');
-      final newObjects = <GameObject>[];
-      for (var i = 0; i < objects.length; i++) {
-        if (objects[i].isStatic) {
-          newObjects.add(objects[i]);
-          continue;
+    on<Tick>(
+      (event, emit) {
+        final time = DateTime.now();
+        final timeDiff = time.difference(state.lastTick).inMicroseconds;
+        // _log.fine('Tick: $timeDiff');
+        if (timeDiff > 30000) {
+          _log.fine('long tick: $timeDiff');
         }
-        var acceleration = Vector2.zero();
-        for (var j = 0; j < objects.length; j++) {
-          if (i == j) {
+        final objects = state.objects;
+        final dx = objects[0].position.x - objects[1].position.x;
+        final dy = objects[0].position.y - objects[1].position.y;
+        final e = 0.5 *
+                (pow(objects[0].velocity.x, 2) -
+                    pow(objects[0].velocity.y, 2)) -
+            10000 / pow(pow(dx, 2) + pow(dy, 2), 0.5);
+        _log.fine('Energy: $e');
+        final newObjects = <GameObject>[];
+        for (var i = 0; i < objects.length; i++) {
+          if (objects[i].isStatic) {
+            newObjects.add(objects[i]);
             continue;
           }
-          final objectA = objects[i];
-          final objectB = objects[j];
-          final interaction = objectB.calculateInteraction(objectA);
-          acceleration += interaction;
+          var acceleration = Vector2.zero();
+          for (var j = 0; j < objects.length; j++) {
+            if (i == j) {
+              continue;
+            }
+            final objectA = objects[i];
+            final objectB = objects[j];
+            final interaction = objectB.calculateInteraction(objectA);
+            acceleration += interaction;
+          }
+          final newVelocity =
+              objects[i].velocity + acceleration * (16000 * 0.000001);
+          final newObject = objects[i].copyWith(
+            velocity: newVelocity,
+            position: objects[i].position + newVelocity,
+          );
+          newObjects.add(newObject);
         }
-        final newVelocity =
-            objects[i].velocity + acceleration * (timeDiff * 0.000001);
-        final newObject = objects[i].copyWith(
-          velocity: newVelocity,
-          position: objects[i].position + newVelocity,
-        );
-        newObjects.add(newObject);
-      }
 
-      emit(state.copyWith(
-        objects: newObjects,
-        lastTick: time,
-      ));
-    });
+        emit(state.copyWith(
+          objects: newObjects,
+          lastTick: time,
+        ));
+      },
+      transformer: droppable(),
+    );
     on<StartPreview>((event, emit) {
       emit(state.copyWith(previewStart: () => event.offset));
     });
