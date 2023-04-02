@@ -10,6 +10,7 @@ class PlayerBall extends GameObject {
           position: position,
           velocity: velocity,
           mass: mass,
+          isStatic: false,
         );
 
   @override

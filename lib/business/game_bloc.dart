@@ -41,6 +41,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       final objects = state.objects;
       final newObjects = <GameObject>[];
       for (var i = 0; i < objects.length; i++) {
+        if (objects[i].isStatic) {
+          newObjects.add(objects[i]);
+          continue;
+        }
         var acceleration = Vector2.zero();
         for (var j = 0; j < objects.length; j++) {
           if (i == j) {
