@@ -15,11 +15,14 @@ class PlayerBall extends GameObject {
 
   @override
   Vector2 calculateInteraction(GameObject other) {
+/*
     return Vector2(
           other.position.x - position.x,
           other.position.y - position.y,
         ).normalized() *
         2;
+*/
+    return Vector2.zero();
   }
 
   @override

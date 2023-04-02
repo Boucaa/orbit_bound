@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -17,13 +18,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       : super(
           GameState(
             objects: [
+              // PlayerBall(
+              //   position: Vector2(0, 0),
+              //   velocity: Vector2(0, 0),
+              //   mass: 1,
+              // ),
               PlayerBall(
-                position: Vector2(0, 0),
-                velocity: Vector2(0, 0),
-                mass: 1,
-              ),
-              PlayerBall(
-                position: Vector2(300, 300),
+                position: Vector2(200, 300),
                 velocity: Vector2(0, 0),
                 mass: 1,
               )
@@ -68,6 +69,36 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         newObjects.add(newObject);
       }
       emit(state.copyWith(objects: newObjects));
+    });
+    on<StartPreview>((event, emit) {
+      emit(state.copyWith(previewStart: () => event.offset));
+    });
+    on<PreviewShot>((event, emit) {
+      emit(state.copyWith(previewOffset: () => event.offset));
+    });
+    on<Shoot>((event, emit) {
+      if (state.previewOffset == null) {
+        return;
+      }
+      final objects = state.objects;
+      final newObjects = <GameObject>[];
+      for (var i = 0; i < objects.length; i++) {
+        if (objects[i] is PlayerBall) {
+          final newObject = objects[i].copyWith(
+            velocity: Vector2(
+              (state.previewStart!.dx - state.previewOffset!.dx) / 100,
+              (state.previewStart!.dy - state.previewOffset!.dy) / 100,
+            ),
+          );
+          newObjects.add(newObject);
+        } else {
+          newObjects.add(objects[i]);
+        }
+      }
+      emit(state.copyWith(
+        objects: newObjects,
+        previewOffset: () => null,
+      ));
     });
   }
 
