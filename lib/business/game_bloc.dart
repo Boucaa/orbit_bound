@@ -30,13 +30,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
               // ),
               PlayerBall(
                 position: Vector2(200, 400),
-                velocity: Vector2(1, -1),
+                velocity: Vector2(1, 0),
                 mass: 1,
               ),
               NewtonObject(
                 position: Vector2(200, 500),
                 velocity: Vector2.zero(),
-                mass: 100,
+                mass: 10000,
               ),
             ],
             lastTick: DateTime.now(),
@@ -64,7 +64,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       final e = 0.5 *
               (pow(objects[0].velocity.x, 2) - pow(objects[0].velocity.y, 2)) -
           100 / pow(pow(dx, 2) + pow(dy, 2), 0.5);
-      // _log.fine('Energy: $e');
+      _log.fine('Energy: $e');
       final newObjects = <GameObject>[];
       for (var i = 0; i < objects.length; i++) {
         if (objects[i].isStatic) {
