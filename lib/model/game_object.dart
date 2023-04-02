@@ -12,4 +12,10 @@ abstract class GameObject {
   });
 
   Vector2 calculateInteraction(GameObject other);
+
+  GameObject copyWith({
+    Vector2? position,
+    Vector2? velocity,
+    double? mass,
+  });
 }

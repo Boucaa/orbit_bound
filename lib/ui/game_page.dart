@@ -8,9 +8,21 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GameBloc(),
-      child: const GameBody(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('space balls'),
+      ),
+      body: BlocProvider(
+        create: (context) => GameBloc()..add(Start()),
+        child: const GameBody(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

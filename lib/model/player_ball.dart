@@ -14,6 +14,23 @@ class PlayerBall extends GameObject {
 
   @override
   Vector2 calculateInteraction(GameObject other) {
-    return Vector2.zero();
+    return Vector2(
+          other.position.x - position.x,
+          other.position.y - position.y,
+        ).normalized() *
+        2;
+  }
+
+  @override
+  GameObject copyWith({
+    Vector2? position,
+    Vector2? velocity,
+    double? mass,
+  }) {
+    return PlayerBall(
+      position: position ?? this.position,
+      velocity: velocity ?? this.velocity,
+      mass: mass ?? this.mass,
+    );
   }
 }

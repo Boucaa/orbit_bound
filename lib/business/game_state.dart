@@ -7,6 +7,16 @@ class GameState extends Equatable {
     this.objects = const [],
   });
 
+  GameState copyWith({
+    List<GameObject>? objects,
+  }) {
+    return GameState(
+      objects: objects ?? this.objects,
+    );
+  }
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        objects,
+  ];
 }

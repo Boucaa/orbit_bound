@@ -7,3 +7,6 @@ abstract class GameEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class Tick extends GameEvent {}
+
+class Start extends GameEvent {}
