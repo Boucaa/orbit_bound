@@ -13,7 +13,8 @@ class SpaceBallsGame extends Forge2DGame {
 
   SpaceBallsGame()
       : super(
-          gravity: Vector2(0, 0), zoom: 1.0,
+          gravity: Vector2(0, 0),
+          zoom: 100,
           contactListener: TestContactListener(
             onPlayerContact: () {
               print('Player contact');
@@ -24,18 +25,22 @@ class SpaceBallsGame extends Forge2DGame {
 
   @override
   Future<void> onLoad() async {
-    gameObjects.add(PlayerBall(
-      // position: size / 2,
-      mass: 1,
-      initialVelocity: Vector2(-5, 0),
-      initialPosition: size / 2,
-      // velocity: Vector2.zero(),
-    ));
-    gameObjects.add(NewtonObject(
-      initialPosition: size / 3,
-      // velocity: Vector2.zero(),
-      mass: 5000,
-    ));
+    gameObjects.add(
+      PlayerBall(
+        // position: size / 2,
+        mass: 1,
+        initialVelocity: Vector2(-1, 0),
+        initialPosition: size / 2,
+        // velocity: Vector2.zero(),
+      ),
+    );
+    gameObjects.add(
+      NewtonObject(
+        initialPosition: size / 3,
+        // velocity: Vector2.zero(),
+        mass: 5,
+      ),
+    );
     addAll(gameObjects);
     addAll(createBoundaries());
 
@@ -99,19 +104,19 @@ class SpaceBallsGame extends Forge2DGame {
       final k1Position = objects[i].velocity * dt;
 
       // Calculate the k2 values
-      final k2Velocity =
-          calcAcceleration(objects[i].position + k1Position * 0.5) * dt;
-      final k2Position = (objects[i].velocity + k1Velocity * 0.5) * dt;
-
-      // Calculate the k3 values
-      final k3Velocity =
-          calcAcceleration(objects[i].position + k2Position * 0.5) * dt;
-      final k3Position = (objects[i].velocity + k2Velocity * 0.5) * dt;
-
-      // Calculate the k4 values
-      final k4Velocity =
-          calcAcceleration(objects[i].position + k3Position) * dt;
-      final k4Position = (objects[i].velocity + k3Velocity) * dt;
+      // final k2Velocity =
+      //     calcAcceleration(objects[i].position + k1Position * 0.5) * dt;
+      // final k2Position = (objects[i].velocity + k1Velocity * 0.5) * dt;
+      //
+      // // Calculate the k3 values
+      // final k3Velocity =
+      //     calcAcceleration(objects[i].position + k2Position * 0.5) * dt;
+      // final k3Position = (objects[i].velocity + k2Velocity * 0.5) * dt;
+      //
+      // // Calculate the k4 values
+      // final k4Velocity =
+      //     calcAcceleration(objects[i].position + k3Position) * dt;
+      // final k4Position = (objects[i].velocity + k3Velocity) * dt;
 
       // Update the velocity and position
       // final newVelocity = objects[i].velocity +

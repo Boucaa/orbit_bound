@@ -17,7 +17,7 @@ abstract class BallObject extends GameObject {
   @override
   Body createBody() {
     final shape = CircleShape();
-    shape.radius = 5;
+    shape.radius = 0.1;
 
     final fixtureDef = FixtureDef(
       shape,
