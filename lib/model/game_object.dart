@@ -4,7 +4,7 @@ import 'package:vector_math/vector_math_64.dart';
 abstract class GameObject extends BodyComponent {
   // final Vector2 velocity;
   final double mass;
-  final bool isStatic;
+  bool isStatic;
   final Vector2? fakePosition;
 
   Vector2 get velocity =>

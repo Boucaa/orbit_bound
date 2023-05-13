@@ -12,7 +12,7 @@ class PlayerBall extends BallObject {
     super.fakePosition,
   }) : super(
           mass: mass,
-          isStatic: false,
+          isStatic: true,
         );
 
   @override
@@ -35,5 +35,15 @@ class PlayerBall extends BallObject {
       mass: mass,
       fakePosition: position,
     );
+  }
+
+  void shoot(Vector2 force) {
+    isStatic = false;
+    body.linearVelocity = force;
+    // body.applyLinearImpulse(
+    //   force,
+    //   point: position -
+    //       Vector2(1, 1), // TODO bug in library? default value is world center
+    // );
   }
 }

@@ -4,12 +4,12 @@ import 'package:vector_math/vector_math_64.dart';
 
 class Target extends BallObject {
   Target({
-    required double mass,
     required super.initialPosition,
     super.fakePosition,
   }) : super(
-          mass: mass,
-          isStatic: false,
+          mass: 1,
+          isStatic: true,
+          radius: 0.5,
         );
 
   @override
@@ -28,7 +28,6 @@ class Target extends BallObject {
   GameObject withFakePosition(Vector2 position) {
     return Target(
       initialPosition: position,
-      mass: mass,
       fakePosition: position,
     );
   }

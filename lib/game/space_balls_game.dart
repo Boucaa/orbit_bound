@@ -1,33 +1,64 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
+import 'package:flame/palette.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
+import 'package:space_balls/model/target.dart';
 
 final _log = Logger('SpaceBallsGame');
 
 class SpaceBallsGame extends Forge2DGame {
   var frameCount = 0;
   final GameLevel level;
+  bool won = false;
 
   SpaceBallsGame({
+    VoidCallback? onWin,
     required this.level,
   }) : super(
           gravity: Vector2(0, 0),
           zoom: 100,
-          contactListener: TestContactListener(
-            onPlayerContact: () {
-              _log.info('Player contact');
-            },
-          ),
         );
+
+  void shoot(Vector2 force) {
+    final playerBall = level.gameObjects.firstWhere(
+      (element) => element is PlayerBall,
+    ) as PlayerBall;
+
+    playerBall.shoot(
+      force / -100.0,
+    );
+  }
 
   @override
   Future<void> onLoad() async {
     addAll(level.gameObjects);
     addAll(createBoundaries());
-
+    world.setContactListener(TestContactListener(
+      onPlayerContact: () {
+        _log.info('Player contact');
+      },
+      onWin: () {
+        _log.info('Win');
+        won = true;
+        final style = TextStyle(color: BasicPalette.white.color, fontSize: 0.5);
+        final regular = TextPaint(
+          style: style,
+        );
+        add(
+          TextComponent(
+            text: 'You won!',
+            anchor: Anchor.center,
+            position: Vector2(3, 4),
+            textRenderer: regular,
+          ),
+        );
+      },
+    ));
     return super.onLoad();
   }
 
@@ -143,9 +174,11 @@ class Wall extends BodyComponent {
 
 class TestContactListener extends ContactListener {
   final VoidCallback onPlayerContact;
+  final VoidCallback onWin;
 
   TestContactListener({
     required this.onPlayerContact,
+    required this.onWin,
   });
 
   @override
@@ -161,6 +194,9 @@ class TestContactListener extends ContactListener {
 
     if (objectA is PlayerBall || objectB is PlayerBall) {
       onPlayerContact();
+      if (objectA is Target || objectB is Target) {
+        onWin();
+      }
     }
   }
 

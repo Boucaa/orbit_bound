@@ -4,6 +4,7 @@ import 'package:space_balls/model/game_object.dart';
 abstract class BallObject extends GameObject {
   final Vector2? initialVelocity;
   final Vector2 initialPosition;
+  final double radius;
 
   BallObject({
     // required super.velocity,
@@ -12,12 +13,19 @@ abstract class BallObject extends GameObject {
     this.initialVelocity,
     required this.initialPosition,
     super.fakePosition,
+    this.radius = 0.1,
   });
+
+  @override
+  set isStatic(bool value) {
+    super.isStatic = value;
+    body.setType(value ? BodyType.static : BodyType.dynamic);
+  }
 
   @override
   Body createBody() {
     final shape = CircleShape();
-    shape.radius = 0.1;
+    shape.radius = radius;
 
     final fixtureDef = FixtureDef(
       shape,
