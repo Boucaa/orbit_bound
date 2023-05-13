@@ -1,40 +1,39 @@
 import 'dart:math';
 
+import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_object.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-class VariableGravityObject extends GameObject {
+class VariableGravityObject extends BallObject {
   final double exponent;
 
   VariableGravityObject({
-    required Vector2 position,
-    required Vector2 velocity,
+    required super.initialPosition,
     required double mass,
-    required this.exponent
-
+    required this.exponent,
+    super.fakePosition,
   }) : super(
-    position: position,
-    velocity: velocity,
-    mass: mass,
-    isStatic: true,
-  );
+          mass: mass,
+          isStatic: true,
+        );
 
   @override
   Vector2 calculateInteraction(GameObject other) {
-    double distance = sqrt(pow(other.position.x-position.x,2)+pow(other.position.y-position.y,2));
-    return Vector2(other.position.x-position.x,other.position.y-position.y)/pow(distance, exponent).toDouble()*mass;
+    double distance = sqrt(pow(other.position.x - position.x, 2) +
+        pow(other.position.y - position.y, 2));
+    return Vector2(
+            other.position.x - position.x, other.position.y - position.y) /
+        pow(distance, exponent).toDouble() *
+        mass;
   }
+
   @override
-  GameObject copyWith({
-    Vector2? position,
-    Vector2? velocity,
-    double? mass,
-  }) {
+  GameObject withFakePosition(Vector2 position) {
     return VariableGravityObject(
-      position: position ?? this.position,
-      velocity: velocity ?? this.velocity,
-      mass: mass ?? this.mass,
-      exponent: exponent ?? this.exponent,
+      initialPosition: position,
+      mass: mass,
+      exponent: exponent,
+      fakePosition: position,
     );
   }
 }

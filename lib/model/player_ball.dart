@@ -1,14 +1,16 @@
+import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_object.dart';
-import 'package:vector_math/vector_math_64.dart';
 
-class PlayerBall extends GameObject {
+class PlayerBall extends BallObject {
   PlayerBall({
-    required Vector2 position,
-    required Vector2 velocity,
+    // required Vector2 position,
+    // required Vector2 velocity,
     required double mass,
+    super.initialVelocity,
+    required super.initialPosition,
+    super.fakePosition,
   }) : super(
-          position: position,
-          velocity: velocity,
           mass: mass,
           isStatic: false,
         );
@@ -26,15 +28,12 @@ class PlayerBall extends GameObject {
   }
 
   @override
-  GameObject copyWith({
-    Vector2? position,
-    Vector2? velocity,
-    double? mass,
-  }) {
+  GameObject withFakePosition(Vector2 position) {
     return PlayerBall(
-      position: position ?? this.position,
-      velocity: velocity ?? this.velocity,
-      mass: mass ?? this.mass,
+      initialPosition: position,
+      initialVelocity: velocity,
+      mass: mass,
+      fakePosition: position,
     );
   }
 }

@@ -1,16 +1,17 @@
 import 'dart:math';
 
+import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_object.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-class NewtonObject extends GameObject {
+class NewtonObject extends BallObject {
   NewtonObject({
-    required Vector2 position,
-    required Vector2 velocity,
+    required super.initialPosition,
+    super.initialVelocity,
     required double mass,
+    super.fakePosition,
   }) : super(
-          position: position,
-          velocity: velocity,
+          // velocity: velocity,
           mass: mass,
           isStatic: true,
         );
@@ -29,15 +30,12 @@ class NewtonObject extends GameObject {
   }
 
   @override
-  GameObject copyWith({
-    Vector2? position,
-    Vector2? velocity,
-    double? mass,
-  }) {
+  GameObject withFakePosition(Vector2 position) {
     return NewtonObject(
-      position: position ?? this.position,
-      velocity: velocity ?? this.velocity,
-      mass: mass ?? this.mass,
+      initialPosition: position,
+      initialVelocity: velocity,
+      mass: mass,
+      fakePosition: position,
     );
   }
 }

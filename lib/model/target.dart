@@ -1,17 +1,16 @@
+import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_object.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-class target extends GameObject {
-  target({
-    required Vector2 position,
-    required Vector2 velocity,
+class Target extends BallObject {
+  Target({
     required double mass,
+    required super.initialPosition,
+    super.fakePosition,
   }) : super(
-    position: position,
-    velocity: velocity,
-    mass: mass,
-    isStatic: false,
-  );
+          mass: mass,
+          isStatic: false,
+        );
 
   @override
   Vector2 calculateInteraction(GameObject other) {
@@ -26,15 +25,11 @@ class target extends GameObject {
   }
 
   @override
-  GameObject copyWith({
-    Vector2? position,
-    Vector2? velocity,
-    double? mass,
-  }) {
-    return target(
-      position: position ?? this.position,
-      velocity: velocity ?? this.velocity,
-      mass: mass ?? this.mass,
+  GameObject withFakePosition(Vector2 position) {
+    return Target(
+      initialPosition: position,
+      mass: mass,
+      fakePosition: position,
     );
   }
 }
