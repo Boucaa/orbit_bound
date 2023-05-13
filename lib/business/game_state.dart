@@ -6,6 +6,7 @@ class GameState extends Equatable {
   final Offset? previewStart;
   final Offset? previewOffset;
   final DateTime lastTick;
+  final GameLevel level;
 
   const GameState({
     this.objects = const [],
@@ -13,6 +14,7 @@ class GameState extends Equatable {
     this.previewStart,
     this.previewOffset,
     required this.lastTick,
+    required this.level,
   });
 
   GameState copyWith({
@@ -21,6 +23,7 @@ class GameState extends Equatable {
     Offset? Function()? previewStart,
     Offset? Function()? previewOffset,
     DateTime? lastTick,
+    GameLevel? level,
   }) {
     return GameState(
       objects: objects ?? this.objects,
@@ -30,6 +33,7 @@ class GameState extends Equatable {
       previewOffset:
           previewOffset != null ? previewOffset.call() : this.previewOffset,
       lastTick: lastTick ?? this.lastTick,
+      level: level ?? this.level,
     );
   }
 

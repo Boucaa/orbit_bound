@@ -17,7 +17,10 @@ class LevelsPage extends StatelessWidget {
           children: [
             Text(
               'Select a Level',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             const SizedBox(height: 16),
             Expanded(
@@ -34,7 +37,11 @@ class LevelsPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const GamePage()),
+                        MaterialPageRoute(
+                          builder: (context) => GamePage(
+                            levelId: 0,
+                          ),
+                        ),
                       );
                     },
                     child: Text(

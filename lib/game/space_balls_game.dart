@@ -2,46 +2,30 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
-import 'package:space_balls/model/game_object.dart';
-import 'package:space_balls/model/newton_object.dart';
+import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 
-class SpaceBallsGame extends Forge2DGame {
-  final _log = Logger('SpaceBallsGame');
-  var frameCount = 0;
-  final gameObjects = <GameObject>[];
+final _log = Logger('SpaceBallsGame');
 
-  SpaceBallsGame()
-      : super(
+class SpaceBallsGame extends Forge2DGame {
+  var frameCount = 0;
+  final GameLevel level;
+
+  SpaceBallsGame({
+    required this.level,
+  }) : super(
           gravity: Vector2(0, 0),
           zoom: 100,
           contactListener: TestContactListener(
             onPlayerContact: () {
-              print('Player contact');
+              _log.info('Player contact');
             },
           ),
-          // world: BodyDef(type: BodyType.static),
         );
 
   @override
   Future<void> onLoad() async {
-    gameObjects.add(
-      PlayerBall(
-        // position: size / 2,
-        mass: 1,
-        initialVelocity: Vector2(-1, 0),
-        initialPosition: size / 2,
-        // velocity: Vector2.zero(),
-      ),
-    );
-    gameObjects.add(
-      NewtonObject(
-        initialPosition: size / 3,
-        // velocity: Vector2.zero(),
-        mass: 5,
-      ),
-    );
-    addAll(gameObjects);
+    addAll(level.gameObjects);
     addAll(createBoundaries());
 
     return super.onLoad();
@@ -65,18 +49,8 @@ class SpaceBallsGame extends Forge2DGame {
   void update(double dt) {
     frameCount++;
     // _log.fine('frame $frameCount with dt $dt');
-    final objects = gameObjects;
-    // dt = 1 / 1000;
+    final objects = level.gameObjects;
     dt = 0.016;
-    // objects.forEach((element) {
-    //   _log.fine(
-    //       'object: ${element.runtimeType}, lin velocity: ${element.velocity}');
-    // });
-    // super.update(dt);
-    // return;
-    // _log.fine(
-    //   'update with objects: ${objects.length} objects, dt: ${dt.toStringAsFixed(3)}',
-    // );
 
     for (var i = 0; i < objects.length; i++) {
       if (objects[i].isStatic) {
@@ -90,7 +64,9 @@ class SpaceBallsGame extends Forge2DGame {
             continue;
           }
 
-          final objectA = objects[i]; //.withFakePosition(testPosition);
+          final objectA = objects[i];
+          // TODO this is necessary fro the kX calculation
+          // .withFakePosition(testPosition);
           final objectB = objects[j];
 
           final interaction = objectB.calculateInteraction(objectA);
@@ -189,17 +165,11 @@ class TestContactListener extends ContactListener {
   }
 
   @override
-  void endContact(Contact contact) {
-    // TODO: implement endContact
-  }
+  void endContact(Contact contact) {}
 
   @override
-  void postSolve(Contact contact, ContactImpulse impulse) {
-    // TODO: implement postSolve
-  }
+  void postSolve(Contact contact, ContactImpulse impulse) {}
 
   @override
-  void preSolve(Contact contact, Manifold oldManifold) {
-    // TODO: implement preSolve
-  }
+  void preSolve(Contact contact, Manifold oldManifold) {}
 }
