@@ -34,6 +34,8 @@ abstract class BallObject extends GameObject {
       linearVelocity: initialVelocity,
     );
 
-    return world.createBody(bodyDef)..createFixture(fixtureDef);
+    return world.createBody(bodyDef)
+      ..createFixture(fixtureDef)
+      ..userData = this;
   }
 }
