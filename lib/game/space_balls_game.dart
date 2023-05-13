@@ -9,6 +9,7 @@ import 'package:space_balls/model/player_ball.dart';
 class SpaceBallsGame extends Forge2DGame {
   final _log = Logger('SpaceBallsGame');
   var frameCount = 0;
+  final gameObjects = <GameObject>[];
 
   SpaceBallsGame()
       : super(
@@ -23,22 +24,19 @@ class SpaceBallsGame extends Forge2DGame {
 
   @override
   Future<void> onLoad() async {
-    add(
-      PlayerBall(
-        // position: size / 2,
-        mass: 1,
-        initialVelocity: Vector2(-5, 0),
-        initialPosition: size / 2,
-        // velocity: Vector2.zero(),
-      ),
-    );
-    add(
-      NewtonObject(
-        initialPosition: size / 3,
-        // velocity: Vector2.zero(),
-        mass: 5000,
-      ),
-    );
+    gameObjects.add(PlayerBall(
+      // position: size / 2,
+      mass: 1,
+      initialVelocity: Vector2(-5, 0),
+      initialPosition: size / 2,
+      // velocity: Vector2.zero(),
+    ));
+    gameObjects.add(NewtonObject(
+      initialPosition: size / 3,
+      // velocity: Vector2.zero(),
+      mass: 5000,
+    ));
+    addAll(gameObjects);
     addAll(createBoundaries());
 
     return super.onLoad();
@@ -62,9 +60,9 @@ class SpaceBallsGame extends Forge2DGame {
   void update(double dt) {
     frameCount++;
     // _log.fine('frame $frameCount with dt $dt');
-    final objects = children.whereType<GameObject>().toList();
+    final objects = gameObjects;
     // dt = 1 / 1000;
-    dt = 0.16;
+    dt = 0.016;
     // objects.forEach((element) {
     //   _log.fine(
     //       'object: ${element.runtimeType}, lin velocity: ${element.velocity}');
