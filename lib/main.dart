@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseProvider(
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Space Balls',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
