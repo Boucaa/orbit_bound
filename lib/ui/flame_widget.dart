@@ -63,10 +63,21 @@ class _FlameWidgetState extends State<FlameWidget> {
             }
           },
           child: Container(
-            color: Colors.black,
+            color: Colors.grey,
             child: Stack(
               children: [
-                GameWidget(game: game),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: SizedBox(
+                      width: 3,
+                      height: 3.0 * 16.0 / 9.0,
+                      child: GameWidget(game: game),
+                    ),
+                  ),
+                ),
                 if (state.previewOffset != null)
                   Positioned(
                     top: 0,

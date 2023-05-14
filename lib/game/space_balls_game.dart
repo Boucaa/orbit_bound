@@ -21,7 +21,7 @@ class SpaceBallsGame extends Forge2DGame {
     required this.level,
   }) : super(
           gravity: Vector2(0, 0),
-          zoom: 100,
+          zoom: 1,
         );
 
   void shoot(Vector2 force) {
@@ -38,27 +38,33 @@ class SpaceBallsGame extends Forge2DGame {
   Future<void> onLoad() async {
     addAll(level.gameObjects);
     addAll(createBoundaries());
-    world.setContactListener(TestContactListener(
-      onPlayerContact: () {
-        _log.info('Player contact');
-      },
-      onWin: () {
-        _log.info('Win');
-        won = true;
-        final style = TextStyle(color: BasicPalette.white.color, fontSize: 0.5);
-        final regular = TextPaint(
-          style: style,
-        );
-        add(
-          TextComponent(
-            text: 'You won!',
-            anchor: Anchor.center,
-            position: Vector2(3, 4),
-            textRenderer: regular,
-          ),
-        );
-      },
-    ));
+    world.setContactListener(
+      TestContactListener(
+        onPlayerContact: () {
+          _log.info('Player contact');
+        },
+        onWin: () {
+          _log.info('Win');
+          won = true;
+          final style =
+              TextStyle(color: BasicPalette.white.color, fontSize: 0.5);
+          final regular = TextPaint(
+            style: style,
+          );
+          add(
+            TextComponent(
+              text: 'You won!',
+              anchor: Anchor.center,
+              position: Vector2(
+                camera.viewport.effectiveSize.x / 2,
+                camera.viewport.effectiveSize.y / 2,
+              ),
+              textRenderer: regular,
+            ),
+          );
+        },
+      ),
+    );
     return super.onLoad();
   }
 

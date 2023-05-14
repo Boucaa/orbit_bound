@@ -17,7 +17,7 @@ class LevelRepository {
               initialPosition: Vector2(2, 4),
             ),
             Target(
-              initialPosition: Vector2(3, 1),
+              initialPosition: Vector2(2.5, 1),
             ),
             // NewtonObject(
             //   initialPosition: Vector2(4 / 3, 8 / 3),
