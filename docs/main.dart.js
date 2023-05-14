@@ -68281,7 +68281,7 @@ $1(a){A.AU(a.a.a+"/"+a.d+": "+a.e.j(0)+": "+a.b)},
 $S:409}
 A.Fy.prototype={
 Y(a){var s=null,r=A.amc(s,B.dL,s)
-return new A.Br(new A.vj(B.zi,"Flutter Demo",r,s),s)}}
+return new A.Br(new A.vj(B.zi,"Space Balls",r,s),s)}}
 A.fO.prototype={
 IY(){var s,r,q,p=this,o=A.ajx()
 o.b=p.M
