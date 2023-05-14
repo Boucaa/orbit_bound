@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
+import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/game/space_balls_game.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
@@ -29,6 +30,21 @@ class FlameWidget extends StatefulWidget {
 class _FlameWidgetState extends State<FlameWidget> {
   late final game = SpaceBallsGame(
     level: widget.level,
+    onWin: () {
+      final userBloc = context.read<UserBloc>();
+      final user = userBloc.state.user;
+
+      if (user == null) return;
+
+      final updatedUser = user.copyWith(
+        levelsCompleted: {
+          ...user.levelsCompleted,
+          widget.levelId,
+        },
+      );
+
+      userBloc.add(UpdateUser(updatedUser));
+    },
   );
 
   @override
@@ -66,7 +82,7 @@ class _FlameWidgetState extends State<FlameWidget> {
             }
           },
           child: Container(
-            color: Color(0xFF2D2D2D),
+            color: const Color(0xFF2D2D2D),
             child: Stack(
               children: [
                 SafeArea(
@@ -148,6 +164,23 @@ class _FlameWidgetState extends State<FlameWidget> {
                             !game.paused ? Icons.pause : Icons.play_arrow,
                             color: Colors.white,
                           ),
+                        ),
+
+                        const Spacer(), // Add this to fill remaining space
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            final user = state.user;
+                            if (user != null &&
+                                user.levelsCompleted.contains(widget.levelId)) {
+                              return const Icon(
+                                Icons.check,
+                                color: Colors.green,
+                                size: 36,
+                              );
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          },
                         ),
                       ],
                     ),

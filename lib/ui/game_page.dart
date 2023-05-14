@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:space_balls/business/base_provider.dart';
 import 'package:space_balls/business/game_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
 import 'package:space_balls/ui/flame_widget.dart';

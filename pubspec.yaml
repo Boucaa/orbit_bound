@@ -45,6 +45,7 @@ dependencies:
   flame_svg: ^1.7.3
   flame_forge2d: ^0.13.0+1
   flame_bloc: ^1.8.4
+  shared_preferences: ^2.1.1
 
 dev_dependencies:
   flutter_test:

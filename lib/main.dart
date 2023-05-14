@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:space_balls/business/base_provider.dart';
 import 'package:space_balls/run_config.dart';
 import 'package:space_balls/ui/game_page.dart';
 import 'package:space_balls/ui/home_page.dart';
@@ -19,12 +20,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BaseProvider(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: testLevel ? GamePage(levelId: 0) : const HomePage(),
       ),
-      home: testLevel ? GamePage(levelId: 0) : const HomePage(),
     );
   }
 }

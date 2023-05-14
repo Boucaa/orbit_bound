@@ -18,10 +18,11 @@ class SpaceBallsGame extends Forge2DGame {
   var frameCount = 0;
   final GameLevel level;
   bool won = false;
+  VoidCallback? onWin;
 
   SpaceBallsGame({
-    VoidCallback? onWin,
     required this.level,
+    this.onWin,
   }) : super(
           gravity: Vector2(0, 0),
           zoom: 1,
@@ -70,6 +71,7 @@ class SpaceBallsGame extends Forge2DGame {
         onWin: () {
           _log.info('Win');
           won = true;
+          onWin?.call();
           final style =
               TextStyle(color: BasicPalette.white.color, fontSize: 0.5);
           final regular = TextPaint(

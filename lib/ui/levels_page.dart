@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/ui/game_page.dart';
 
 class LevelsPage extends StatelessWidget {
@@ -15,7 +17,7 @@ class LevelsPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Text(
+            const Text(
               'Select a Level',
               style: TextStyle(
                   fontSize: 30,
@@ -33,27 +35,37 @@ class LevelsPage extends StatelessWidget {
                 ),
                 itemCount: 15,
                 itemBuilder: (context, index) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GamePage(
-                            levelId: index,
+                  return BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      final user = state.user; // Access the current user
+
+                      return ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GamePage(
+                                levelId: index,
+                              ),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          // Change the button color based on whether the level is completed
+                          primary: user != null &&
+                                  user.levelsCompleted.contains(index)
+                              ? Colors.green
+                              : Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
+                        ),
+                        child: Text(
+                          (index + 1).toString(),
+                          style: const TextStyle(fontSize: 24),
                         ),
                       );
                     },
-                    child: Text(
-                      (index + 1).toString(),
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
                   );
                 },
               ),
