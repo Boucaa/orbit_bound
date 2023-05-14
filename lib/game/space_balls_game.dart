@@ -5,6 +5,8 @@ import 'package:flame/palette.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/painting.dart';
 import 'package:logging/logging.dart';
+import 'package:space_balls/game/ball_drawing_coponent.dart';
+import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
@@ -37,6 +39,19 @@ class SpaceBallsGame extends Forge2DGame {
   @override
   Future<void> onLoad() async {
     addAll(level.gameObjects);
+    addAll(
+      await Future.wait(
+        level.gameObjects.whereType<BallObject>().map(
+          (e) async {
+            final sprite = await loadSprite(e.spritePath);
+            return BallDrawingComponent(
+              ballObject: e,
+              sprite: sprite,
+            );
+          },
+        ),
+      ),
+    );
     addAll(createBoundaries());
     world.setContactListener(
       TestContactListener(

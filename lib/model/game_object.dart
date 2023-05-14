@@ -17,7 +17,9 @@ abstract class GameObject extends BodyComponent {
     required this.mass,
     required this.isStatic,
     this.fakePosition,
-  });
+  }) : super(
+          renderBody: false,
+        );
 
   Vector2 calculateInteraction(GameObject other);
 

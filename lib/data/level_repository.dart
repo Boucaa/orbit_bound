@@ -1,8 +1,8 @@
 import 'package:flame/game.dart';
 import 'package:space_balls/model/game_level.dart';
+import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
-import 'package:space_balls/model/newton_object.dart';
 
 class LevelRepository {
   GameLevel getLevel(int levelId) {
@@ -20,10 +20,11 @@ class LevelRepository {
             Target(
               initialPosition: Vector2(2.5, 1),
             ),
-            // NewtonObject(
-            //   initialPosition: Vector2(4 / 3, 8 / 3),
-            //   mass: 5,
-            // ),
+            NewtonObject(
+              initialPosition: Vector2(1, 4.5),
+              mass: 1,
+
+            ),
           ],
         );
       case 1:
