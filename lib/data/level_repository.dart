@@ -34,14 +34,40 @@ class LevelRepository {
             PlayerBall(
               mass: 1,
               initialVelocity: Vector2(-1, 0),
-              initialPosition: Vector2(2, 4),
+              initialPosition: Vector2(1.5, 4.8),
             ),
             Target(
-              initialPosition: Vector2(2.5, 1),
+              initialPosition: Vector2(1.5, 0.8),
             ),
             NewtonObject(
-              initialPosition: Vector2(4 / 3, 8 / 3),
-              mass: 2,
+              initialPosition: Vector2(1.5, 3),
+              mass: 1.5,
+            ),
+          ],
+        );
+      case 2:
+        return GameLevel(
+          name: 'test',
+          description: 'lorem ipsum',
+          gameObjects: [
+            PlayerBall(
+              mass: 1,
+              initialVelocity: Vector2(-1, 0),
+              initialPosition: Vector2(1.5, 4.8),
+            ),
+            Target(
+              initialPosition: Vector2(1.5, 0.8),
+            ),
+            NewtonObject(
+              initialPosition: Vector2(1, 3),
+              mass: 1.5,
+            ),
+            NewtonObject(
+              initialPosition: Vector2(2, 3),
+              mass: 0.5,
+              isStatic: false,
+              initialVelocity: Vector2(0, -1),
+
             ),
           ],
         );
