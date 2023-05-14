@@ -90,7 +90,7 @@ class _FlameWidgetState extends State<FlameWidget> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: FittedBox(
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.contain,
                       alignment: Alignment.topCenter,
                       child: SizedBox(
                         width: 3,
