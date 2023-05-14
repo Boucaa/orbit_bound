@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/home.gif'),
+              Image.asset('assets/images/home.gif'),
               const SizedBox(height: 20),
               Text(
                 'Space balls',

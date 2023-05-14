@@ -39,7 +39,7 @@ class LevelsPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => GamePage(
-                            levelId: 0,
+                            levelId: index,
                           ),
                         ),
                       );
