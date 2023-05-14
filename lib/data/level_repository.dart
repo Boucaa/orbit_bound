@@ -23,7 +23,6 @@ class LevelRepository {
             NewtonObject(
               initialPosition: Vector2(1, 4.5),
               mass: 1,
-
             ),
           ],
         );
@@ -68,7 +67,6 @@ class LevelRepository {
               mass: 0.5,
               isStatic: false,
               initialVelocity: Vector2(0, -1),
-
             ),
           ],
         );

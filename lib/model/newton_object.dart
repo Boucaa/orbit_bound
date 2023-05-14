@@ -11,10 +11,11 @@ class NewtonObject extends BallObject {
     required double mass,
     super.fakePosition,
     super.isStatic = true,
+    super.spritePath,
+    super.spriteSheetPath,
   }) : super(
           // velocity: velocity,
           mass: mass,
-
         );
 
   @override

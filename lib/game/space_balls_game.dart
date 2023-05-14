@@ -5,7 +5,8 @@ import 'package:flame/palette.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/painting.dart';
 import 'package:logging/logging.dart';
-import 'package:space_balls/game/ball_drawing_coponent.dart';
+import 'package:space_balls/game/ball_sprite_animation_component.dart';
+import 'package:space_balls/game/ball_sprite_coponent.dart';
 import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
@@ -43,11 +44,19 @@ class SpaceBallsGame extends Forge2DGame {
       await Future.wait(
         level.gameObjects.whereType<BallObject>().map(
           (e) async {
-            final sprite = await loadSprite(e.spritePath);
-            return BallDrawingComponent(
-              ballObject: e,
-              sprite: sprite,
-            );
+            if (e.spriteSheetPath != null) {
+              return BallSpriteAnimationComponent(
+                ballObject: e,
+                img: await images.load(e.spriteSheetPath!),
+              );
+            } else if (e.spritePath != null) {
+              return BallSpriteComponent(
+                ballObject: e,
+                sprite: await loadSprite(e.spritePath!),
+              );
+            } else {
+              throw Exception('No sprite or sprite sheet path');
+            }
           },
         ),
       ),
