@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:space_balls/run_config.dart';
 import 'package:space_balls/ui/game_page.dart';
+import 'package:space_balls/ui/home_page.dart';
 
 void main() {
   Logger.root.level = Level.ALL;
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GamePage(levelId: 0),
+      home: testLevel ? GamePage(levelId: 0) : const HomePage(),
     );
   }
 }
