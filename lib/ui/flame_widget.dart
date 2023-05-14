@@ -5,6 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:space_balls/game/space_balls_game.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
+import 'package:space_balls/ui/game_page.dart';
 import 'package:space_balls/ui/preview_painter.dart';
 
 import '../business/game_bloc.dart';
@@ -13,10 +14,12 @@ final _log = Logger('FlameWidget');
 
 class FlameWidget extends StatefulWidget {
   final GameLevel level;
+  final int levelId;
 
   const FlameWidget({
     Key? key,
     required this.level,
+    required this.levelId,
   }) : super(key: key);
 
   @override
@@ -63,18 +66,21 @@ class _FlameWidgetState extends State<FlameWidget> {
             }
           },
           child: Container(
-            color: Colors.grey,
+            color: Color(0xFF2D2D2D),
             child: Stack(
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: SizedBox(
-                      width: 3,
-                      height: 3.0 * 16.0 / 9.0,
-                      child: GameWidget(game: game),
+                SafeArea(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.topCenter,
+                      child: SizedBox(
+                        width: 3,
+                        height: 3.0 * 16.0 / 9.0,
+                        child: GameWidget(game: game),
+                      ),
                     ),
                   ),
                 ),
@@ -84,6 +90,69 @@ class _FlameWidgetState extends State<FlameWidget> {
                     left: 0,
                     child: _previewPainter(context, state),
                   ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        FloatingActionButton(
+                          heroTag: 'back',
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          tooltip: 'Back',
+                          backgroundColor: Colors.deepOrange,
+                          child: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        FloatingActionButton(
+                          heroTag: 'reset',
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GamePage(
+                                    levelId: widget.levelId,
+                                  ),
+                                ));
+                          },
+                          tooltip: 'Reset',
+                          backgroundColor: Colors.blue,
+                          child: const Icon(
+                            Icons.refresh,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        FloatingActionButton(
+                          heroTag: 'pause',
+                          onPressed: () {
+                            if (game.paused) {
+                              setState(() {
+                                game.paused = false;
+                              });
+                            } else {
+                              setState(() {
+                                game.paused = true;
+                              });
+                            }
+                          },
+                          tooltip: 'pause',
+                          backgroundColor:
+                              !game.paused ? Colors.red : Colors.green,
+                          child: Icon(
+                            !game.paused ? Icons.pause : Icons.play_arrow,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),

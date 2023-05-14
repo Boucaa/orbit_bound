@@ -18,9 +18,10 @@ class GamePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => GameBloc(
         level,
-      )..add(Start()),
+      ),
       child: FlameWidget(
         level: level,
+        levelId: levelId,
       ),
     );
   }
