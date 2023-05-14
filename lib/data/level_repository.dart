@@ -21,6 +21,10 @@ class LevelRepository {
             Target(
               initialPosition: Vector2(2.5, 1),
             ),
+            NewtonObject(
+              initialPosition: Vector2(1, 4.5),
+              mass: 1,
+            ),
           ],
         );
       case 1:

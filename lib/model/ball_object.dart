@@ -5,6 +5,8 @@ abstract class BallObject extends GameObject {
   final Vector2? initialVelocity;
   final Vector2 initialPosition;
   final double radius;
+  final String? spritePath;
+  final String? spriteSheetPath;
 
   BallObject({
     // required super.velocity,
@@ -14,6 +16,8 @@ abstract class BallObject extends GameObject {
     required this.initialPosition,
     super.fakePosition,
     this.radius = 0.1,
+    this.spritePath,
+    this.spriteSheetPath = 'ball_default.png',
   });
 
   @override

@@ -13,6 +13,7 @@ class PlayerBall extends BallObject {
   }) : super(
           mass: mass,
           isStatic: true,
+          spriteSheetPath: 'player.png',
         );
 
   @override
