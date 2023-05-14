@@ -10,10 +10,11 @@ class NewtonObject extends BallObject {
     super.initialVelocity,
     required double mass,
     super.fakePosition,
+    super.isStatic = true,
   }) : super(
           // velocity: velocity,
           mass: mass,
-          isStatic: true,
+
         );
 
   @override
