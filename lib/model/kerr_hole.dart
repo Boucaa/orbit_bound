@@ -29,7 +29,7 @@ class KerrHole extends BallObject {
             1 / 2)
         .toDouble();
     Vector2 dragfield = -Vector2(
-            -other.position.x + position.x, other.position.y - position.y) *
+            -other.position.y + position.y, other.position.x - position.x) *
         (spin / pow(distance, 3));
     return -Vector2(
                 other.position.x - position.x, other.position.y - position.y) *
