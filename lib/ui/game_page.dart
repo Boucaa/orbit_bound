@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:space_balls/business/base_provider.dart';
-import 'package:space_balls/business/game_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
 import 'package:space_balls/ui/flame_widget.dart';
 
@@ -16,14 +13,9 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GameBloc(
-        level,
-      ),
-      child: FlameWidget(
-        level: level,
-        levelId: levelId,
-      ),
+    return FlameWidget(
+      level: level,
+      levelId: levelId,
     );
   }
 }

@@ -3,14 +3,16 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/game/ball_sprite_animation_component.dart';
 import 'package:space_balls/game/ball_sprite_coponent.dart';
+import 'package:space_balls/game/controls_component.dart';
 import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
+import 'package:space_balls/ui/flame_widget.dart';
 
 final _log = Logger('SpaceBallsGame');
 
@@ -34,7 +36,7 @@ class SpaceBallsGame extends Forge2DGame {
     ) as PlayerBall;
 
     playerBall.shoot(
-      force / -100.0,
+      force * 1.5,
     );
   }
 
@@ -66,7 +68,7 @@ class SpaceBallsGame extends Forge2DGame {
     world.setContactListener(
       TestContactListener(
         onPlayerContact: () {
-          _log.info('Player contact');
+          // _log.info('Player contact');
         },
         onWin: () {
           _log.info('Win');
@@ -89,6 +91,17 @@ class SpaceBallsGame extends Forge2DGame {
             ),
           );
         },
+      ),
+    );
+    // TODO update this when the screen size changes or figure out a cleaner way
+    RenderBox box =
+        FlameWidget.gameKey.currentContext!.findRenderObject() as RenderBox;
+    Offset position = box.localToGlobal(Offset.zero);
+    add(
+      ControlsComponent(
+        onShoot: shoot,
+        size: camera.viewport.effectiveSize,
+        widgetStartOffset: Vector2(position.dx, position.dy),
       ),
     );
     return super.onLoad();
