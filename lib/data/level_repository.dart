@@ -4,6 +4,7 @@ import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/schwarzschild_hole.dart';
+import 'package:space_balls/model/kerr_hole.dart';
 
 class LevelRepository {
   GameLevel getLevel(int levelId) {
@@ -88,7 +89,27 @@ class LevelRepository {
               initialPosition: Vector2(1.5, 3),
               mass: 1.5,
             ),
-
+          ],
+        );
+      case 4:
+        return GameLevel(
+          name: 'kerr black hole',
+          description: 'lorem ipsum',
+          gameObjects: [
+            PlayerBall(
+              mass: 1,
+              initialVelocity: Vector2(-1, 0),
+              initialPosition: Vector2(1.5, 4.8),
+            ),
+            Target(
+              initialPosition: Vector2(1.5, 0.8),
+            ),
+            KerrHole(
+              initialPosition: Vector2(1.5, 3),
+              mass: 1.5,
+              spin: 1,
+              drag: 3,
+            ),
           ],
         );
       default:
