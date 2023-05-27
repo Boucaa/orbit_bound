@@ -20,7 +20,7 @@ class VariableGravityObject extends BallObject {
   Vector2 calculateInteraction(GameObject other) {
     double distance = sqrt(pow(other.position.x - position.x, 2) +
         pow(other.position.y - position.y, 2));
-    return Vector2(
+    return -Vector2(
             other.position.x - position.x, other.position.y - position.y) /
         pow(distance, exponent).toDouble() *
         mass;

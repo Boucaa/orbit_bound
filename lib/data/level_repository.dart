@@ -6,6 +6,7 @@ import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/schwarzschild_hole.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/wall.dart';
+import 'package:space_balls/model/variable_gravity_object.dart';
 
 class LevelRepository {
   GameLevel getLevel(int levelId) {
@@ -104,8 +105,8 @@ class LevelRepository {
         );
       case 4:
         return GameLevel(
-          name: 'kerr black hole',
-          description: 'lorem ipsum',
+          name: 'Kerr black hole',
+          description: 'Most black holes rotate. When a black hole rotates, there is a preferred direction of orbit where spacetime is wound up on the black hole. Effectively, you get slowed when orbiting against this inertial drag, and accelerated if you choose the right direction.',
           gameObjects: [
             PlayerBall(
               mass: 1,
@@ -120,6 +121,110 @@ class LevelRepository {
               mass: 1.5,
               spin: 1,
               drag: 3,
+            ),
+          ],
+        );
+      case 5:
+        return GameLevel(
+          name: 'Black hole merger',
+          description: '',
+          gameObjects: [
+            PlayerBall(
+              mass: 1,
+              initialVelocity: Vector2(-1, 0),
+              initialPosition: Vector2(1.5, 4.8),
+            ),
+            Target(
+              initialPosition: Vector2(1.5, 0.8),
+            ),
+            SchwardschildHole(
+              initialPosition: Vector2(2, 3),
+              mass: 1.5,
+              initialVelocity: Vector2(0,0.8),
+              isStatic: false,
+            ),
+            SchwardschildHole(
+                initialPosition: Vector2(1, 3),
+                mass: 1.5,
+                isStatic: false,
+                initialVelocity: Vector2(0,-0.8)
+            ),
+          ],
+        );
+      case 6:
+        return GameLevel(
+          name: 'Variable gravity object',
+          description: 'lorem ipsum',
+          gameObjects: [
+            PlayerBall(
+              mass: 1,
+              initialVelocity: Vector2(-1, 0),
+              initialPosition: Vector2(1.5, 4.8),
+            ),
+            Target(
+              initialPosition: Vector2(1.5, 0.8),
+            ),
+            VariableGravityObject(
+              initialPosition: Vector2(1.5, 3),
+              mass: 1.5,
+              exponent: 3,
+            ),
+            WallLine(
+              Vector2(0, 3),
+              Vector2(1.4, 3),
+              isContactGameOver: true,
+            ),
+            WallLine(
+              Vector2(1.6, 3),
+              Vector2(2, 3),
+              isContactGameOver: true,
+            ),
+            WallLine(
+              Vector2(2.4, 3),
+              Vector2(3, 3),
+              isContactGameOver: true,
+            ),
+          ],
+        );
+      case 7:
+        return GameLevel(
+          name: 'fun slalom',
+          description: 'lorem ipsum',
+          gameObjects: [
+            PlayerBall(
+              mass: 1,
+              initialVelocity: Vector2(-1, 0),
+              initialPosition: Vector2(1.5, 4.8),
+            ),
+            Target(
+              initialPosition: Vector2(1.5, 0.7),
+            ),
+            NewtonObject(
+              initialPosition: Vector2(1.5, 1.8),
+              mass: 1.5,
+            ),
+            NewtonObject(
+              initialPosition: Vector2(1.5, 2.9),
+              mass: 1.5,
+            ),
+            NewtonObject(
+              initialPosition: Vector2(1.5, 4),
+              mass: 1.5,
+            ),
+            WallLine(
+              Vector2(0, 4),
+              Vector2(1.4, 4),
+              isContactGameOver: true,
+            ),
+            WallLine(
+              Vector2(0, 1.8),
+              Vector2(1.4, 1.8),
+              isContactGameOver: true,
+            ),
+            WallLine(
+              Vector2(1.6, 2.9),
+              Vector2(3, 2.9),
+              isContactGameOver: true,
             ),
           ],
         );
