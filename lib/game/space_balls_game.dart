@@ -74,22 +74,7 @@ class SpaceBallsGame extends Forge2DGame {
           _log.info('Win');
           won = true;
           onWin?.call();
-          final style =
-              TextStyle(color: BasicPalette.white.color, fontSize: 0.5);
-          final regular = TextPaint(
-            style: style,
-          );
-          add(
-            TextComponent(
-              text: 'You won!',
-              anchor: Anchor.center,
-              position: Vector2(
-                camera.viewport.effectiveSize.x / 2,
-                camera.viewport.effectiveSize.y / 2,
-              ),
-              textRenderer: regular,
-            ),
-          );
+          addLargeText('You won!');
         },
       ),
     );
@@ -141,8 +126,6 @@ class SpaceBallsGame extends Forge2DGame {
           }
 
           final objectA = objects[i];
-          // TODO this is necessary fro the kX calculation
-          // .withFakePosition(testPosition);
           final objectB = objects[j];
 
           final interaction = objectB.calculateInteraction(objectA);
@@ -151,50 +134,31 @@ class SpaceBallsGame extends Forge2DGame {
         return acceleration;
       }
 
-      // Calculate the k1 values
-      final k1Velocity = calcAcceleration(objects[i].position) * dt;
-      final k1Position = objects[i].velocity * dt;
+      final velocityChange = calcAcceleration(objects[i].position) * dt;
 
-      // Calculate the k2 values
-      // final k2Velocity =
-      //     calcAcceleration(objects[i].position + k1Position * 0.5) * dt;
-      // final k2Position = (objects[i].velocity + k1Velocity * 0.5) * dt;
-      //
-      // // Calculate the k3 values
-      // final k3Velocity =
-      //     calcAcceleration(objects[i].position + k2Position * 0.5) * dt;
-      // final k3Position = (objects[i].velocity + k2Velocity * 0.5) * dt;
-      //
-      // // Calculate the k4 values
-      // final k4Velocity =
-      //     calcAcceleration(objects[i].position + k3Position) * dt;
-      // final k4Position = (objects[i].velocity + k3Velocity) * dt;
-
-      // Update the velocity and position
-      // final newVelocity = objects[i].velocity +
-      //     (k1Velocity + k2Velocity * 2 + k3Velocity * 2 + k4Velocity) * (1 / 6);
-      // final newPosition = objects[i].position +
-      //     (k1Position + k2Position * 2 + k3Position * 2 + k4Position) * (1 / 6);
-
-      // final newVelocity =
-      //     objects[i].velocity + acceleration * (16000 * 0.000001);
-
-      // final newObject = objects[i].copyWith(
-      //   velocity: newVelocity,
-      //   position: newPosition,//objects[i].position + newVelocity * (16000*0.000001),
-      // );
-      // _log.fine(
-      //   'update object ${objects[i].runtimeType} with velocity: ${objects[i].velocity} and newVelocity: $newVelocity',
-      // );
-      final newVelocity = objects[i].velocity + k1Velocity;
+      final newVelocity = objects[i].velocity + velocityChange;
       objects[i].body.linearVelocity = newVelocity;
-      // _log.fine('k1: $k1Velocity');
-      // _log.fine(
-      //   'update object ${objects[i].runtimeType} velocity is now: ${objects[i].body.linearVelocity}',
-      // );
     }
 
     super.update(dt);
+  }
+
+  void addLargeText(String text) {
+    final style = TextStyle(color: BasicPalette.white.color, fontSize: 0.5);
+    final regular = TextPaint(
+      style: style,
+    );
+    add(
+      TextComponent(
+        text: text,
+        anchor: Anchor.center,
+        position: Vector2(
+          camera.viewport.effectiveSize.x / 2,
+          camera.viewport.effectiveSize.y / 2,
+        ),
+        textRenderer: regular,
+      ),
+    );
   }
 }
 

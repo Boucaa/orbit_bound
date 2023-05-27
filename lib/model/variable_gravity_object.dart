@@ -11,7 +11,6 @@ class VariableGravityObject extends BallObject {
     required super.initialPosition,
     required double mass,
     required this.exponent,
-    super.fakePosition,
   }) : super(
           mass: mass,
           isStatic: true,
@@ -25,15 +24,5 @@ class VariableGravityObject extends BallObject {
             other.position.x - position.x, other.position.y - position.y) /
         pow(distance, exponent).toDouble() *
         mass;
-  }
-
-  @override
-  GameObject withFakePosition(Vector2 position) {
-    return VariableGravityObject(
-      initialPosition: position,
-      mass: mass,
-      exponent: exponent,
-      fakePosition: position,
-    );
   }
 }

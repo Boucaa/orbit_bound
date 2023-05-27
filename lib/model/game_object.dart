@@ -5,23 +5,18 @@ abstract class GameObject extends BodyComponent {
   // final Vector2 velocity;
   final double mass;
   bool isStatic;
-  final Vector2? fakePosition;
 
-  Vector2 get velocity =>
-      fakePosition != null ? Vector2.zero() : body.linearVelocity;
+  Vector2 get velocity => body.linearVelocity;
 
-  Vector2 get position => fakePosition ?? body.position;
+  Vector2 get position => body.position;
 
   GameObject({
     // required this.velocity,
     required this.mass,
     required this.isStatic,
-    this.fakePosition,
   }) : super(
           renderBody: false,
         );
 
   Vector2 calculateInteraction(GameObject other);
-
-  GameObject withFakePosition(Vector2 position);
 }
