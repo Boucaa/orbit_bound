@@ -5,6 +5,7 @@ import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/schwarzschild_hole.dart';
 import 'package:space_balls/model/kerr_hole.dart';
+import 'package:space_balls/model/variable_gravity_object.dart';
 
 class LevelRepository {
   GameLevel getLevel(int levelId) {
@@ -109,6 +110,80 @@ class LevelRepository {
               mass: 1.5,
               spin: 1,
               drag: 3,
+            ),
+          ],
+        );
+      case 5:
+        return GameLevel(
+          name: 'BH merger',
+          description: 'lorem ipsum',
+          gameObjects: [
+            PlayerBall(
+              mass: 1,
+              initialVelocity: Vector2(-1, 0),
+              initialPosition: Vector2(1.5, 4.8),
+            ),
+            Target(
+              initialPosition: Vector2(1.5, 0.8),
+            ),
+            SchwardschildHole(
+              initialPosition: Vector2(2, 3),
+              mass: 1.5,
+              initialVelocity: Vector2(0,0.8),
+              isStatic: false,
+            ),
+            SchwardschildHole(
+                initialPosition: Vector2(1, 3),
+                mass: 1.5,
+                isStatic: false,
+                initialVelocity: Vector2(0,-0.8)
+            ),
+          ],
+        );
+      case 6:
+        return GameLevel(
+          name: 'Variable gravity object',
+          description: 'lorem ipsum',
+          gameObjects: [
+            PlayerBall(
+              mass: 1,
+              initialVelocity: Vector2(-1, 0),
+              initialPosition: Vector2(1.5, 4.8),
+            ),
+            Target(
+              initialPosition: Vector2(1.5, 0.8),
+            ),
+            VariableGravityObject(
+              initialPosition: Vector2(1.5, 3),
+              mass: 1.5,
+              exponent: -1,
+            ),
+          ],
+        );
+      case 7:
+        return GameLevel(
+          name: 'fun slalom',
+          description: 'lorem ipsum',
+          gameObjects: [
+            PlayerBall(
+              mass: 1,
+              initialVelocity: Vector2(-1, 0),
+              initialPosition: Vector2(1.5, 4.8),
+            ),
+            Target(
+              initialPosition: Vector2(1.5, 0.7),
+            ),
+            NewtonObject(
+              initialPosition: Vector2(1.5, 1.8),
+              mass: 1.5,
+            ),
+            NewtonObject(
+              initialPosition: Vector2(1.5, 2.9),
+              mass: 1.5,
+            ),
+            NewtonObject(
+              initialPosition: Vector2(1.5, 4),
+              mass: 1.5,
             ),
           ],
         );
