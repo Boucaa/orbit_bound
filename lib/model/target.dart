@@ -10,6 +10,7 @@ class Target extends BallObject {
           isStatic: true,
           radius: 0.25,
           spritePath: 'portalv2.png',
+          isContactGameOver: false,
         );
 
   @override
