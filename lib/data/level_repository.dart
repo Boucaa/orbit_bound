@@ -6,6 +6,7 @@ import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/schwarzschild_hole.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/wall.dart';
+import 'package:space_balls/model/variable_gravity_object.dart';
 
 class LevelRepository {
   GameLevel getLevel(int levelId) {
@@ -166,7 +167,22 @@ class LevelRepository {
             VariableGravityObject(
               initialPosition: Vector2(1.5, 3),
               mass: 1.5,
-              exponent: -1,
+              exponent: 3,
+            ),
+            WallLine(
+              Vector2(0, 3),
+              Vector2(1.4, 3),
+              isContactGameOver: true,
+            ),
+            WallLine(
+              Vector2(1.6, 3),
+              Vector2(2, 3),
+              isContactGameOver: true,
+            ),
+            WallLine(
+              Vector2(2.4, 3),
+              Vector2(3, 3),
+              isContactGameOver: true,
             ),
           ],
         );
@@ -194,6 +210,21 @@ class LevelRepository {
             NewtonObject(
               initialPosition: Vector2(1.5, 4),
               mass: 1.5,
+            ),
+            WallLine(
+              Vector2(0, 4),
+              Vector2(1.4, 4),
+              isContactGameOver: true,
+            ),
+            WallLine(
+              Vector2(0, 1.8),
+              Vector2(1.4, 1.8),
+              isContactGameOver: true,
+            ),
+            WallLine(
+              Vector2(1.6, 2.9),
+              Vector2(3, 2.9),
+              isContactGameOver: true,
             ),
           ],
         );
