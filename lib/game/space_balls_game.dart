@@ -66,6 +66,9 @@ class SpaceBallsGame extends Forge2DGame {
       await Future.wait(
         level.gameObjects.whereType<BallObject>().map(
           (e) async {
+            if (e.customPaint) {
+              return null;
+            }
             if (e.spriteSheetPath != null) {
               return BallSpriteAnimationComponent(
                 ballObject: e,
@@ -85,7 +88,7 @@ class SpaceBallsGame extends Forge2DGame {
             }
           },
         ),
-      ),
+      ).then((value) => value.whereType<Component>()),
     );
     addAll(createBoundaries());
     world.setContactListener(
@@ -93,61 +96,8 @@ class SpaceBallsGame extends Forge2DGame {
         onPlayerContact: () {
           // _log.info('Player contact');
         },
-        onWin: () {
-          _log.info('Win');
-          won = true;
-          onWin?.call();
-          addLargeText('You won!');
-        },
-        onGameOver: () {
-          _log.info('Game over');
-          gameOver = true;
-          remove(player);
-          removeWhere(
-            (c) =>
-                c is BallSpriteAnimationComponent && c.ballObject is PlayerBall,
-          );
-          Random rnd = Random();
-
-          Vector2 randomVector2() {
-            final vec = (Vector2.random(rnd) - Vector2.random(rnd)) * 10;
-            _log.info('Random vector: $vec');
-            return vec;
-          }
-
-// Composition.
-//
-// Defining a particle effect as a set of nested behaviors from top to bottom, one within another:
-// ParticleComponent
-//   > ComposedParticle
-//     > AcceleratedParticle
-//       > CircleParticle
-          add(
-            ParticleSystemComponent(
-              particle: flame_particles.Particle.generate(
-                count: particleCount,
-                generator: (i) {
-                  final vec = randomVector2();
-                  _log.info('Random vector: $vec');
-                  return AcceleratedParticle(
-                    acceleration: Vector2.zero(),
-                    speed: vec * 2.0,
-                    position: player.position + vec / 100.0,
-                    child: CircleParticle(
-                      paint: Paint()
-                        ..color = Colors.black
-                            .withBlue(i * (255 ~/ particleCount))
-                            .withGreen(
-                                (particleCount - i) * (255 ~/ particleCount)),
-                      radius: 0.02,
-                    ),
-                  );
-                },
-              ),
-            ),
-          );
-          addLargeText('Game over');
-        },
+        onWin: win,
+        onGameOver: onGameOver,
       ),
     );
     // TODO update this when the screen size changes or figure out a cleaner way
@@ -161,6 +111,59 @@ class SpaceBallsGame extends Forge2DGame {
       ),
     );
     return super.onLoad();
+  }
+
+  void win() {
+    _log.info('Win');
+    won = true;
+    removePlayer();
+    onWin?.call();
+    addLargeText('You won!');
+  }
+
+  void onGameOver() {
+    _log.info('Game over');
+    gameOver = true;
+    removePlayer();
+    Random rnd = Random();
+
+    Vector2 randomVector2() {
+      final vec = (Vector2.random(rnd) - Vector2.random(rnd)) * 10;
+      _log.info('Random vector: $vec');
+      return vec;
+    }
+
+    add(
+      ParticleSystemComponent(
+        particle: flame_particles.Particle.generate(
+          count: particleCount,
+          generator: (i) {
+            final vec = randomVector2();
+            _log.info('Random vector: $vec');
+            return AcceleratedParticle(
+              acceleration: Vector2.zero(),
+              speed: vec * 2.0,
+              position: player.position + vec / 100.0,
+              child: CircleParticle(
+                paint: Paint()
+                  ..color = Colors.black
+                      .withBlue(i * (255 ~/ particleCount))
+                      .withGreen((particleCount - i) * (255 ~/ particleCount)),
+                radius: 0.02,
+              ),
+            );
+          },
+        ),
+      ),
+    );
+    addLargeText('Game over');
+  }
+
+  void removePlayer() {
+    remove(player);
+    removeWhere(
+      (c) => c is BallSpriteAnimationComponent && c.ballObject is PlayerBall,
+    );
   }
 
   List<Component> createBoundaries() {
