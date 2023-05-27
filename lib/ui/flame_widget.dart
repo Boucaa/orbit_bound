@@ -6,6 +6,7 @@ import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/game/space_balls_game.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/ui/game_page.dart';
+import 'package:space_balls/ui/level_description_dialog.dart';
 
 final _log = Logger('FlameWidget');
 
@@ -45,6 +46,19 @@ class _FlameWidgetState extends State<FlameWidget> {
       userBloc.add(UpdateUser(updatedUser));
     },
   );
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      showDialog(
+        context: context,
+        builder: (context) => LevelDescriptionDialog(
+          level: widget.level,
+        ),
+      );
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

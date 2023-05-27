@@ -13,9 +13,11 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlameWidget(
-      level: level,
-      levelId: levelId,
+    return Scaffold(
+      body: FlameWidget(
+        level: level,
+        levelId: levelId,
+      ),
     );
   }
 }
