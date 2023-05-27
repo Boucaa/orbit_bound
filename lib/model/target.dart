@@ -8,7 +8,8 @@ class Target extends BallObject {
   }) : super(
           mass: 1,
           isStatic: true,
-          radius: 0.5,
+          radius: 0.25,
+          spritePath: 'portalv2.png',
         );
 
   @override

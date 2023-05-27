@@ -12,7 +12,7 @@ import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
-import 'package:space_balls/ui/flame_widget.dart';
+import 'package:space_balls/model/wall.dart';
 
 final _log = Logger('SpaceBallsGame');
 
@@ -21,9 +21,11 @@ class SpaceBallsGame extends Forge2DGame {
   final GameLevel level;
   bool won = false;
   VoidCallback? onWin;
+  final GlobalKey gameKey;
 
   SpaceBallsGame({
     required this.level,
+    required this.gameKey,
     this.onWin,
   }) : super(
           gravity: Vector2(0, 0),
@@ -58,7 +60,11 @@ class SpaceBallsGame extends Forge2DGame {
                 sprite: await loadSprite(e.spritePath!),
               );
             } else {
-              throw Exception('No sprite or sprite sheet path');
+              const defaultSpriteSheet = 'ball_default.png';
+              return BallSpriteAnimationComponent(
+                ballObject: e,
+                img: await images.load(defaultSpriteSheet),
+              );
             }
           },
         ),
@@ -79,8 +85,7 @@ class SpaceBallsGame extends Forge2DGame {
       ),
     );
     // TODO update this when the screen size changes or figure out a cleaner way
-    RenderBox box =
-        FlameWidget.gameKey.currentContext!.findRenderObject() as RenderBox;
+    RenderBox box = gameKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = box.localToGlobal(Offset.zero);
     add(
       ControlsComponent(
@@ -99,10 +104,10 @@ class SpaceBallsGame extends Forge2DGame {
     final bottomLeft = Vector2(topLeft.x, bottomRight.y);
 
     return [
-      Wall(topLeft, topRight),
-      Wall(topRight, bottomRight),
-      Wall(bottomLeft, bottomRight),
-      Wall(topLeft, bottomLeft)
+      WallLine(topLeft, topRight),
+      WallLine(topRight, bottomRight),
+      WallLine(bottomLeft, bottomRight),
+      WallLine(topLeft, bottomLeft)
     ];
   }
 
@@ -159,25 +164,6 @@ class SpaceBallsGame extends Forge2DGame {
         textRenderer: regular,
       ),
     );
-  }
-}
-
-class Wall extends BodyComponent {
-  final Vector2 _start;
-  final Vector2 _end;
-
-  Wall(this._start, this._end);
-
-  @override
-  Body createBody() {
-    final shape = EdgeShape()..set(_start, _end);
-    final fixtureDef = FixtureDef(shape, friction: 0.3);
-    final bodyDef = BodyDef(
-      userData: this,
-      position: Vector2.zero(),
-    );
-
-    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 }
 

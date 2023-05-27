@@ -16,7 +16,7 @@ abstract class BallObject extends GameObject {
     required this.initialPosition,
     this.radius = 0.1,
     this.spritePath,
-    this.spriteSheetPath = 'ball_default.png',
+    this.spriteSheetPath,
   });
 
   @override
