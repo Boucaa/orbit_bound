@@ -12,7 +12,7 @@ import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
-import 'package:space_balls/ui/flame_widget.dart';
+import 'package:space_balls/model/wall.dart';
 
 final _log = Logger('SpaceBallsGame');
 
@@ -21,9 +21,11 @@ class SpaceBallsGame extends Forge2DGame {
   final GameLevel level;
   bool won = false;
   VoidCallback? onWin;
+  final GlobalKey gameKey;
 
   SpaceBallsGame({
     required this.level,
+    required this.gameKey,
     this.onWin,
   }) : super(
           gravity: Vector2(0, 0),
@@ -58,7 +60,11 @@ class SpaceBallsGame extends Forge2DGame {
                 sprite: await loadSprite(e.spritePath!),
               );
             } else {
-              throw Exception('No sprite or sprite sheet path');
+              const defaultSpriteSheet = 'ball_default.png';
+              return BallSpriteAnimationComponent(
+                ballObject: e,
+                img: await images.load(defaultSpriteSheet),
+              );
             }
           },
         ),
@@ -74,28 +80,12 @@ class SpaceBallsGame extends Forge2DGame {
           _log.info('Win');
           won = true;
           onWin?.call();
-          final style =
-              TextStyle(color: BasicPalette.white.color, fontSize: 0.5);
-          final regular = TextPaint(
-            style: style,
-          );
-          add(
-            TextComponent(
-              text: 'You won!',
-              anchor: Anchor.center,
-              position: Vector2(
-                camera.viewport.effectiveSize.x / 2,
-                camera.viewport.effectiveSize.y / 2,
-              ),
-              textRenderer: regular,
-            ),
-          );
+          addLargeText('You won!');
         },
       ),
     );
     // TODO update this when the screen size changes or figure out a cleaner way
-    RenderBox box =
-        FlameWidget.gameKey.currentContext!.findRenderObject() as RenderBox;
+    RenderBox box = gameKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = box.localToGlobal(Offset.zero);
     add(
       ControlsComponent(
@@ -114,10 +104,10 @@ class SpaceBallsGame extends Forge2DGame {
     final bottomLeft = Vector2(topLeft.x, bottomRight.y);
 
     return [
-      Wall(topLeft, topRight),
-      Wall(topRight, bottomRight),
-      Wall(bottomLeft, bottomRight),
-      Wall(topLeft, bottomLeft)
+      WallLine(topLeft, topRight),
+      WallLine(topRight, bottomRight),
+      WallLine(bottomLeft, bottomRight),
+      WallLine(topLeft, bottomLeft)
     ];
   }
 
@@ -141,8 +131,6 @@ class SpaceBallsGame extends Forge2DGame {
           }
 
           final objectA = objects[i];
-          // TODO this is necessary fro the kX calculation
-          // .withFakePosition(testPosition);
           final objectB = objects[j];
 
           final interaction = objectB.calculateInteraction(objectA);
@@ -151,69 +139,31 @@ class SpaceBallsGame extends Forge2DGame {
         return acceleration;
       }
 
-      // Calculate the k1 values
-      final k1Velocity = calcAcceleration(objects[i].position) * dt;
-      final k1Position = objects[i].velocity * dt;
+      final velocityChange = calcAcceleration(objects[i].position) * dt;
 
-      // Calculate the k2 values
-      // final k2Velocity =
-      //     calcAcceleration(objects[i].position + k1Position * 0.5) * dt;
-      // final k2Position = (objects[i].velocity + k1Velocity * 0.5) * dt;
-      //
-      // // Calculate the k3 values
-      // final k3Velocity =
-      //     calcAcceleration(objects[i].position + k2Position * 0.5) * dt;
-      // final k3Position = (objects[i].velocity + k2Velocity * 0.5) * dt;
-      //
-      // // Calculate the k4 values
-      // final k4Velocity =
-      //     calcAcceleration(objects[i].position + k3Position) * dt;
-      // final k4Position = (objects[i].velocity + k3Velocity) * dt;
-
-      // Update the velocity and position
-      // final newVelocity = objects[i].velocity +
-      //     (k1Velocity + k2Velocity * 2 + k3Velocity * 2 + k4Velocity) * (1 / 6);
-      // final newPosition = objects[i].position +
-      //     (k1Position + k2Position * 2 + k3Position * 2 + k4Position) * (1 / 6);
-
-      // final newVelocity =
-      //     objects[i].velocity + acceleration * (16000 * 0.000001);
-
-      // final newObject = objects[i].copyWith(
-      //   velocity: newVelocity,
-      //   position: newPosition,//objects[i].position + newVelocity * (16000*0.000001),
-      // );
-      // _log.fine(
-      //   'update object ${objects[i].runtimeType} with velocity: ${objects[i].velocity} and newVelocity: $newVelocity',
-      // );
-      final newVelocity = objects[i].velocity + k1Velocity;
+      final newVelocity = objects[i].velocity + velocityChange;
       objects[i].body.linearVelocity = newVelocity;
-      // _log.fine('k1: $k1Velocity');
-      // _log.fine(
-      //   'update object ${objects[i].runtimeType} velocity is now: ${objects[i].body.linearVelocity}',
-      // );
     }
 
     super.update(dt);
   }
-}
 
-class Wall extends BodyComponent {
-  final Vector2 _start;
-  final Vector2 _end;
-
-  Wall(this._start, this._end);
-
-  @override
-  Body createBody() {
-    final shape = EdgeShape()..set(_start, _end);
-    final fixtureDef = FixtureDef(shape, friction: 0.3);
-    final bodyDef = BodyDef(
-      userData: this,
-      position: Vector2.zero(),
+  void addLargeText(String text) {
+    final style = TextStyle(color: BasicPalette.white.color, fontSize: 0.5);
+    final regular = TextPaint(
+      style: style,
     );
-
-    return world.createBody(bodyDef)..createFixture(fixtureDef);
+    add(
+      TextComponent(
+        text: text,
+        anchor: Anchor.center,
+        position: Vector2(
+          camera.viewport.effectiveSize.x / 2,
+          camera.viewport.effectiveSize.y / 2,
+        ),
+        textRenderer: regular,
+      ),
+    );
   }
 }
 

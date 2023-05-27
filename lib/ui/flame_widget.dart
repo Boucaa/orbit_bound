@@ -10,8 +10,6 @@ import 'package:space_balls/ui/game_page.dart';
 final _log = Logger('FlameWidget');
 
 class FlameWidget extends StatefulWidget {
-  static final gameKey = GlobalKey();
-
   final GameLevel level;
   final int levelId;
 
@@ -26,7 +24,10 @@ class FlameWidget extends StatefulWidget {
 }
 
 class _FlameWidgetState extends State<FlameWidget> {
+  final GlobalKey _gameKey = GlobalKey();
+
   late final game = SpaceBallsGame(
+    gameKey: _gameKey,
     level: widget.level,
     onWin: () {
       final userBloc = context.read<UserBloc>();
@@ -63,7 +64,7 @@ class _FlameWidgetState extends State<FlameWidget> {
                   height: 3.0 * 16.0 / 9.0,
                   child: GameWidget(
                     game: game,
-                    key: FlameWidget.gameKey,
+                    key: _gameKey,
                   ),
                 ),
               ),

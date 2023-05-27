@@ -14,7 +14,6 @@ class KerrHole extends BallObject {
     required double mass,
     required this.spin,
     required this.drag,
-    super.fakePosition,
     super.isStatic = true,
   }) : super(
           // velocity: velocity,
@@ -38,17 +37,5 @@ class KerrHole extends BallObject {
                 Vector2(other.velocity.x - velocity.x,
                     other.velocity.x - velocity.x)) *
             drag;
-  }
-
-  @override
-  GameObject withFakePosition(Vector2 position) {
-    return KerrHole(
-      initialPosition: position,
-      initialVelocity: velocity,
-      mass: mass,
-      spin: spin,
-      drag: drag,
-      fakePosition: position,
-    );
   }
 }
