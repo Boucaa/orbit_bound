@@ -10,6 +10,7 @@ import 'package:space_balls/game/ball_sprite_coponent.dart';
 import 'package:space_balls/game/controls_component.dart';
 import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
+import 'package:space_balls/model/game_object.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/wall.dart';
@@ -18,10 +19,14 @@ final _log = Logger('SpaceBallsGame');
 
 class SpaceBallsGame extends Forge2DGame {
   var frameCount = 0;
+  bool gameOver = false;
   final GameLevel level;
   bool won = false;
   VoidCallback? onWin;
   final GlobalKey gameKey;
+  late PlayerBall player = level.gameObjects.firstWhere(
+    (element) => element is PlayerBall,
+  ) as PlayerBall;
 
   SpaceBallsGame({
     required this.level,
@@ -32,12 +37,20 @@ class SpaceBallsGame extends Forge2DGame {
           zoom: 1,
         );
 
-  void shoot(Vector2 force) {
-    final playerBall = level.gameObjects.firstWhere(
-      (element) => element is PlayerBall,
-    ) as PlayerBall;
+  @override
+  set paused(bool value) {
+    if (gameOver) {
+      return;
+    }
+    super.paused = value;
+  }
 
-    playerBall.shoot(
+  void shoot(Vector2 force) {
+    if (gameOver) {
+      return;
+    }
+
+    player.shoot(
       force * 1.5,
     );
   }
@@ -81,6 +94,16 @@ class SpaceBallsGame extends Forge2DGame {
           won = true;
           onWin?.call();
           addLargeText('You won!');
+        },
+        onGameOver: () {
+          _log.info('Game over');
+          gameOver = true;
+          remove(player);
+          removeWhere(
+            (c) =>
+                c is BallSpriteAnimationComponent && c.ballObject is PlayerBall,
+          );
+          addLargeText('Game over');
         },
       ),
     );
@@ -170,10 +193,12 @@ class SpaceBallsGame extends Forge2DGame {
 class TestContactListener extends ContactListener {
   final VoidCallback onPlayerContact;
   final VoidCallback onWin;
+  final VoidCallback onGameOver;
 
   TestContactListener({
     required this.onPlayerContact,
     required this.onWin,
+    required this.onGameOver,
   });
 
   @override
@@ -187,10 +212,15 @@ class TestContactListener extends ContactListener {
     final objectA = bodyA.userData;
     final objectB = bodyB.userData;
 
+    if (objectA is! GameObject || objectB is! GameObject) {
+      return;
+    }
     if (objectA is PlayerBall || objectB is PlayerBall) {
       onPlayerContact();
       if (objectA is Target || objectB is Target) {
         onWin();
+      } else if (objectA.isContactGameOver || objectB.isContactGameOver) {
+        onGameOver();
       }
     }
   }

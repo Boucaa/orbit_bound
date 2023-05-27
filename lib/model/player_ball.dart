@@ -11,6 +11,7 @@ class PlayerBall extends BallObject {
           mass: mass,
           isStatic: true,
           spriteSheetPath: 'player.png',
+          isContactGameOver: false,
         );
 
   @override

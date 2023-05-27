@@ -17,6 +17,7 @@ abstract class BallObject extends GameObject {
     this.radius = 0.1,
     this.spritePath,
     this.spriteSheetPath,
+    super.isContactGameOver = true,
   });
 
   @override
