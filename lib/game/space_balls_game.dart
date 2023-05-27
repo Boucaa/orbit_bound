@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
+import 'package:flame/particles.dart';
+import 'package:flame/particles.dart' as flame_particles;
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/game/ball_sprite_animation_component.dart';
 import 'package:space_balls/game/ball_sprite_coponent.dart';
@@ -18,6 +21,7 @@ import 'package:space_balls/model/wall.dart';
 final _log = Logger('SpaceBallsGame');
 
 class SpaceBallsGame extends Forge2DGame {
+  static const particleCount = 200;
   var frameCount = 0;
   bool gameOver = false;
   final GameLevel level;
@@ -102,6 +106,45 @@ class SpaceBallsGame extends Forge2DGame {
           removeWhere(
             (c) =>
                 c is BallSpriteAnimationComponent && c.ballObject is PlayerBall,
+          );
+          Random rnd = Random();
+
+          Vector2 randomVector2() {
+            final vec = (Vector2.random(rnd) - Vector2.random(rnd)) * 10;
+            _log.info('Random vector: $vec');
+            return vec;
+          }
+
+// Composition.
+//
+// Defining a particle effect as a set of nested behaviors from top to bottom, one within another:
+// ParticleComponent
+//   > ComposedParticle
+//     > AcceleratedParticle
+//       > CircleParticle
+          add(
+            ParticleSystemComponent(
+              particle: flame_particles.Particle.generate(
+                count: particleCount,
+                generator: (i) {
+                  final vec = randomVector2();
+                  _log.info('Random vector: $vec');
+                  return AcceleratedParticle(
+                    acceleration: Vector2.zero(),
+                    speed: vec * 2.0,
+                    position: player.position + vec / 100.0,
+                    child: CircleParticle(
+                      paint: Paint()
+                        ..color = Colors.black
+                            .withBlue(i * (255 ~/ particleCount))
+                            .withGreen(
+                                (particleCount - i) * (255 ~/ particleCount)),
+                      radius: 0.02,
+                    ),
+                  );
+                },
+              ),
+            ),
           );
           addLargeText('Game over');
         },
