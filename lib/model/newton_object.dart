@@ -9,12 +9,10 @@ class NewtonObject extends BallObject {
     required super.initialPosition,
     super.initialVelocity,
     required double mass,
-    super.fakePosition,
     super.isStatic = true,
     super.spritePath,
     super.spriteSheetPath,
   }) : super(
-          // velocity: velocity,
           mass: mass,
         );
 
@@ -29,15 +27,5 @@ class NewtonObject extends BallObject {
             other.position.x - position.x, other.position.y - position.y) /
         distanceSquared *
         mass;
-  }
-
-  @override
-  GameObject withFakePosition(Vector2 position) {
-    return NewtonObject(
-      initialPosition: position,
-      initialVelocity: velocity,
-      mass: mass,
-      fakePosition: position,
-    );
   }
 }

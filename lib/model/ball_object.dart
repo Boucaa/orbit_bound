@@ -7,6 +7,7 @@ abstract class BallObject extends GameObject {
   final double radius;
   final String? spritePath;
   final String? spriteSheetPath;
+  final bool customPaint;
 
   BallObject({
     // required super.velocity,
@@ -14,10 +15,11 @@ abstract class BallObject extends GameObject {
     required super.isStatic,
     this.initialVelocity,
     required this.initialPosition,
-    super.fakePosition,
     this.radius = 0.1,
     this.spritePath,
-    this.spriteSheetPath = 'ball_default.png',
+    this.spriteSheetPath,
+    super.isContactGameOver = true,
+    this.customPaint = false,
   });
 
   @override

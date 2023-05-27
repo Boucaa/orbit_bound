@@ -13,14 +13,22 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/home.gif'),
+              SizedBox(
+                width: 250,
+                height: 250,
+                child: Image.asset(
+                  'assets/images/home.gif',
+                  fit: BoxFit.cover,
+                ),
+              ),
               const SizedBox(height: 20),
               Text(
-                'Space balls',
+                'Space Balls',
                 style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 40),
               ElevatedButton(
@@ -30,21 +38,48 @@ class HomePage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const LevelsPage()),
                   );
                 },
-                child: const Text('Levels'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                child: const Text(
+                  'Levels',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
+              OutlinedButton(
                 onPressed: () {
                   // TODO: Add functionality for the second button
                 },
-                child: const Text('Level editor'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                child: const Text(
+                  'Level Editor',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
+              OutlinedButton(
                 onPressed: () {
                   // TODO: Add functionality for the third button
                 },
-                child: const Text('Educational portal'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                child: const Text(
+                  'Educational Portal',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
             ],
           ),

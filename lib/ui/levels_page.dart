@@ -19,12 +19,13 @@ class LevelsPage extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              const Text(
+              Text(
                 'Select a Level',
                 style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 16),
               Expanded(
@@ -55,9 +56,7 @@ class LevelsPage extends StatelessWidget {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              // Change the button color based on whether the level is completed
-                              primary: user != null &&
-                                      user.levelsCompleted.contains(index)
+                              primary: user != null && user.levelsCompleted.contains(index)
                                   ? Colors.green
                                   : Theme.of(context).primaryColor,
                               shape: RoundedRectangleBorder(

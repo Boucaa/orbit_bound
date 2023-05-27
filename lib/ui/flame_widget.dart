@@ -6,12 +6,11 @@ import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/game/space_balls_game.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/ui/game_page.dart';
+import 'package:space_balls/ui/level_description_dialog.dart';
 
 final _log = Logger('FlameWidget');
 
 class FlameWidget extends StatefulWidget {
-  static final gameKey = GlobalKey();
-
   final GameLevel level;
   final int levelId;
 
@@ -26,7 +25,10 @@ class FlameWidget extends StatefulWidget {
 }
 
 class _FlameWidgetState extends State<FlameWidget> {
+  final GlobalKey _gameKey = GlobalKey();
+
   late final game = SpaceBallsGame(
+    gameKey: _gameKey,
     level: widget.level,
     onWin: () {
       final userBloc = context.read<UserBloc>();
@@ -46,6 +48,19 @@ class _FlameWidgetState extends State<FlameWidget> {
   );
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      showDialog(
+        context: context,
+        builder: (context) => LevelDescriptionDialog(
+          level: widget.level,
+        ),
+      );
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xFF2D2D2D),
@@ -63,7 +78,7 @@ class _FlameWidgetState extends State<FlameWidget> {
                   height: 3.0 * 16.0 / 9.0,
                   child: GameWidget(
                     game: game,
-                    key: FlameWidget.gameKey,
+                    key: _gameKey,
                   ),
                 ),
               ),
