@@ -119,19 +119,47 @@ class SpaceBallsGame extends Forge2DGame {
     removePlayer();
     onWin?.call();
     addLargeText('You won!');
+
+    add(
+      ParticleSystemComponent(
+        particle: flame_particles.Particle.generate(
+          count: particleCount,
+          generator: (i) {
+            final vec = randomVector2();
+            _log.info('Random vector: $vec');
+
+            // Generate random color for each particle
+            final color = Colors.primaries[i % Colors.primaries.length];
+
+            return AcceleratedParticle(
+              acceleration: Vector2.zero(),
+              speed: vec * 2.0,
+              position: player.position + vec / 100.0,
+              child: CircleParticle(
+                paint: Paint()
+                  ..color = color
+                      .withAlpha((particleCount - i) * (255 ~/ particleCount)),
+                radius: 0.02,
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Random rnd = Random();
+
+  Vector2 randomVector2() {
+    final vec = (Vector2.random(rnd) - Vector2.random(rnd)) * 10;
+    _log.info('Random vector: $vec');
+    return vec;
   }
 
   void onGameOver() {
     _log.info('Game over');
     gameOver = true;
     removePlayer();
-    Random rnd = Random();
-
-    Vector2 randomVector2() {
-      final vec = (Vector2.random(rnd) - Vector2.random(rnd)) * 10;
-      _log.info('Random vector: $vec');
-      return vec;
-    }
 
     add(
       ParticleSystemComponent(
