@@ -105,8 +105,8 @@ class LevelRepository {
         );
       case 4:
         return GameLevel(
-          name: 'kerr black hole',
-          description: 'lorem ipsum',
+          name: 'Kerr black hole',
+          description: 'Most black holes rotate. When a black hole rotates, there is a preferred direction of orbit where spacetime is wound up on the black hole. Effectively, you get slowed when orbiting against this inertial drag, and accelerated if you choose the right direction.',
           gameObjects: [
             PlayerBall(
               mass: 1,
@@ -126,8 +126,8 @@ class LevelRepository {
         );
       case 5:
         return GameLevel(
-          name: 'BH merger',
-          description: 'lorem ipsum',
+          name: 'Black hole merger',
+          description: '',
           gameObjects: [
             PlayerBall(
               mass: 1,
