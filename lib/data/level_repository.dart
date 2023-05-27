@@ -13,7 +13,7 @@ class LevelRepository {
     switch (levelId) {
       case 0:
         return GameLevel(
-          name: 'tutorial',
+          name: 'Tutorial',
           description: 'lorem ipsum',
           gameObjects: [
             PlayerBall(
@@ -42,8 +42,8 @@ class LevelRepository {
         );
       case 1:
         return GameLevel(
-          name: 'newtonian object',
-          description: 'lorem ipsum',
+          name: 'Newtonian object',
+          description: 'Orbits of test particles around a simple newtonian body are always cone-sections: circles, elipses, parabolas, or hyperbolas. Can you use these orbits, bend the shot, and hit the target?',
           gameObjects: [
             PlayerBall(
               mass: 1,
@@ -86,8 +86,8 @@ class LevelRepository {
         );
       case 3:
         return GameLevel(
-          name: 'schwardschild black hole',
-          description: 'lorem ipsum',
+          name: 'Schwardschild black hole',
+          description: 'The simplest black hole is a spherically symmetric static black hole called the Schwardschild black hole. Its gravity is so strong that a horizon exist where nothing can escape the immense force. Be careful so you dont fall in!',
           gameObjects: [
             PlayerBall(
               mass: 1,
@@ -127,7 +127,7 @@ class LevelRepository {
       case 5:
         return GameLevel(
           name: 'Black hole merger',
-          description: '',
+          description: 'Mergers of black holes have opened a new observational window into the universe, can you navigate through such a merger?',
           gameObjects: [
             PlayerBall(
               mass: 1,
@@ -154,7 +154,7 @@ class LevelRepository {
       case 6:
         return GameLevel(
           name: 'Variable gravity object',
-          description: 'lorem ipsum',
+          description: 'What if gravity isnt as straightforward as we think it is? Explore the choice of exponent of a 1/r^n potential to hit the target.',
           gameObjects: [
             PlayerBall(
               mass: 1,
@@ -188,8 +188,8 @@ class LevelRepository {
         );
       case 7:
         return GameLevel(
-          name: 'fun slalom',
-          description: 'lorem ipsum',
+          name: 'Slalom',
+          description: 'This level contains only simple newtonian objects with some bothersome barricades, can you take on the challenge?',
           gameObjects: [
             PlayerBall(
               mass: 1,
