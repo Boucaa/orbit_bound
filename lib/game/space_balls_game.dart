@@ -27,6 +27,7 @@ class SpaceBallsGame extends Forge2DGame {
   final GameLevel level;
   bool won = false;
   VoidCallback? onWin;
+  VoidCallback? onLose;
   final GlobalKey gameKey;
   late PlayerBall player = level.gameObjects.firstWhere(
     (element) => element is PlayerBall,
@@ -36,6 +37,7 @@ class SpaceBallsGame extends Forge2DGame {
     required this.level,
     required this.gameKey,
     this.onWin,
+    this.onLose,
   }) : super(
           gravity: Vector2(0, 0),
           zoom: 1,
@@ -145,7 +147,7 @@ class SpaceBallsGame extends Forge2DGame {
     won = true;
     removePlayer();
     onWin?.call();
-    addLargeText('You won!');
+    // addLargeText('You won!');
 
     add(
       ParticleSystemComponent(
@@ -211,7 +213,8 @@ class SpaceBallsGame extends Forge2DGame {
         ),
       ),
     );
-    addLargeText('Game over');
+    onLose?.call();
+    // addLargeText('Game over');
   }
 
   void removePlayer() {
