@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
 import 'package:space_balls/ui/flame_widget.dart';
 
 class GamePage extends StatelessWidget {
-  final int levelId;
   final bool showDescription;
-  late final level = LevelRepository().getLevel(levelId);
+  final int levelId;
 
-  GamePage({
+  const GamePage({
     Key? key,
     required this.levelId,
     this.showDescription = true,
@@ -17,7 +17,7 @@ class GamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FlameWidget(
-        level: level,
+        level: context.read<LevelRepository>().getLevel(levelId),
         levelId: levelId,
         showDescription: showDescription,
       ),

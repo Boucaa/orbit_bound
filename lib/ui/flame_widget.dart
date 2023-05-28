@@ -39,9 +39,9 @@ class _FlameWidgetState extends State<FlameWidget> {
       if (user == null) return;
 
       final updatedUser = user.copyWith(
-        levelsCompleted: {
-          ...user.levelsCompleted,
-          widget.levelId,
+        completedLevelIds: {
+          ...user.completedLevelIds,
+          widget.level.id,
         },
       );
 
@@ -252,7 +252,7 @@ class _FlameWidgetState extends State<FlameWidget> {
                     builder: (context, state) {
                       final user = state.user;
                       if (user != null &&
-                          user.levelsCompleted.contains(widget.levelId)) {
+                          user.completedLevelIds.contains(widget.level.id)) {
                         return const Icon(
                           Icons.check,
                           color: Colors.green,

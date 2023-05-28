@@ -59,7 +59,6 @@ class SpaceBallsGame extends Forge2DGame {
             count: particleCount,
             generator: (i) {
               final vec = randomVector2();
-              _log.info('Random vector: $vec');
 
               // Generate random color for each particle
               final color = Colors.primaries[i % Colors.primaries.length];
@@ -155,7 +154,6 @@ class SpaceBallsGame extends Forge2DGame {
           count: particleCount,
           generator: (i) {
             final vec = randomVector2();
-            _log.info('Random vector: $vec');
 
             // Generate random color for each particle
             final color = Colors.primaries[i % Colors.primaries.length];
@@ -181,7 +179,6 @@ class SpaceBallsGame extends Forge2DGame {
 
   Vector2 randomVector2() {
     final vec = (Vector2.random(rnd) - Vector2.random(rnd)) * 10;
-    _log.info('Random vector: $vec');
     return vec;
   }
 
@@ -196,7 +193,6 @@ class SpaceBallsGame extends Forge2DGame {
           count: particleCount,
           generator: (i) {
             final vec = randomVector2();
-            _log.info('Random vector: $vec');
             return AcceleratedParticle(
               acceleration: Vector2.zero(),
               speed: vec * 2.0,

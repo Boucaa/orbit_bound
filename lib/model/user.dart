@@ -1,35 +1,36 @@
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  final Set<int> levelsCompleted;
+  final Set<String> completedLevelIds;
 
   const User({
-    this.levelsCompleted = const {},
+    this.completedLevelIds = const {},
   });
 
   User copyWith({
-    Set<int>? levelsCompleted,
+    Set<String>? completedLevelIds,
   }) {
     return User(
-      levelsCompleted: levelsCompleted ?? this.levelsCompleted,
+      completedLevelIds: completedLevelIds ?? this.completedLevelIds,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'levelsCompleted': levelsCompleted.toList(),
+      'completedLevelIds': completedLevelIds.toList(),
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      levelsCompleted:
-          (map['levelsCompleted'] as List).map((e) => e as int).toSet(),
+      completedLevelIds: ((map['completedLevelIds'] ?? []) as List)
+          .map((e) => e as String)
+          .toSet(),
     );
   }
 
   @override
   List<Object?> get props => [
-        levelsCompleted,
+        completedLevelIds,
       ];
 }
