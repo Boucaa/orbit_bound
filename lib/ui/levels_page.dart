@@ -12,7 +12,7 @@ class LevelsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Levels Page'),
+        title: const Text('Levels'),
       ),
       body: Align(
         alignment: Alignment.topCenter,

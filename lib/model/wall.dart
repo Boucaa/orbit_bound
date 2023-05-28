@@ -18,7 +18,7 @@ class WallLine extends GameObject {
   @override
   Body createBody() {
     final shape = EdgeShape()..set(_start, _end);
-    final fixtureDef = FixtureDef(shape, friction: 0.3);
+    final fixtureDef = FixtureDef(shape, friction: 0.0);
     final bodyDef = BodyDef(
       userData: this,
       position: Vector2.zero(),

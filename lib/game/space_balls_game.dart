@@ -89,6 +89,7 @@ class SpaceBallsGame extends Forge2DGame {
 
   @override
   Future<void> onLoad() async {
+    addAll(level.nonPhysicalComponents);
     addAll(level.gameObjects);
     addAll(
       await Future.wait(
