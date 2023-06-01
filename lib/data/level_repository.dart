@@ -9,6 +9,7 @@ import 'package:space_balls/data/levels/tutorial_level.dart';
 import 'package:space_balls/data/levels/variable_gravity_level.dart';
 import 'package:space_balls/data/levels/wall_bounce_level.dart';
 import 'package:space_balls/model/game_level.dart';
+import 'package:space_balls/data/levels/negative_mass_level.dart';
 
 class LevelRepository {
   static List<GameLevel Function()> get _levels => [
@@ -22,6 +23,7 @@ class LevelRepository {
         () => WallBounceLevel(),
         () => VariableGravityLevel(),
         () => SlalomLevel(),
+        () => NegativeMassLevel(),
       ];
 
   int get levelCount => _levels.length;
