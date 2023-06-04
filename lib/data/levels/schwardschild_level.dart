@@ -8,9 +8,9 @@ class SchwardschildLevel extends GameLevel {
   SchwardschildLevel()
       : super(
           id: 'schwardschild',
-          name: 'Schwardschild black hole',
+          name: 'Schwarzschild black hole',
           description:
-              'The simplest black hole is a spherically symmetric static black hole called the Schwardschild black hole. Its gravity is so strong that a horizon exist where nothing can escape the immense force. Be careful so you dont fall in!',
+              'The simplest black hole is a spherically symmetric static black hole called the Schwarzschild black hole. Its gravity is so strong that a horizon exist where nothing can escape the immense force. Be careful so you dont fall in!',
           gameObjects: [
             PlayerBall(
               mass: 1,

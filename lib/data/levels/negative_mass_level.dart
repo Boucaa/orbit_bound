@@ -11,7 +11,7 @@ class NegativeMassLevel extends GameLevel {
     id: 'newtonian',
     name: 'Negative mass level',
     description:
-    'Orbits of test particles around a simple newtonian body are always cone-sections: circles, elipses, parabolas, or hyperbolas. Can you use these orbits, bend the shot, and hit the target?',
+    'How could the physics of negative mass objects work? You can also imagine you are dealing with motion of particles with the same charge. Can you hit the target?',
     gameObjects: [
       PlayerBall(
         mass: 1,
@@ -31,8 +31,8 @@ class NegativeMassLevel extends GameLevel {
         isContactGameOver: false,
       ),
       WallLine(
-        Vector2(1.95, 2.5),
-        Vector2(2.5, 2.5),
+        Vector2(1.95, 2.45),
+        Vector2(2.5, 2.45),
         isContactGameOver: true,
       ),
       WallLine(
