@@ -17,18 +17,18 @@ import 'package:space_balls/model/game_level.dart';
 
 class LevelRepository {
   static List<GameLevel Function()> get _levels => [
-        () => TestLevel(),
+        //() => TestLevel(),
         () => TutorialLevel(),
         () => WallBounceLevel(),
         () => NewtonianLevel(),
         () => SunWithPlanetLevel(),
+        () => OrbitAroundLevel(),
+        () => SlalomLevel(),
         () => SchwardschildLevel(),
         () => KerrLevel(),
         () => BlackHoleMergerLevel(),
         () => VariableGravityLevel(),
-        () => SlalomLevel(),
         () => NegativeMassLevel(),
-        () => OrbitAroundLevel(),
         () => FzuLevel(),
       ];
 
