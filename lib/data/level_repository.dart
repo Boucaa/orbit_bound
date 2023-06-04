@@ -11,6 +11,7 @@ import 'package:space_balls/data/levels/variable_gravity_level.dart';
 import 'package:space_balls/data/levels/wall_bounce_level.dart';
 import 'package:space_balls/data/levels/negative_mass_level.dart';
 import 'package:space_balls/data/levels/orbit_around_level.dart';
+import 'package:space_balls/data/levels/fzu_level.dart';
 import 'package:space_balls/model/game_level.dart';
 
 
@@ -18,16 +19,17 @@ class LevelRepository {
   static List<GameLevel Function()> get _levels => [
         () => TestLevel(),
         () => TutorialLevel(),
+        () => WallBounceLevel(),
         () => NewtonianLevel(),
         () => SunWithPlanetLevel(),
         () => SchwardschildLevel(),
         () => KerrLevel(),
         () => BlackHoleMergerLevel(),
-        () => WallBounceLevel(),
         () => VariableGravityLevel(),
         () => SlalomLevel(),
         () => NegativeMassLevel(),
         () => OrbitAroundLevel(),
+        () => FzuLevel(),
       ];
 
   int get levelCount => _levels.length;
