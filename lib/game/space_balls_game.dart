@@ -27,6 +27,7 @@ class SpaceBallsGame extends Forge2DGame {
   final GameLevel level;
   bool won = false;
   VoidCallback? onWin;
+  VoidCallback? onLose;
   final GlobalKey gameKey;
   late PlayerBall player = level.gameObjects.firstWhere(
     (element) => element is PlayerBall,
@@ -36,6 +37,7 @@ class SpaceBallsGame extends Forge2DGame {
     required this.level,
     required this.gameKey,
     this.onWin,
+    this.onLose,
   }) : super(
           gravity: Vector2(0, 0),
           zoom: 1,
@@ -57,7 +59,6 @@ class SpaceBallsGame extends Forge2DGame {
             count: particleCount,
             generator: (i) {
               final vec = randomVector2();
-              _log.info('Random vector: $vec');
 
               // Generate random color for each particle
               final color = Colors.primaries[i % Colors.primaries.length];
@@ -88,6 +89,7 @@ class SpaceBallsGame extends Forge2DGame {
 
   @override
   Future<void> onLoad() async {
+    addAll(level.nonPhysicalComponents);
     addAll(level.gameObjects);
     addAll(
       await Future.wait(
@@ -145,7 +147,7 @@ class SpaceBallsGame extends Forge2DGame {
     won = true;
     removePlayer();
     onWin?.call();
-    addLargeText('You won!');
+    // addLargeText('You won!');
 
     add(
       ParticleSystemComponent(
@@ -153,7 +155,6 @@ class SpaceBallsGame extends Forge2DGame {
           count: particleCount,
           generator: (i) {
             final vec = randomVector2();
-            _log.info('Random vector: $vec');
 
             // Generate random color for each particle
             final color = Colors.primaries[i % Colors.primaries.length];
@@ -179,7 +180,6 @@ class SpaceBallsGame extends Forge2DGame {
 
   Vector2 randomVector2() {
     final vec = (Vector2.random(rnd) - Vector2.random(rnd)) * 10;
-    _log.info('Random vector: $vec');
     return vec;
   }
 
@@ -194,7 +194,6 @@ class SpaceBallsGame extends Forge2DGame {
           count: particleCount,
           generator: (i) {
             final vec = randomVector2();
-            _log.info('Random vector: $vec');
             return AcceleratedParticle(
               acceleration: Vector2.zero(),
               speed: vec * 2.0,
@@ -211,7 +210,8 @@ class SpaceBallsGame extends Forge2DGame {
         ),
       ),
     );
-    addLargeText('Game over');
+    onLose?.call();
+    // addLargeText('Game over');
   }
 
   void removePlayer() {

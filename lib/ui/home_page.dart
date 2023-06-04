@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                'Space Balls',
+                'Orbit Bound',
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,

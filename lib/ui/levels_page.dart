@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_balls/business/user_bloc.dart';
+import 'package:space_balls/data/level_repository.dart';
 import 'package:space_balls/ui/game_page.dart';
 
 class LevelsPage extends StatelessWidget {
@@ -11,7 +12,7 @@ class LevelsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Levels Page'),
+        title: const Text('Levels'),
       ),
       body: Align(
         alignment: Alignment.topCenter,
@@ -19,7 +20,7 @@ class LevelsPage extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Text(
+              const Text(
                 'Select a Level',
                 style: TextStyle(
                   fontSize: 30,
@@ -32,14 +33,17 @@ class LevelsPage extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 600),
                   child: GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16,
                       childAspectRatio: 1,
                     ),
-                    itemCount: 15,
+                    itemCount: context.read<LevelRepository>().levelCount,
                     itemBuilder: (context, index) {
+                      final level =
+                          context.read<LevelRepository>().getLevel(index);
                       return BlocBuilder<UserBloc, UserState>(
                         builder: (context, state) {
                           final user = state.user; // Access the current user
@@ -56,7 +60,8 @@ class LevelsPage extends StatelessWidget {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: user != null && user.levelsCompleted.contains(index)
+                              primary: user != null &&
+                                      user.completedLevelIds.contains(level.id)
                                   ? Colors.green
                                   : Theme.of(context).primaryColor,
                               shape: RoundedRectangleBorder(

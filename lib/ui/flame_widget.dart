@@ -13,11 +13,13 @@ final _log = Logger('FlameWidget');
 class FlameWidget extends StatefulWidget {
   final GameLevel level;
   final int levelId;
+  final bool showDescription;
 
   const FlameWidget({
     Key? key,
     required this.level,
     required this.levelId,
+    required this.showDescription,
   }) : super(key: key);
 
   @override
@@ -37,26 +39,136 @@ class _FlameWidgetState extends State<FlameWidget> {
       if (user == null) return;
 
       final updatedUser = user.copyWith(
-        levelsCompleted: {
-          ...user.levelsCompleted,
-          widget.levelId,
+        completedLevelIds: {
+          ...user.completedLevelIds,
+          widget.level.id,
         },
       );
 
       userBloc.add(UpdateUser(updatedUser));
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          TextButton nextLevelButton = TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.green,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(28.0),
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              goToNextLevel();
+            },
+            child: const SizedBox(
+              height: 40,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      "Next Level",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+          return AlertDialog(
+            backgroundColor: Colors.grey[800],
+            content: const Text(
+              "You Win!",
+              style: TextStyle(color: Colors.white, fontSize: 22),
+              textAlign: TextAlign.center,
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Center(child: nextLevelButton),
+              ),
+            ],
+          );
+        },
+      );
+    },
+    onLose: () async {
+      await Future.delayed(const Duration(milliseconds: 1000));
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            TextButton tryAgainButton = TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28.0),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                reset();
+              },
+              child: const SizedBox(
+                height: 40,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.refresh,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        "Try Again",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+            return AlertDialog(
+              backgroundColor: Colors.grey[800],
+              content: const Text(
+                "You Lose",
+                style: TextStyle(color: Colors.white, fontSize: 22),
+                textAlign: TextAlign.center,
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Center(child: tryAgainButton),
+                ),
+              ],
+            );
+          },
+        );
+      }
     },
   );
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      showDialog(
-        context: context,
-        builder: (context) => LevelDescriptionDialog(
-          level: widget.level,
-        ),
-      );
-    });
+    if (widget.showDescription) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        showDialog(
+          context: context,
+          builder: (context) => LevelDescriptionDialog(
+            level: widget.level,
+          ),
+        );
+      });
+    }
     super.initState();
   }
 
@@ -105,15 +217,7 @@ class _FlameWidgetState extends State<FlameWidget> {
                   const SizedBox(width: 8),
                   FloatingActionButton(
                     heroTag: 'reset',
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GamePage(
-                              levelId: widget.levelId,
-                            ),
-                          ));
-                    },
+                    onPressed: reset,
                     tooltip: 'Reset',
                     backgroundColor: Colors.blue,
                     child: const Icon(
@@ -148,7 +252,7 @@ class _FlameWidgetState extends State<FlameWidget> {
                     builder: (context, state) {
                       final user = state.user;
                       if (user != null &&
-                          user.levelsCompleted.contains(widget.levelId)) {
+                          user.completedLevelIds.contains(widget.level.id)) {
                         return const Icon(
                           Icons.check,
                           color: Colors.green,
@@ -164,6 +268,30 @@ class _FlameWidgetState extends State<FlameWidget> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  void reset() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => GamePage(
+          levelId: widget.levelId,
+          showDescription: false,
+        ),
+      ),
+    );
+  }
+
+  void goToNextLevel() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => GamePage(
+          levelId: widget.levelId + 1,
+          showDescription: true,
+        ),
       ),
     );
   }
