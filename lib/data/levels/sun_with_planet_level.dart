@@ -8,8 +8,8 @@ class SunWithPlanetLevel extends GameLevel {
   SunWithPlanetLevel()
       : super(
           id: 'sun_with_planet',
-          name: 'sun with a planet',
-          description: 'lorem ipsum',
+          name: 'Sun with a planet',
+          description: 'A gravitational slingshot is a maneuver used by many satelites to gain velocity and save fuel. This involves a flyby next to a planets relative motion to a central object. Can you use the planet to get a boost to the target?',
           gameObjects: [
             PlayerBall(
               mass: 1,
