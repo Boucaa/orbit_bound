@@ -65194,7 +65194,7 @@ q=new A.h(new Float64Array(2))
 q.N(2,3)
 p=new A.h(new Float64Array(2))
 p.N(0,-1)
-return new A.q4("sun_with_planet","sun with a planet","lorem ipsum",A.a([o,s,r,A.ky(q,p,!1,0.5)],t.R),B.az)},
+return new A.q4("sun_with_planet","Sun with a planet","A gravitational slingshot is a maneuver used by many satelites to gain velocity and save fuel. This involves a flyby next to a planets relative motion to a central object. Can you use the planet to get a boost to the target?",A.a([o,s,r,A.ky(q,p,!1,0.5)],t.R),B.az)},
 $S:421}
 A.XE.prototype={
 $0(){var s,r,q=new A.h(new Float64Array(2))
