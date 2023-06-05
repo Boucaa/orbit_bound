@@ -20326,7 +20326,7 @@ _.e=e},
 qq:function qq(){},
 afI(a,b){var s,r,q,p,o=null,n=new A.h(new Float64Array(2))
 n.iB(128)
-n=A.asO(64,o,!0,A.aJ(64,0.05,!1,t.i),o,n)
+n=A.asO(32,o,!0,A.aJ(32,0.05,!1,t.i),o,n)
 s=new A.h(new Float64Array(2))
 s.iB(a.K*2)
 n=A.asP(b,n)
@@ -20526,7 +20526,7 @@ _.z=r},
 hh(a,b,c){var s,r=null,q=new A.aS(new Float64Array(16))
 q.bO()
 s=B.aV.je()
-q=new A.jg(b,a,0.1,r,"player_alt.png",!1,c,!0,!1,!1,q,$,s,r,r,0,new A.bB([],t.U),new A.bB([],t.g))
+q=new A.jg(b,a,0.1,r,"player.png",!1,c,!0,!1,!1,q,$,s,r,r,0,new A.bB([],t.U),new A.bB([],t.g))
 q.jA(r,r,r,!1)
 return q},
 jg:function jg(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r){var _=this
