@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.space_balls">
+    package="com.janboucek.orbit_bound">
    <application
-        android:label="space_balls"
+        android:label="Orbit Bound"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

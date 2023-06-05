@@ -1,4 +1,4 @@
-package com.example.space_balls
+package com.janboucek.orbit_bound
 
 import io.flutter.embedding.android.FlutterActivity
 

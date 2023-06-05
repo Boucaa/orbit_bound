@@ -12,6 +12,7 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
   final Function(Vector2) onShoot;
 
   Vector2? startPosition;
+  bool tookAShot = false;
 
   Vector2? get endPosition {
     if (startPosition == null ||
@@ -63,6 +64,10 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
 
   @override
   void onDragEnd(DragEndEvent event) {
+    if (tookAShot) {
+      return;
+    }
+    tookAShot = true;
     if (startPosition != null &&
         endDevicePosition != null &&
         startDevicePosition != null) {
@@ -88,6 +93,9 @@ class ShotPreviewComponent extends Component {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
+    if (controlsComponent.tookAShot) {
+      return;
+    }
     if (controlsComponent.startPosition == null ||
         controlsComponent.endPosition == null) {
       return;

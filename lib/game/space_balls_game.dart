@@ -22,13 +22,16 @@ final _log = Logger('SpaceBallsGame');
 
 class SpaceBallsGame extends Forge2DGame {
   static const particleCount = 200;
+
   var frameCount = 0;
-  bool gameOver = false;
   final GameLevel level;
+  bool gameOver = false;
   bool won = false;
   VoidCallback? onWin;
   VoidCallback? onLose;
+
   final GlobalKey gameKey;
+
   late PlayerBall player = level.gameObjects.firstWhere(
     (element) => element is PlayerBall,
   ) as PlayerBall;
@@ -52,39 +55,38 @@ class SpaceBallsGame extends Forge2DGame {
   }
 
   void shoot(Vector2 force) {
-    if (gameOver) {
-      add(
-        ParticleSystemComponent(
-          particle: flame_particles.Particle.generate(
-            count: particleCount,
-            generator: (i) {
-              final vec = randomVector2();
-
-              // Generate random color for each particle
-              final color = Colors.primaries[i % Colors.primaries.length];
-
-              return AcceleratedParticle(
-                acceleration: Vector2.zero(),
-                speed: vec * 2.0,
-                position: player.position + vec / 100.0,
-                child: CircleParticle(
-                  paint: Paint()
-                    ..color = color.withAlpha(
-                        (particleCount - i) * (255 ~/ particleCount)),
-                  radius: 0.02,
-                ),
-              );
-            },
-          ),
-        ),
+    // if (gameOver && !tookAShot) {
+    //   add(
+    //     ParticleSystemComponent(
+    //       particle: flame_particles.Particle.generate(
+    //         count: particleCount,
+    //         generator: (i) {
+    //           final vec = randomVector2();
+    //
+    //           // Generate random color for each particle
+    //           final color = Colors.primaries[i % Colors.primaries.length];
+    //
+    //           return AcceleratedParticle(
+    //             acceleration: Vector2.zero(),
+    //             speed: vec * 2.0,
+    //             position: player.position + vec / 100.0,
+    //             child: CircleParticle(
+    //               paint: Paint()
+    //                 ..color = color.withAlpha(
+    //                     (particleCount - i) * (255 ~/ particleCount)),
+    //               radius: 0.02,
+    //             ),
+    //           );
+    //         },
+    //       ),
+    //     ),
+    //   );
+    //
+    //   return;
+    // }
+      player.shoot(
+        force * 1.5,
       );
-
-      return;
-    }
-
-    player.shoot(
-      force * 1.5,
-    );
   }
 
   @override
