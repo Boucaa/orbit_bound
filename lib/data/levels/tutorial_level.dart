@@ -9,8 +9,8 @@ class TutorialLevel extends GameLevel {
       : super(
           id: 'tutorial',
           name: 'Tutorial',
-          description:
-              'Welcome to Space Balls! This is a tutorial level to get you started.',
+          description: 'Welcome to Orbit Bound! '
+              'This is a tutorial level to get you started.',
           gameObjects: [
             PlayerBall(
               mass: 1,

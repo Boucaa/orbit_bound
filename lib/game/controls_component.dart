@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 class ControlsComponent extends PositionComponent with DragCallbacks {
@@ -12,6 +13,7 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
   final Function(Vector2) onShoot;
 
   Vector2? startPosition;
+  bool tookAShot = false;
 
   Vector2? get endPosition {
     if (startPosition == null ||
@@ -63,6 +65,10 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
 
   @override
   void onDragEnd(DragEndEvent event) {
+    if (tookAShot) {
+      return;
+    }
+    tookAShot = true;
     if (startPosition != null &&
         endDevicePosition != null &&
         startDevicePosition != null) {
@@ -88,6 +94,9 @@ class ShotPreviewComponent extends Component {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
+    if (controlsComponent.tookAShot) {
+      return;
+    }
     if (controlsComponent.startPosition == null ||
         controlsComponent.endPosition == null) {
       return;
@@ -108,6 +117,68 @@ class ShotPreviewComponent extends Component {
         ..strokeWidth =
             0.03, // Adjust the thickness of the photon trail as needed.
     );
+
+    // // Drawing x and y components
+    // final componentPaint = Paint()
+    //   ..color = const Color(0xFF9999FF) // The color for components.
+    //   ..strokeWidth = 0.01;
+    //
+    // // Draw the horizontal (x-component) line
+    // canvas.drawLine(
+    //   startPosition,
+    //   Offset(endPosition.dx, startPosition.dy),
+    //   componentPaint,
+    // );
+    //
+    // // Draw the vertical (y-component) line
+    // canvas.drawLine(
+    //   Offset(endPosition.dx, startPosition.dy),
+    //   endPosition,
+    //   componentPaint,
+    // );
+    //
+    // // Calculate the x and y components
+    // final double xComponent = endPosition.dx - startPosition.dx;
+    // final double yComponent = endPosition.dy - startPosition.dy;
+    //
+    // // Create a TextPainter
+    // final textSpanX = TextSpan(
+    //   text: "X: ${xComponent.toStringAsFixed(2)}",
+    //   style: const TextStyle(color: Colors.blue, fontSize: 0.1),
+    // );
+    // final textPainterX = TextPainter(
+    //   text: textSpanX,
+    //   textDirection: TextDirection.ltr,
+    // );
+    // textPainterX.layout();
+    //
+    // final textSpanY = TextSpan(
+    //   text: "Y: ${yComponent.toStringAsFixed(2)}",
+    //   style: const TextStyle(color: Colors.blue, fontSize: 0.1),
+    // );
+    // final textPainterY = TextPainter(
+    //   text: textSpanY,
+    //   textDirection: TextDirection.ltr,
+    // );
+    // textPainterY.layout();
+    //
+    // // Paint the text
+    // textPainterX.paint(
+    //   canvas,
+    //   Offset(
+    //     startPosition.dx + (endPosition.dx - startPosition.dx) / 2,
+    //     startPosition.dy - 0.02,
+    //   ), // Change the offset as needed
+    // );
+    //
+    // textPainterY.paint(
+    //     canvas,
+    //     Offset(
+    //         endPosition.dx + 0.02,
+    //         startPosition.dy +
+    //             (endPosition.dy - startPosition.dy) /
+    //                 2) // Change the offset as needed
+    //     );
 
     // Calculate direction of the main line.
     final direction = endPosition - startPosition;
