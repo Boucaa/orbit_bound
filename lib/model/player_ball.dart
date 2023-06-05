@@ -10,7 +10,7 @@ class PlayerBall extends BallObject {
   }) : super(
           mass: mass,
           isStatic: true,
-          spriteSheetPath: 'player_alt.png',
+          spriteSheetPath: 'player.png',
           isContactGameOver: false,
         );
 

@@ -13,7 +13,7 @@ class BallSpriteAnimationComponent extends SpriteAnimationComponent {
           img,
           SpriteAnimationData.sequenced(
             textureSize: Vector2.all(128.0),
-            amount: 64,
+            amount: 32,
             stepTime: 0.05,
           ),
           size: Vector2.all(ballObject.radius * 2),
