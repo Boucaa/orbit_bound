@@ -39,7 +39,8 @@ class HomePage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -49,38 +50,38 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              const SizedBox(height: 20),
-              OutlinedButton(
-                onPressed: () {
-                  // TODO: Add functionality for the second button
-                },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: const Text(
-                  'Level Editor',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              const SizedBox(height: 20),
-              OutlinedButton(
-                onPressed: () {
-                  // TODO: Add functionality for the third button
-                },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: const Text(
-                  'Educational Portal',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
+              // const SizedBox(height: 20),
+              // OutlinedButton(
+              //   onPressed: () {
+              //     // TODO: Add functionality for the second button
+              //   },
+              //   style: OutlinedButton.styleFrom(
+              //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(30),
+              //     ),
+              //   ),
+              //   child: const Text(
+              //     'Level Editor',
+              //     style: TextStyle(fontSize: 18),
+              //   ),
+              // ),
+              // const SizedBox(height: 20),
+              // OutlinedButton(
+              //   onPressed: () {
+              //     // TODO: Add functionality for the third button
+              //   },
+              //   style: OutlinedButton.styleFrom(
+              //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(30),
+              //     ),
+              //   ),
+              //   child: const Text(
+              //     'Educational Portal',
+              //     style: TextStyle(fontSize: 18),
+              //   ),
+              // ),
             ],
           ),
         ),
