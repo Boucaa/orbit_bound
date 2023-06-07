@@ -12,6 +12,7 @@ class SchwardschildHole extends BallObject {
     super.isStatic = true,
   }) : super(
           // velocity: velocity,
+          spriteSheetPath:  'black_hole.png',
           mass: mass,
         );
 
