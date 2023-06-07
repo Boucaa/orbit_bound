@@ -17,6 +17,7 @@ class KerrHole extends BallObject {
     super.isStatic = true,
   }) : super(
           // velocity: velocity,
+          spriteSheetPath:  'black_hole_ring.png',
           mass: mass,
         );
 
