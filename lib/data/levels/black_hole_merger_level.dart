@@ -21,16 +21,16 @@ class BlackHoleMergerLevel extends GameLevel {
               initialPosition: Vector2(1.5, 0.8),
             ),
             SchwardschildHole(
-              initialPosition: Vector2(2, 3),
+              initialPosition: Vector2(2.2, 3),
               mass: 1.5,
-              initialVelocity: Vector2(0, 0.8),
+              initialVelocity: Vector2(0, 0.62),
               isStatic: false,
             ),
             SchwardschildHole(
-              initialPosition: Vector2(1, 3),
+              initialPosition: Vector2(0.8, 3),
               mass: 1.5,
               isStatic: false,
-              initialVelocity: Vector2(0, -0.8),
+              initialVelocity: Vector2(0, -0.62),
             ),
           ],
         );

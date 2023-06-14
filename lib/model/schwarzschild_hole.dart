@@ -10,8 +10,10 @@ class SchwardschildHole extends BallObject {
     super.initialVelocity,
     required double mass,
     super.isStatic = true,
+    super.radius,
   }) : super(
           // velocity: velocity,
+          spriteSheetPath: 'black_hole.png',
           mass: mass,
         );
 
@@ -24,6 +26,8 @@ class SchwardschildHole extends BallObject {
         .toDouble();
     return -Vector2(
             other.position.x - position.x, other.position.y - position.y) *
-        (mass / pow(distance, 3) + pow(mass, 2) / pow(distance, 5) * 0.1);
+        (mass / pow(distance, 3) -
+            pow(mass, 2) / pow(distance, 5) * 0.1 +
+            pow(mass, 4) / pow(distance, 7) * 0.05);
   }
 }
