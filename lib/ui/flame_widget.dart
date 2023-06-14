@@ -101,7 +101,7 @@ class _FlameWidgetState extends State<FlameWidget> {
     },
     onLose: () async {
       await Future.delayed(const Duration(milliseconds: 1000));
-      if (context.mounted) {
+      if (mounted) {
         showDialog(
           context: context,
           builder: (context) {
@@ -273,6 +273,7 @@ class _FlameWidgetState extends State<FlameWidget> {
   }
 
   void reset() {
+    if (!mounted) return;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -285,6 +286,7 @@ class _FlameWidgetState extends State<FlameWidget> {
   }
 
   void goToNextLevel() {
+    if (!mounted) return;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(

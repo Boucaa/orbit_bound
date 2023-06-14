@@ -16,7 +16,7 @@ class BallSpriteAnimationComponent extends SpriteAnimationComponent {
             amount: 32,
             stepTime: 0.05,
           ),
-          size: Vector2.all(ballObject.radius * 2),
+          size: Vector2.all(ballObject.renderRadius * 2),
         );
 
   @override

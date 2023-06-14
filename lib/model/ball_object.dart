@@ -8,6 +8,7 @@ abstract class BallObject extends GameObject {
   final String? spritePath;
   final String? spriteSheetPath;
   final bool customPaint;
+  final double renderRadius;
 
   BallObject({
     // required super.velocity,
@@ -20,7 +21,8 @@ abstract class BallObject extends GameObject {
     this.spriteSheetPath,
     super.isContactGameOver = true,
     this.customPaint = false,
-  });
+    double? renderRadius,
+  }) : renderRadius = renderRadius ?? radius;
 
   @override
   set isStatic(bool value) {

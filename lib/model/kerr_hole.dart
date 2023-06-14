@@ -15,10 +15,12 @@ class KerrHole extends BallObject {
     required this.spin,
     required this.drag,
     super.isStatic = true,
+    super.radius,
   }) : super(
           // velocity: velocity,
-          spriteSheetPath:  'black_hole_ring.png',
+          spriteSheetPath: 'black_hole_ring.png',
           mass: mass,
+          renderRadius: 5 * radius,
         );
 
   @override
