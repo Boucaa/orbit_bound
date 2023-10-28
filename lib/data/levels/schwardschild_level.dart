@@ -1,17 +1,18 @@
 import 'package:flame/game.dart';
+import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/schwarzschild_hole.dart';
 import 'package:space_balls/model/target.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SchwardschildLevel extends GameLevel {
-  SchwardschildLevel()
+  SchwardschildLevel(BuildContext context)
       : super(
-          id: 'schwarzschild',
-          name: 'Schwarzschild black hole',
-          description:
-              'The simplest black hole is a spherically symmetric static black hole called the Schwarzschild black hole. Its gravity is so strong that a horizon exist where nothing can escape the immense force. Be careful so you dont fall in!',
-          gameObjects: [
+    id: 'schwarzschild',
+    name: AppLocalizations.of(context)!.schwarzschild_name,
+    description: AppLocalizations.of(context)!.schwarzschild_description,
+  gameObjects: [
             PlayerBall(
               mass: 1,
               initialVelocity: Vector2(-1, 0),

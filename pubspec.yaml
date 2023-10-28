@@ -47,6 +47,10 @@ dependencies:
   flame_bloc: ^1.9.0
   shared_preferences: ^2.1.1
 
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.18.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -98,3 +102,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  generate: true
+flutter_intl:
+  enabled: true

@@ -1,17 +1,18 @@
 import 'package:flame/game.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/schwarzschild_hole.dart';
 import 'package:space_balls/model/target.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BlackHoleMergerLevel extends GameLevel {
-  BlackHoleMergerLevel()
+  BlackHoleMergerLevel(BuildContext context)
       : super(
-          id: 'black_hole_merger',
-          name: 'Black hole merger',
-          description:
-              'Mergers of black holes have opened a new observational window into the universe, can you navigate through such a merger?',
-          gameObjects: [
+    id: 'black_hole_merger',
+    name: AppLocalizations.of(context)!.black_hole_merger_name,
+    description: AppLocalizations.of(context)!.black_hole_merger_description,
+    gameObjects: [
             PlayerBall(
               mass: 1,
               initialVelocity: Vector2(-1, 0),

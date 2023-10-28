@@ -1,17 +1,18 @@
 import 'package:flame/game.dart';
+import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewtonianLevel extends GameLevel {
-  NewtonianLevel()
+  NewtonianLevel(BuildContext context)
       : super(
-          id: 'newtonian',
-          name: 'Newtonian object',
-          description:
-              'Orbits of test particles around a simple newtonian body are always cone-sections: circles, elipses, parabolas, or hyperbolas. Can you use these orbits, bend the shot, and hit the target?',
-          gameObjects: [
+    id: 'newtonian_object',
+    name: AppLocalizations.of(context)!.newtonian_object_name,
+    description: AppLocalizations.of(context)!.newtonian_object_description,
+  gameObjects: [
             PlayerBall(
               mass: 1,
               initialVelocity: Vector2(-1, 0),

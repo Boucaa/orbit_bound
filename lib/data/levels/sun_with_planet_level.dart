@@ -1,16 +1,18 @@
+import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SunWithPlanetLevel extends GameLevel {
-  SunWithPlanetLevel()
+  SunWithPlanetLevel(BuildContext context)
       : super(
-          id: 'sun_with_planet',
-          name: 'Sun with a planet',
-          description: 'A gravitational slingshot is a maneuver used by many satelites to gain velocity and save fuel. This involves a flyby next to a planets relative motion to a central object. Can you use the planet to get a boost to the target?',
-          gameObjects: [
+    id: 'sun_with_planet',
+    name: AppLocalizations.of(context)!.sun_with_planet_name,
+    description: AppLocalizations.of(context)!.sun_with_planet_description,
+     gameObjects: [
             PlayerBall(
               mass: 1,
               initialVelocity: Vector2(-1, 0),

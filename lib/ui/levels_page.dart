@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
 import 'package:space_balls/ui/game_page.dart';
@@ -12,7 +13,7 @@ class LevelsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Levels'),
+        title: Text(AppLocalizations.of(context)!.levels),
       ),
       body: Align(
         alignment: Alignment.topCenter,
@@ -20,9 +21,9 @@ class LevelsPage extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              const Text(
-                'Select a Level',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.selectLevel,
+                style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -42,8 +43,10 @@ class LevelsPage extends StatelessWidget {
                     ),
                     itemCount: context.read<LevelRepository>().levelCount,
                     itemBuilder: (context, index) {
-                      final level =
-                          context.read<LevelRepository>().getLevel(index);
+                      final level = context.read<LevelRepository>().getLevel(
+                            index,
+                            context,
+                          );
                       return BlocBuilder<UserBloc, UserState>(
                         builder: (context, state) {
                           final user = state.user; // Access the current user

@@ -1,16 +1,17 @@
+import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/kerr_hole.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class KerrLevel extends GameLevel {
-  KerrLevel()
+  KerrLevel(BuildContext context)
       : super(
           id: 'kerr',
-          name: 'Kerr black hole',
-          description:
-              'Most black holes rotate. When a black hole rotates, there is a preferred direction of orbit where spacetime is wound up on the black hole. Effectively, you get slowed when orbiting against this inertial drag, and accelerated if you choose the right direction.',
+          name: AppLocalizations.of(context)!.kerr_name,
+          description: AppLocalizations.of(context)!.kerr_description,
           gameObjects: [
             PlayerBall(
               mass: 1,

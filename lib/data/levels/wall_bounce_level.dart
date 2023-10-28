@@ -4,13 +4,14 @@ import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/wall.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WallBounceLevel extends GameLevel {
-  WallBounceLevel()
+  WallBounceLevel(BuildContext context)
       : super(
           id: 'wall_bounce',
-          name: 'Wall Bounce',
-          description: 'Bounce the ball off the wall',
+          name: AppLocalizations.of(context)!.wall_bounce_name,
+          description: AppLocalizations.of(context)!.wall_bounce_description,
           gameObjects: [
             PlayerBall(
               mass: 1,
@@ -33,7 +34,7 @@ class WallBounceLevel extends GameLevel {
           ],
           nonPhysicalComponents: [
             TextComponent(
-              text: 'These walls are ok to hit. Use them to your advantage.',
+              text: AppLocalizations.of(context)!.good_walls_description,
               // 'test',
               anchor: Anchor.center,
               position: Vector2(1.5, 3.5),

@@ -1,18 +1,19 @@
+import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/wall.dart';
 import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SlalomLevel extends GameLevel {
-  SlalomLevel()
+  SlalomLevel(BuildContext context)
       : super(
-          id: 'slalom',
-          name: 'Slalom',
-          description:
-              'This level contains only simple newtonian objects with some bothersome barricades, can you take on the challenge?',
-          gameObjects: [
+    id: 'slalom',
+    name: AppLocalizations.of(context)!.slalom_name,
+    description: AppLocalizations.of(context)!.slalom_description,
+   gameObjects: [
             PlayerBall(
               mass: 1,
               initialVelocity: Vector2(-1, 0),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/business/base_provider.dart';
+import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/run_config.dart';
 import 'package:space_balls/ui/game_page.dart';
 import 'package:space_balls/ui/home_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   Logger.root.level = Level.ALL;
@@ -21,13 +25,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseProvider(
-      child: MaterialApp(
-        title: 'Orbit Bound',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: testLevel ? GamePage(levelId: 0) : const HomePage(),
-      ),
+      child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+        return MaterialApp(
+          title: 'Orbit Bound',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('cs'),
+          ],
+          locale: Locale(state.user?.locale ?? 'en'),
+          home: testLevel ? const GamePage(levelId: 0) : const HomePage(),
+        );
+      }),
     );
   }
 }
