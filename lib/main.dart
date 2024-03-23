@@ -6,6 +6,7 @@ import 'package:logging/logging.dart';
 import 'package:space_balls/business/base_provider.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/run_config.dart';
+import 'package:space_balls/ui/colors.dart';
 import 'package:space_balls/ui/game_page.dart';
 import 'package:space_balls/ui/home_page.dart';
 
@@ -30,13 +31,13 @@ class MyApp extends StatelessWidget {
           title: 'Orbit Bound',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.orange,
+              seedColor: primaryColor,
               brightness: Brightness.dark,
-              primaryContainer: Colors.orange,
+              primaryContainer: primaryColor,
               primary: Colors.white,
             ),
             appBarTheme: const AppBarTheme(
-              color: Colors.orange,
+              color: primaryColor,
               foregroundColor: Colors.white,
             ),
           ),

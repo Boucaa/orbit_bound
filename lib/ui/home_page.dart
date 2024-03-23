@@ -53,20 +53,20 @@ class HomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 250,
-                  height: 250,
-                  child: Image.asset(
-                    'assets/images/home.gif',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                // SizedBox(
+                //   width: 250,
+                //   height: 250,
+                //   child: Image.asset(
+                //     'assets/images/home.gif',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 const SizedBox(height: 20),
                 // Replace the title text with the image
                 Image.asset(
-                  'assets/images/title.png',
+                  'assets/images/title.webp',
                   width: 340, // Adjust width as needed
-                  height: 100, // Adjust height as needed
+                  height: 340, // Adjust height as needed
                 ),
                 // const Text(
                 //   'Orbit Bound',
@@ -116,23 +116,23 @@ class HomePage extends StatelessWidget {
                 //   ),
                 // ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    // TODO: Add functionality for the third button
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                    Theme.of(context).colorScheme.primaryContainer,
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: const Text(
-                    'Educational Portal',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     // TODO: Add functionality for the third button
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor:
+                //     Theme.of(context).colorScheme.primaryContainer,
+                //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(20),
+                //     ),
+                //   ),
+                //   child: const Text(
+                //     'Educational Portal',
+                //     style: TextStyle(fontSize: 18),
+                //   ),
+                // ),
               ],
             ),
           ),
