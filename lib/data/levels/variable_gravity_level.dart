@@ -1,18 +1,19 @@
+import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/variable_gravity_object.dart';
 import 'package:space_balls/model/wall.dart';
 import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VariableGravityLevel extends GameLevel {
-  VariableGravityLevel()
+  VariableGravityLevel(BuildContext context)
       : super(
-          id: 'variable_gravity',
-          name: 'Variable gravity object',
-          description:
-              'What if gravity isnt as straightforward as we think it is? Explore the choice of exponent of a 1/r^n potential to hit the target.',
-          gameObjects: [
+    id: 'variable_gravity',
+    name: AppLocalizations.of(context)!.variable_gravity_name,
+    description: AppLocalizations.of(context)!.variable_gravity_description,
+ gameObjects: [
             PlayerBall(
               mass: 1,
               initialVelocity: Vector2(-1, 0),

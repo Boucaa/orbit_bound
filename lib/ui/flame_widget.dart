@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/game/space_balls_game.dart';
@@ -84,9 +85,9 @@ class _FlameWidgetState extends State<FlameWidget> {
           );
           return AlertDialog(
             backgroundColor: Colors.grey[800],
-            content: const Text(
-              "You Win!",
-              style: TextStyle(color: Colors.white, fontSize: 22),
+            content: Text(
+              AppLocalizations.of(context)!.win_message,
+              style: const TextStyle(color: Colors.white, fontSize: 22),
               textAlign: TextAlign.center,
             ),
             actions: [
@@ -116,21 +117,22 @@ class _FlameWidgetState extends State<FlameWidget> {
                 Navigator.of(context).pop();
                 reset();
               },
-              child: const SizedBox(
+              child: SizedBox(
                 height: 40,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.refresh,
                         color: Colors.white,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
-                        "Try Again",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        AppLocalizations.of(context)!.try_again_message,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ],
                   ),
@@ -139,9 +141,9 @@ class _FlameWidgetState extends State<FlameWidget> {
             );
             return AlertDialog(
               backgroundColor: Colors.grey[800],
-              content: const Text(
-                "You Lose",
-                style: TextStyle(color: Colors.white, fontSize: 22),
+              content: Text(
+                AppLocalizations.of(context)!.lose_message,
+                style: const TextStyle(color: Colors.white, fontSize: 22),
                 textAlign: TextAlign.center,
               ),
               actions: [

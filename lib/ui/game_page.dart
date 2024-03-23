@@ -17,7 +17,7 @@ class GamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FlameWidget(
-        level: context.read<LevelRepository>().getLevel(levelId),
+        level: context.read<LevelRepository>().getLevel(levelId, context),
         levelId: levelId,
         showDescription: showDescription,
       ),

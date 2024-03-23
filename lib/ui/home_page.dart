@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/ui/levels_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,83 +11,132 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 250,
-                height: 250,
-                child: Image.asset(
-                  'assets/images/home.gif',
-                  fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        final userBloc = context.read<UserBloc>();
+                        userBloc.add(
+                          UpdateUser(
+                            userBloc.state.user!.copyWith(locale: 'cs'),
+                          ),
+                        );
+                      },
+                      child: const Text('🇨🇿', style: TextStyle(fontSize: 40)),
+                    ),
+                    const SizedBox(width: 12),
+                    InkWell(
+                      onTap: () {
+                        final userBloc = context.read<UserBloc>();
+                        userBloc.add(
+                          UpdateUser(
+                            userBloc.state.user!.copyWith(locale: 'en'),
+                          ),
+                        );
+                      },
+                      child: const Text('🇬🇧', style: TextStyle(fontSize: 40)),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 20),
-              Text(
-                'Orbit Bound',
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+            ),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // SizedBox(
+                //   width: 250,
+                //   height: 250,
+                //   child: Image.asset(
+                //     'assets/images/home.gif',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
+                const SizedBox(height: 20),
+                // Replace the title text with the image
+                Image.asset(
+                  'assets/images/title.webp',
+                  width: 340, // Adjust width as needed
+                  height: 340, // Adjust height as needed
                 ),
-              ),
-              const SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LevelsPage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                // const Text(
+                //   'Orbit Bound',
+                //   style: TextStyle(
+                //     fontSize: 40,
+                //     fontWeight: FontWeight.bold,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LevelsPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.levels,
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
-                child: const Text(
-                  'Levels',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              // const SizedBox(height: 20),
-              // OutlinedButton(
-              //   onPressed: () {
-              //     // TODO: Add functionality for the second button
-              //   },
-              //   style: OutlinedButton.styleFrom(
-              //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(30),
-              //     ),
-              //   ),
-              //   child: const Text(
-              //     'Level Editor',
-              //     style: TextStyle(fontSize: 18),
-              //   ),
-              // ),
-              // const SizedBox(height: 20),
-              // OutlinedButton(
-              //   onPressed: () {
-              //     // TODO: Add functionality for the third button
-              //   },
-              //   style: OutlinedButton.styleFrom(
-              //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(30),
-              //     ),
-              //   ),
-              //   child: const Text(
-              //     'Educational Portal',
-              //     style: TextStyle(fontSize: 18),
-              //   ),
-              // ),
-            ],
+                // const SizedBox(height: 20),
+                // OutlinedButton(
+                //   onPressed: () {
+                //     // TODO: Add functionality for the second button
+                //   },
+                //   style: OutlinedButton.styleFrom(
+                //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(30),
+                //     ),
+                //   ),
+                //   child: const Text(
+                //     'Level Editor',
+                //     style: TextStyle(fontSize: 18),
+                //   ),
+                // ),
+                const SizedBox(height: 20),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     // TODO: Add functionality for the third button
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor:
+                //     Theme.of(context).colorScheme.primaryContainer,
+                //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(20),
+                //     ),
+                //   ),
+                //   child: const Text(
+                //     'Educational Portal',
+                //     style: TextStyle(fontSize: 18),
+                //   ),
+                // ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
