@@ -1,6 +1,7 @@
 {
   "helloWorld": "Hello World!",
   "levels": "Levels",
+  "educational_portal": "Educational portal",
   "selectLevel": "Select Level",
   "black_hole_merger_name": "Black hole merger",
   "black_hole_merger_description": "Mergers of black holes have opened a new observational window into the universe, can you navigate through such a merger?",
@@ -35,5 +36,9 @@
   "good_walls_description": "These walls are ok to hit. Use them to your advantage.",
   "win_message": "You Win!",
   "try_again_message": "Try Again",
-  "lose_message": "You Lose"
+  "lose_message": "You Lose",
+  "education_title": "Calculating orbits",
+  "education_text": "Kepler's laws define the motions of test bodies around a central objects uniquely as cone-sections. In this app, we calculate the evolution of any particle by integrating its equations of motion in the potential of other bodies. The gravitaional attractive force of two objects of masses M_1 and M_2 separated at a distance r is",
+  "education_title_2": "Effective description of general relativity",
+  "education_text_2": "Motion of objects can be hard to calculate in the full general relativistic framework. It is, however, possible to include relativistic effects by correction terms in the so-called post-newtonian approximation."
 }

@@ -1,6 +1,7 @@
 {
   "helloWorld": "Ahoj světe!",
   "levels": "Úrovně",
+  "educational_portal": "Naučný portál",
   "selectLevel": "Vyberte úroveň",
   "black_hole_merger_name": "Kolize černých děr",
   "black_hole_merger_description": "Pozorování gravitačních vln vzniklých srážkami černých děr otevřelo nové observační okno do vesmíru. Dokážete se navigovat takovým sloučením?",
@@ -35,5 +36,10 @@
   "good_walls_description": "Do těchto zdí je v pořádku narážet. Využijte je ve svůj prospěch.",
   "win_message": "Vyhráli jste!",
   "try_again_message": "Zkuste to znovu",
-  "lose_message": "Prohráli jste"
+  "lose_message": "Prohráli jste",
+  "education_title": "Počítání oběžných drah",
+  "education_text": "Keplerovy zákony určují pohyb těles kolem centrálního objektu jako kuželosečky. V této aplikaci počítáme dráhy těles pomocí integrace pohybových rovnic v potenciálu generovaném ostatními přítomnými tělesy. Síla kterou na sebe působí dvě tělesa o hmotnostech M_1 a M_2 vzdálené r je rovna",
+  "education_title_2": "Efektivní popis obecné relativity",
+  "education_text_2": "V obecné teorii reltivity je obtížné spočítat dráhy těles. Je však možné zahrnout relativistické efekty pomocí korekčních členů v rámci takzvané post-newtonovské aproximaci."
+
 }

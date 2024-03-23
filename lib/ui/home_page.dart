@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/ui/levels_page.dart';
+import 'package:space_balls/ui/educational_portal.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -116,23 +117,27 @@ class HomePage extends StatelessWidget {
                 //   ),
                 // ),
                 const SizedBox(height: 20),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     // TODO: Add functionality for the third button
-                //   },
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor:
-                //     Theme.of(context).colorScheme.primaryContainer,
-                //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(20),
-                //     ),
-                //   ),
-                //   child: const Text(
-                //     'Educational Portal',
-                //     style: TextStyle(fontSize: 18),
-                //   ),
-                // ),
+                ElevatedButton(
+                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const CustomPage()),
+                                    );
+                                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                    Theme.of(context).colorScheme.primaryContainer,
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.educational_portal,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
               ],
             ),
           ),
