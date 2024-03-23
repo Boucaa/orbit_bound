@@ -7,14 +7,14 @@ import 'package:vector_math/vector_math_64.dart';
 class SchwardschildHole extends BallObject {
   SchwardschildHole({
     required super.initialPosition,
+    required super.mass,
     super.initialVelocity,
-    required double mass,
     super.isStatic = true,
     super.radius,
+    super.renderRadius,
   }) : super(
           // velocity: velocity,
-          spriteSheetPath: 'black_hole.png',
-          mass: mass,
+            spriteSheetPath: 'black_hole.png',
         );
 
   @override
