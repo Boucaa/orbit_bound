@@ -213,8 +213,8 @@ class SpaceBallsGame extends Forge2DGame {
   }
 
   List<Component> createBoundaries() {
-    final topLeft = Vector2.zero();
-    final bottomRight = screenToWorld(camera.viewport.effectiveSize);
+    final topLeft = Vector2.all(WallLine.wallWidth / 2);
+    final bottomRight = screenToWorld(camera.viewport.effectiveSize) - topLeft;
     final topRight = Vector2(bottomRight.x, topLeft.y);
     final bottomLeft = Vector2(topLeft.x, bottomRight.y);
 
