@@ -26,6 +26,8 @@
   "variable_gravity_description": "What if gravity isn't as straightforward as we think it is? Explore the choice of exponent of a 1/r^n potential to hit the target.",
   "wall_bounce_name": "Wall Bounce",
   "wall_bounce_description": "Bounce the ball off the wall",
+  "wormhole_name": "Wormhole level",
+  "wormhole_description": "A wormhole is a theoretical concept of a tunnel through spacetime, can you use it to get to the target?",
   "target_description": "This is the target. Your goal is to hit it with the ball.",
   "ball_description": "This is the ball.",
   "wall_warning": "Don't hit the walls and reach the target.",

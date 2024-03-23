@@ -30,13 +30,13 @@ class MyApp extends StatelessWidget {
           title: 'Orbit Bound',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.blue,
+              seedColor: Colors.orange,
               brightness: Brightness.dark,
-              primaryContainer: Colors.blue,
+              primaryContainer: Colors.orange,
               primary: Colors.white,
             ),
             appBarTheme: const AppBarTheme(
-              color: Colors.blue,
+              color: Colors.orange,
               foregroundColor: Colors.white,
             ),
           ),

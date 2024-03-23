@@ -26,6 +26,8 @@
   "variable_gravity_description": "Co když gravitace není tak jednoduchá, jak si myslíme? Prozkoumejte volbu exponentu potenciálu 1/r^n a zasáhněte cíl.",
   "wall_bounce_name": "Odraz od stěny",
   "wall_bounce_description": "Odrazte míč od zdi",
+  "wormhole_name": "Červí díra",
+  "wormhole_description": "Červí díra je teoretický koncept tunelu prostoročasem, dokážete jej využít k zasažení cíle?",
   "target_description": "Toto je cíl. Vaším úkolem je zasáhnout jej míčem.",
   "ball_description": "Toto je míč.",
   "wall_warning": "Nenarážejte do zdí a dosáhněte cíle.",

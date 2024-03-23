@@ -62,14 +62,20 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Orbit Bound',
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                // Replace the title text with the image
+                Image.asset(
+                  'assets/images/title.png',
+                  width: 340, // Adjust width as needed
+                  height: 100, // Adjust height as needed
                 ),
+                // const Text(
+                //   'Orbit Bound',
+                //   style: TextStyle(
+                //     fontSize: 40,
+                //     fontWeight: FontWeight.bold,
+                //     color: Colors.white,
+                //   ),
+                // ),
                 const SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
@@ -85,7 +91,7 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                   child: Text(
@@ -109,22 +115,24 @@ class HomePage extends StatelessWidget {
                 //     style: TextStyle(fontSize: 18),
                 //   ),
                 // ),
-                // const SizedBox(height: 20),
-                // OutlinedButton(
-                //   onPressed: () {
-                //     // TODO: Add functionality for the third button
-                //   },
-                //   style: OutlinedButton.styleFrom(
-                //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(30),
-                //     ),
-                //   ),
-                //   child: const Text(
-                //     'Educational Portal',
-                //     style: TextStyle(fontSize: 18),
-                //   ),
-                // ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    // TODO: Add functionality for the third button
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                    Theme.of(context).colorScheme.primaryContainer,
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: const Text(
+                    'Educational Portal',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
               ],
             ),
           ),
