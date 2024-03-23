@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/ui/levels_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -80,6 +80,8 @@ class HomePage extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 16),
                     shape: RoundedRectangleBorder(

@@ -63,10 +63,12 @@ class LevelsPage extends StatelessWidget {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: user != null &&
+                              backgroundColor: user != null &&
                                       user.completedLevelIds.contains(level.id)
                                   ? Colors.green
-                                  : Theme.of(context).primaryColor,
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
