@@ -3,20 +3,24 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
-import 'package:flame/particles.dart';
 import 'package:flame/particles.dart' as flame_particles;
+import 'package:flame/particles.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/game/ball_sprite_animation_component.dart';
 import 'package:space_balls/game/ball_sprite_coponent.dart';
+import 'package:space_balls/game/contact/game_contact_listener.dart';
+import 'package:space_balls/game/contact/lose_contact_resolver.dart';
+import 'package:space_balls/game/contact/schwardschild_hole_contact_resolver.dart';
+import 'package:space_balls/game/contact/win_contact_resolver.dart';
 import 'package:space_balls/game/controls_component.dart';
 import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
-import 'package:space_balls/model/game_object.dart';
 import 'package:space_balls/model/player_ball.dart';
-import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/wall.dart';
+
+import '../model/game_object.dart';
 
 final _log = Logger('SpaceBallsGame');
 
@@ -55,80 +59,31 @@ class SpaceBallsGame extends Forge2DGame {
   }
 
   void shoot(Vector2 force) {
-    // if (gameOver && !tookAShot) {
-    //   add(
-    //     ParticleSystemComponent(
-    //       particle: flame_particles.Particle.generate(
-    //         count: particleCount,
-    //         generator: (i) {
-    //           final vec = randomVector2();
-    //
-    //           // Generate random color for each particle
-    //           final color = Colors.primaries[i % Colors.primaries.length];
-    //
-    //           return AcceleratedParticle(
-    //             acceleration: Vector2.zero(),
-    //             speed: vec * 2.0,
-    //             position: player.position + vec / 100.0,
-    //             child: CircleParticle(
-    //               paint: Paint()
-    //                 ..color = color.withAlpha(
-    //                     (particleCount - i) * (255 ~/ particleCount)),
-    //               radius: 0.02,
-    //             ),
-    //           );
-    //         },
-    //       ),
-    //     ),
-    //   );
-    //
-    //   return;
-    // }
-      player.shoot(
-        force * 1.5,
-      );
+    player.shoot(
+      force * 1.5,
+    );
   }
 
   @override
   Future<void> onLoad() async {
     addAll(level.nonPhysicalComponents);
-    addAll(level.gameObjects);
-    addAll(
-      await Future.wait(
-        level.gameObjects.whereType<BallObject>().map(
-          (e) async {
-            if (e.customPaint) {
-              return null;
-            }
-            if (e.spriteSheetPath != null) {
-              return BallSpriteAnimationComponent(
-                ballObject: e,
-                img: await images.load(e.spriteSheetPath!),
-              );
-            } else if (e.spritePath != null) {
-              return BallSpriteComponent(
-                ballObject: e,
-                sprite: await loadSprite(e.spritePath!),
-              );
-            } else {
-              const defaultSpriteSheet = 'ball_default.png';
-              return BallSpriteAnimationComponent(
-                ballObject: e,
-                img: await images.load(defaultSpriteSheet),
-              );
-            }
-          },
-        ),
-      ).then((value) => value.whereType<Component>()),
-    );
+    await createGameObjects(level.gameObjects);
     addAll(createBoundaries());
     world.setContactListener(
-      TestContactListener(
-        onPlayerContact: () {
-          // _log.info('Player contact');
+      GameContactListener(
+        contactResolvers: [
+          WinContactResolver(onWin: win),
+          LoseContactResolver(onLose: onGameOver),
+          SchwardschildContactResolver(),
+        ],
+        onDeleteObjects: (objects) {
+          for (var object in objects) {
+            removeGameObject(object);
+          }
         },
-        onWin: win,
-        onGameOver: onGameOver,
+        onCreateObjects: (objects) {
+          createGameObjects(objects);
+        },
       ),
     );
     // TODO update this when the screen size changes or figure out a cleaner way
@@ -144,10 +99,44 @@ class SpaceBallsGame extends Forge2DGame {
     return super.onLoad();
   }
 
+  Future<void> createGameObjects(List<GameObject> gameObjects) async {
+    addAll(gameObjects);
+    addAll(
+      await Future.wait(
+        gameObjects.whereType<BallObject>().map(
+              (e) => getBallObjectComponent(e),
+            ),
+      ).then((value) => value.whereType<Component>()),
+    );
+  }
+
+  Future<Component?> getBallObjectComponent(BallObject ballObject) async {
+    if (ballObject.customPaint) {
+      return null;
+    }
+    if (ballObject.spriteSheetPath != null) {
+      return BallSpriteAnimationComponent(
+        ballObject: ballObject,
+        img: await images.load(ballObject.spriteSheetPath!),
+      );
+    } else if (ballObject.spritePath != null) {
+      return BallSpriteComponent(
+        ballObject: ballObject,
+        sprite: await loadSprite(ballObject.spritePath!),
+      );
+    } else {
+      const defaultSpriteSheet = 'ball_default.png';
+      return BallSpriteAnimationComponent(
+        ballObject: ballObject,
+        img: await images.load(defaultSpriteSheet),
+      );
+    }
+  }
+
   void win() {
     _log.info('Win');
     won = true;
-    removePlayer();
+    removeGameObject(player);
     onWin?.call();
     // addLargeText('You won!');
 
@@ -188,7 +177,7 @@ class SpaceBallsGame extends Forge2DGame {
   void onGameOver() {
     _log.info('Game over');
     gameOver = true;
-    removePlayer();
+    removeGameObject(player);
 
     add(
       ParticleSystemComponent(
@@ -216,10 +205,10 @@ class SpaceBallsGame extends Forge2DGame {
     // addLargeText('Game over');
   }
 
-  void removePlayer() {
-    remove(player);
+  void removeGameObject(GameObject gameObject) {
+    remove(gameObject);
     removeWhere(
-      (c) => c is BallSpriteAnimationComponent && c.ballObject is PlayerBall,
+      (c) => c is BallSpriteAnimationComponent && c.ballObject == gameObject,
     );
   }
 
@@ -291,49 +280,4 @@ class SpaceBallsGame extends Forge2DGame {
       ),
     );
   }
-}
-
-class TestContactListener extends ContactListener {
-  final VoidCallback onPlayerContact;
-  final VoidCallback onWin;
-  final VoidCallback onGameOver;
-
-  TestContactListener({
-    required this.onPlayerContact,
-    required this.onWin,
-    required this.onGameOver,
-  });
-
-  @override
-  void beginContact(Contact contact) {
-    final fixtureA = contact.fixtureA;
-    final fixtureB = contact.fixtureB;
-
-    final bodyA = fixtureA.body;
-    final bodyB = fixtureB.body;
-
-    final objectA = bodyA.userData;
-    final objectB = bodyB.userData;
-
-    if (objectA is! GameObject || objectB is! GameObject) {
-      return;
-    }
-    if (objectA is PlayerBall || objectB is PlayerBall) {
-      onPlayerContact();
-      if (objectA is Target || objectB is Target) {
-        onWin();
-      } else if (objectA.isContactGameOver || objectB.isContactGameOver) {
-        onGameOver();
-      }
-    }
-  }
-
-  @override
-  void endContact(Contact contact) {}
-
-  @override
-  void postSolve(Contact contact, ContactImpulse impulse) {}
-
-  @override
-  void preSolve(Contact contact, Manifold oldManifold) {}
 }
