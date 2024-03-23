@@ -53,23 +53,29 @@ class HomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 250,
-                  height: 250,
-                  child: Image.asset(
-                    'assets/images/home.gif',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                // SizedBox(
+                //   width: 250,
+                //   height: 250,
+                //   child: Image.asset(
+                //     'assets/images/home.gif',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Orbit Bound',
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                // Replace the title text with the image
+                Image.asset(
+                  'assets/images/title.webp',
+                  width: 340, // Adjust width as needed
+                  height: 340, // Adjust height as needed
                 ),
+                // const Text(
+                //   'Orbit Bound',
+                //   style: TextStyle(
+                //     fontSize: 40,
+                //     fontWeight: FontWeight.bold,
+                //     color: Colors.white,
+                //   ),
+                // ),
                 const SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
@@ -85,7 +91,7 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                   child: Text(
@@ -109,15 +115,17 @@ class HomePage extends StatelessWidget {
                 //     style: TextStyle(fontSize: 18),
                 //   ),
                 // ),
-                // const SizedBox(height: 20),
-                // OutlinedButton(
+                const SizedBox(height: 20),
+                // ElevatedButton(
                 //   onPressed: () {
                 //     // TODO: Add functionality for the third button
                 //   },
-                //   style: OutlinedButton.styleFrom(
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor:
+                //     Theme.of(context).colorScheme.primaryContainer,
                 //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                 //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(30),
+                //       borderRadius: BorderRadius.circular(20),
                 //     ),
                 //   ),
                 //   child: const Text(

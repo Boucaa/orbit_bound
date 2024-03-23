@@ -11,6 +11,7 @@ import 'package:space_balls/data/levels/sun_with_planet_level.dart';
 import 'package:space_balls/data/levels/tutorial_level.dart';
 import 'package:space_balls/data/levels/variable_gravity_level.dart';
 import 'package:space_balls/data/levels/wall_bounce_level.dart';
+import 'package:space_balls/data/levels/wormhole_level.dart';
 import 'package:space_balls/model/game_level.dart';
 
 class LevelRepository {
@@ -28,6 +29,7 @@ class LevelRepository {
         (context) => VariableGravityLevel(context),
         (context) => NegativeMassLevel(context),
         (context) => FzuLevel(context),
+        (context) => WormholeLevel(context),
       ];
 
   int get levelCount => _levels.length;
