@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:space_balls/model/game_object.dart';
 
 class WallLine extends GameObject {
+  static const double wallWidth = 0.05;
+
   final Vector2 _start;
   final Vector2 _end;
 
@@ -62,7 +64,7 @@ class WallLine extends GameObject {
     // Apply the gradient to the paint
     final paint = Paint()
       ..shader = gradient
-      ..strokeWidth = 0.05 // reduced strokeWidth for smaller world size
+      ..strokeWidth = wallWidth // reduced strokeWidth for smaller world size
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round; // gives a rounded cap to the line ends
 

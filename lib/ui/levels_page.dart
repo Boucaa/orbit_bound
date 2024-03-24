@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
+import 'package:space_balls/ui/colors.dart';
 import 'package:space_balls/ui/game_page.dart';
 
 class LevelsPage extends StatelessWidget {
@@ -65,7 +66,7 @@ class LevelsPage extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: user != null &&
                                       user.completedLevelIds.contains(level.id)
-                                  ? Colors.green
+                                  ? darkGreen
                                   : Theme.of(context)
                                       .colorScheme
                                       .primaryContainer,
