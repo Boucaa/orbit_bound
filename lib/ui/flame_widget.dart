@@ -6,6 +6,8 @@ import 'package:logging/logging.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/game/space_balls_game.dart';
 import 'package:space_balls/model/game_level.dart';
+import 'package:space_balls/ui/base_dialog.dart';
+import 'package:space_balls/ui/colors.dart';
 import 'package:space_balls/ui/game_page.dart';
 import 'package:space_balls/ui/level_description_dialog.dart';
 
@@ -17,11 +19,11 @@ class FlameWidget extends StatefulWidget {
   final bool showDescription;
 
   const FlameWidget({
-    Key? key,
+    super.key,
     required this.level,
     required this.levelId,
     required this.showDescription,
-  }) : super(key: key);
+  });
 
   @override
   State<FlameWidget> createState() => _FlameWidgetState();
@@ -53,7 +55,7 @@ class _FlameWidgetState extends State<FlameWidget> {
         builder: (context) {
           TextButton nextLevelButton = TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: Colors.green,
+              backgroundColor: darkGreen,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(28.0),
               ),
@@ -83,19 +85,9 @@ class _FlameWidgetState extends State<FlameWidget> {
               ),
             ),
           );
-          return AlertDialog(
-            backgroundColor: Colors.grey[800],
-            content: Text(
-              AppLocalizations.of(context)!.win_message,
-              style: const TextStyle(color: Colors.white, fontSize: 22),
-              textAlign: TextAlign.center,
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Center(child: nextLevelButton),
-              ),
-            ],
+          return BaseDialog(
+            title: AppLocalizations.of(context)!.win_message,
+            child: nextLevelButton,
           );
         },
       );
@@ -108,7 +100,7 @@ class _FlameWidgetState extends State<FlameWidget> {
           builder: (context) {
             TextButton tryAgainButton = TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(28.0),
                 ),
@@ -139,19 +131,9 @@ class _FlameWidgetState extends State<FlameWidget> {
                 ),
               ),
             );
-            return AlertDialog(
-              backgroundColor: Colors.grey[800],
-              content: Text(
-                AppLocalizations.of(context)!.lose_message,
-                style: const TextStyle(color: Colors.white, fontSize: 22),
-                textAlign: TextAlign.center,
-              ),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Center(child: tryAgainButton),
-                ),
-              ],
+            return BaseDialog(
+              title: AppLocalizations.of(context)!.lose_message,
+              child: tryAgainButton,
             );
           },
         );
@@ -248,7 +230,6 @@ class _FlameWidgetState extends State<FlameWidget> {
                       color: Colors.white,
                     ),
                   ),
-
                   const Spacer(), // Add this to fill remaining space
                   BlocBuilder<UserBloc, UserState>(
                     builder: (context, state) {
