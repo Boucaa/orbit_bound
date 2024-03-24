@@ -8,10 +8,10 @@ class GamePage extends StatelessWidget {
   final int levelId;
 
   const GamePage({
-    Key? key,
+    super.key,
     required this.levelId,
     this.showDescription = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
