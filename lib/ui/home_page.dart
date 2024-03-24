@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/ui/levels_page.dart';
+import 'package:space_balls/ui/locale_flag_button.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,36 +12,22 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Align(
+          const Align(
             alignment: Alignment.topRight,
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        final userBloc = context.read<UserBloc>();
-                        userBloc.add(
-                          UpdateUser(
-                            userBloc.state.user!.copyWith(locale: 'cs'),
-                          ),
-                        );
-                      },
-                      child: const Text('🇨🇿', style: TextStyle(fontSize: 40)),
+                    LocaleFlagButton(
+                      asset: 'assets/images/flag_cz.svg',
+                      locale: 'cs',
                     ),
-                    const SizedBox(width: 12),
-                    InkWell(
-                      onTap: () {
-                        final userBloc = context.read<UserBloc>();
-                        userBloc.add(
-                          UpdateUser(
-                            userBloc.state.user!.copyWith(locale: 'en'),
-                          ),
-                        );
-                      },
-                      child: const Text('🇬🇧', style: TextStyle(fontSize: 40)),
+                    SizedBox(width: 12),
+                    LocaleFlagButton(
+                      asset: 'assets/images/flag_gb.svg',
+                      locale: 'en',
                     ),
                   ],
                 ),
@@ -96,7 +81,7 @@ class HomePage extends StatelessWidget {
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.levels,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
                 // const SizedBox(height: 20),
