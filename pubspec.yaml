@@ -47,6 +47,7 @@ dependencies:
   flame_forge2d: ^0.14.0
   flame_bloc: ^1.9.0
   shared_preferences: ^2.2.2
+  google_fonts: ^6.2.1
 
   flutter_localizations:
     sdk: flutter

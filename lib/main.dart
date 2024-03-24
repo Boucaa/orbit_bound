@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/business/base_provider.dart';
 import 'package:space_balls/business/user_bloc.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
               color: primaryColor,
               foregroundColor: Colors.white,
             ),
+            textTheme: GoogleFonts.oxaniumTextTheme(),
           ),
           localizationsDelegates: const [
             AppLocalizations.delegate,
