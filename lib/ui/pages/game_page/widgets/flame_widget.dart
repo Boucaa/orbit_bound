@@ -6,10 +6,11 @@ import 'package:logging/logging.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/game/space_balls_game.dart';
 import 'package:space_balls/model/game_level.dart';
-import 'package:space_balls/ui/base_dialog.dart';
-import 'package:space_balls/ui/colors.dart';
-import 'package:space_balls/ui/game_page.dart';
-import 'package:space_balls/ui/level_description_dialog.dart';
+import 'package:space_balls/ui/pages/game_page/game_page.dart';
+import 'package:space_balls/ui/pages/game_page/widgets/level_description_dialog.dart';
+import 'package:space_balls/ui/theme/colors.dart';
+import 'package:space_balls/ui/theme/text_style.dart';
+import 'package:space_balls/ui/widgets/base_dialog.dart';
 
 final _log = Logger('FlameWidget');
 
@@ -52,6 +53,7 @@ class _FlameWidgetState extends State<FlameWidget> {
 
       showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           TextButton nextLevelButton = TextButton(
             style: TextButton.styleFrom(
@@ -64,21 +66,21 @@ class _FlameWidgetState extends State<FlameWidget> {
               Navigator.of(context).pop();
               goToNextLevel();
             },
-            child: const SizedBox(
+            child: SizedBox(
               height: 40,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(
-                      "Next Level",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                      AppLocalizations.of(context)!.nextLevel,
+                      style: buttonTextStyle,
                     ),
                   ],
                 ),
@@ -97,6 +99,7 @@ class _FlameWidgetState extends State<FlameWidget> {
       if (mounted) {
         showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (context) {
             TextButton tryAgainButton = TextButton(
               style: TextButton.styleFrom(
@@ -123,8 +126,7 @@ class _FlameWidgetState extends State<FlameWidget> {
                       const SizedBox(width: 10),
                       Text(
                         AppLocalizations.of(context)!.try_again_message,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 18),
+                        style: buttonTextStyle,
                       ),
                     ],
                   ),

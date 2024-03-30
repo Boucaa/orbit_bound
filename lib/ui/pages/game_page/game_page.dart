@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
-import 'package:space_balls/ui/flame_widget.dart';
+import 'package:space_balls/ui/pages/game_page/widgets/flame_widget.dart';
 
 class GamePage extends StatelessWidget {
   final bool showDescription;

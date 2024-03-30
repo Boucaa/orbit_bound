@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:space_balls/ui/levels_page.dart';
-import 'package:space_balls/ui/locale_flag_button.dart';
+import 'package:space_balls/ui/pages/levels_page/levels_page.dart';
+import 'package:space_balls/ui/pages/home_page/widgets/locale_flag_button.dart';
+import 'package:space_balls/ui/theme/text_style.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -67,7 +68,8 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LevelsPage()),
+                        builder: (context) => const LevelsPage(),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -80,8 +82,8 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    AppLocalizations.of(context)!.levels,
-                    style: const TextStyle(fontSize: 18),
+                    AppLocalizations.of(context)!.play,
+                    style: buttonTextStyle,
                   ),
                 ),
                 // const SizedBox(height: 20),

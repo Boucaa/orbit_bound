@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:space_balls/model/game_level.dart';
-import 'package:space_balls/ui/base_dialog.dart';
+import 'package:space_balls/ui/widgets/base_dialog.dart';
+import 'package:space_balls/ui/theme/text_style.dart';
 
 class LevelDescriptionDialog extends StatelessWidget {
   final GameLevel level;
@@ -17,18 +18,16 @@ class LevelDescriptionDialog extends StatelessWidget {
       child: BaseDialog(
         title: level.name,
         child: Center(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  level.description,
-                  style: const TextStyle(color: Colors.white),
-                  textAlign: TextAlign.justify,
-                ),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                level.description,
+                style: baseTextStyle,
+                textAlign: TextAlign.justify,
+              ),
+            ],
           ),
         ),
       ),

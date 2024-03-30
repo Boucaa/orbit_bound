@@ -7,9 +7,9 @@ import 'package:logging/logging.dart';
 import 'package:space_balls/business/base_provider.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/run_config.dart';
-import 'package:space_balls/ui/colors.dart';
-import 'package:space_balls/ui/game_page.dart';
-import 'package:space_balls/ui/home_page.dart';
+import 'package:space_balls/ui/pages/game_page/game_page.dart';
+import 'package:space_balls/ui/pages/home_page/home_page.dart';
+import 'package:space_balls/ui/theme/colors.dart';
 
 void main() {
   Logger.root.level = Level.ALL;
