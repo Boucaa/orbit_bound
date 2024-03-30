@@ -15,9 +15,16 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final level = context.read<LevelRepository>().getLevel(levelId, context);
+    if (level == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pop();
+      });
+      return Container();
+    }
     return Scaffold(
       body: FlameWidget(
-        level: context.read<LevelRepository>().getLevel(levelId, context),
+        level: level,
         levelId: levelId,
         showDescription: showDescription,
       ),

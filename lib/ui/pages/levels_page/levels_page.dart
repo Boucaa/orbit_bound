@@ -62,7 +62,7 @@ class LevelsPage extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: user != null &&
-                                      user.completedLevelIds.contains(level.id)
+                                      user.completedLevelIds.contains(level!.id)
                                   ? darkGreen
                                   : Theme.of(context)
                                       .colorScheme
