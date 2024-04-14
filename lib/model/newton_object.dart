@@ -8,13 +8,11 @@ class NewtonObject extends BallObject {
   NewtonObject({
     required super.initialPosition,
     super.initialVelocity,
-    required double mass,
+    required super.mass,
     super.isStatic = true,
     super.spritePath,
     super.spriteSheetPath,
-  }) : super(
-          mass: mass,
-        );
+  });
 
   @override
   Vector2 calculateInteraction(GameObject other) {

@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
-import 'package:space_balls/ui/colors.dart';
-import 'package:space_balls/ui/game_page.dart';
+import 'package:space_balls/ui/pages/game_page/game_page.dart';
+import 'package:space_balls/ui/theme/colors.dart';
+import 'package:space_balls/ui/theme/text_style.dart';
 
 class LevelsPage extends StatelessWidget {
-  const LevelsPage({Key? key}) : super(key: key);
+  const LevelsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +25,7 @@ class LevelsPage extends StatelessWidget {
             children: [
               Text(
                 AppLocalizations.of(context)!.selectLevel,
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                style: pageHeaderTextStyle,
               ),
               const SizedBox(height: 16),
               Expanded(
@@ -65,7 +62,7 @@ class LevelsPage extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: user != null &&
-                                      user.completedLevelIds.contains(level.id)
+                                      user.completedLevelIds.contains(level!.id)
                                   ? darkGreen
                                   : Theme.of(context)
                                       .colorScheme
@@ -76,7 +73,7 @@ class LevelsPage extends StatelessWidget {
                             ),
                             child: Text(
                               (index + 1).toString(),
-                              style: const TextStyle(fontSize: 24),
+                              style: levelButtonTextStyle,
                             ),
                           );
                         },

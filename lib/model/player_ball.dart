@@ -4,12 +4,11 @@ import 'package:space_balls/model/game_object.dart';
 
 class PlayerBall extends BallObject {
   PlayerBall({
-    required double mass,
+    required super.mass,
     super.initialVelocity,
     required super.initialPosition,
+    super.isStatic = true,
   }) : super(
-          mass: mass,
-          isStatic: true,
           spriteSheetPath: 'player.png',
           isContactGameOver: false,
         );

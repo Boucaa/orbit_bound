@@ -9,6 +9,7 @@ abstract class BallObject extends GameObject {
   final String? spriteSheetPath;
   final bool customPaint;
   final double renderRadius;
+  final bool isSensor;
 
   BallObject({
     // required super.velocity,
@@ -22,6 +23,7 @@ abstract class BallObject extends GameObject {
     super.isContactGameOver = true,
     this.customPaint = false,
     double? renderRadius,
+    this.isSensor = false,
   }) : renderRadius = renderRadius ?? radius;
 
   @override
@@ -40,6 +42,7 @@ abstract class BallObject extends GameObject {
       restitution: 0.8,
       density: 1.0,
       friction: 0.4,
+      isSensor: isSensor,
     );
 
     final bodyDef = BodyDef(
