@@ -1,6 +1,7 @@
 {
   "helloWorld": "Ahoj světe!",
   "levels": "Úrovně",
+  "play": "Hrát",
   "selectLevel": "Vyberte úroveň",
   "black_hole_merger_name": "Kolize černých děr",
   "black_hole_merger_description": "Pozorování gravitačních vln vzniklých srážkami černých děr otevřelo nové observační okno do vesmíru. Dokážete se navigovat takovým sloučením?",
@@ -32,8 +33,10 @@
   "ball_description": "Toto je míč.",
   "wall_warning": "Nenarážejte do zdí a dosáhněte cíle.",
   "shooting_instruction": "Můžete střílet tažením prstem nebo myší.",
-  "good_walls_description": "Do těchto zdí je v pořádku narážet. Využijte je ve svůj prospěch.",
+  "good_walls_description_0": "Do těchto zdí je v pořádku narážet.",
+  "good_walls_description_1": "Využijte je ve svůj prospěch.",
   "win_message": "Vyhráli jste!",
   "try_again_message": "Zkuste to znovu",
-  "lose_message": "Prohráli jste"
+  "lose_message": "Prohráli jste",
+  "nextLevel": "Další úroveň"
 }

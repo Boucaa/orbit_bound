@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:space_balls/ui/colors.dart';
+import 'package:space_balls/ui/theme/colors.dart';
 
-import '../business/user_bloc.dart';
+import '../../../../business/user_bloc.dart';
 
 class LocaleFlagButton extends StatelessWidget {
   final String asset;

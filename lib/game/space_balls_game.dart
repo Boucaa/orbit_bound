@@ -15,6 +15,7 @@ import 'package:space_balls/game/contact/game_contact_listener.dart';
 import 'package:space_balls/game/contact/lose_contact_resolver.dart';
 import 'package:space_balls/game/contact/schwardschild_hole_contact_resolver.dart';
 import 'package:space_balls/game/contact/win_contact_resolver.dart';
+import 'package:space_balls/game/contact/wormhole_contact_resolver.dart';
 import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
@@ -36,9 +37,7 @@ class SpaceBallsGame extends Forge2DGame {
 
   final GlobalKey gameKey;
 
-  late PlayerBall player = level.gameObjects.firstWhere(
-    (element) => element is PlayerBall,
-  ) as PlayerBall;
+  PlayerBall get player => children.whereType<PlayerBall>().first;
 
   SpaceBallsGame({
     required this.level,
@@ -75,6 +74,7 @@ class SpaceBallsGame extends Forge2DGame {
           WinContactResolver(onWin: win),
           LoseContactResolver(onLose: onGameOver),
           SchwardschildContactResolver(),
+          WormholeContactResolver(),
         ],
         onDeleteObjects: (objects) {
           for (var object in objects) {
@@ -230,7 +230,7 @@ class SpaceBallsGame extends Forge2DGame {
   void update(double dt) {
     frameCount++;
     // _log.fine('frame $frameCount with dt $dt');
-    final objects = level.gameObjects;
+    final objects = children.whereType<GameObject>().toList();
     dt = 0.016;
 
     for (var i = 0; i < objects.length; i++) {

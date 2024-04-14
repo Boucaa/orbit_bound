@@ -34,7 +34,10 @@ class LevelRepository {
 
   int get levelCount => _levels.length;
 
-  GameLevel getLevel(int levelIndex, BuildContext context) {
+  GameLevel? getLevel(int levelIndex, BuildContext context) {
+    if (levelIndex < 0 || levelIndex >= _levels.length) {
+      return null;
+    }
     return _levels[levelIndex](context);
   }
 }

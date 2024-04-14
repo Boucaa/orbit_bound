@@ -1,6 +1,7 @@
 {
   "helloWorld": "Hello World!",
   "levels": "Levels",
+  "play": "Play",
   "selectLevel": "Select Level",
   "black_hole_merger_name": "Black hole merger",
   "black_hole_merger_description": "Mergers of black holes have opened a new observational window into the universe, can you navigate through such a merger?",
@@ -32,8 +33,10 @@
   "ball_description": "This is the ball.",
   "wall_warning": "Don't hit the walls and reach the target.",
   "shooting_instruction": "You can shoot it by dragging your finger or mouse.",
-  "good_walls_description": "These walls are ok to hit. Use them to your advantage.",
+  "good_walls_description_0": "These walls are ok to hit.",
+  "good_walls_description_1": "Use them to your advantage.",
   "win_message": "You Win!",
   "try_again_message": "Try Again",
-  "lose_message": "You Lose"
+  "lose_message": "You Lose",
+  "nextLevel": "Next Level"
 }
