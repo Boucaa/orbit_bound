@@ -68,7 +68,7 @@ class SpaceBallsGame extends Forge2DGame {
     addAll(level.nonPhysicalComponents);
     await createGameObjects(level.gameObjects);
     addAll(createBoundaries());
-    world.setContactListener(
+    world.physicsWorld.setContactListener(
       GameContactListener(
         contactResolvers: [
           WinContactResolver(onWin: win),
@@ -92,7 +92,7 @@ class SpaceBallsGame extends Forge2DGame {
     add(
       ControlsComponent(
         onShoot: shoot,
-        size: camera.viewport.effectiveSize,
+        size: camera.viewport.virtualSize,
         widgetStartOffset: Vector2(position.dx, position.dy),
       ),
     );
@@ -213,16 +213,22 @@ class SpaceBallsGame extends Forge2DGame {
   }
 
   List<Component> createBoundaries() {
-    final topLeft = Vector2.all(WallLine.wallWidth / 2);
-    final bottomRight = screenToWorld(camera.viewport.effectiveSize) - topLeft;
-    final topRight = Vector2(bottomRight.x, topLeft.y);
-    final bottomLeft = Vector2(topLeft.x, bottomRight.y);
+    // Get the actual screen dimensions using RenderBox
+    RenderBox box = gameKey.currentContext!.findRenderObject() as RenderBox;
+    final screenSize = box.size;
 
+    // Create vectors for each corner using the actual screen dimensions
+    final topLeft = Vector2.zero();
+    final bottomRight = Vector2(screenSize.width, screenSize.height);
+    final topRight = Vector2(screenSize.width, 0);
+    final bottomLeft = Vector2(0, screenSize.height);
+
+    final xOffset = Vector2(WallLine.wallWidth / 2, 0);
     return [
       WallLine(topLeft, topRight),
-      WallLine(topRight, bottomRight),
+      WallLine(topRight - xOffset, bottomRight - xOffset),
       WallLine(bottomLeft, bottomRight),
-      WallLine(topLeft, bottomLeft)
+      WallLine(topLeft + xOffset, bottomLeft + xOffset),
     ];
   }
 
@@ -273,8 +279,8 @@ class SpaceBallsGame extends Forge2DGame {
         text: text,
         anchor: Anchor.center,
         position: Vector2(
-          camera.viewport.effectiveSize.x / 2,
-          camera.viewport.effectiveSize.y / 2,
+          camera.viewport.virtualSize.x / 2,
+          camera.viewport.virtualSize.y / 2,
         ),
         textRenderer: regular,
       ),
