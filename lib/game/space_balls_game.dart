@@ -8,6 +8,7 @@ import 'package:flame/particles.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:space_balls/data/shot_repository.dart';
 import 'package:space_balls/game/components/ball_sprite_animation_component.dart';
 import 'package:space_balls/game/components/ball_sprite_coponent.dart';
 import 'package:space_balls/game/components/controls_component.dart';
@@ -34,6 +35,8 @@ class SpaceBallsGame extends Forge2DGame {
   bool won = false;
   VoidCallback? onWin;
   VoidCallback? onLose;
+  Function(Shot)? onShot;
+  List<Shot> previousShots;
 
   final GlobalKey gameKey;
 
@@ -42,8 +45,10 @@ class SpaceBallsGame extends Forge2DGame {
   SpaceBallsGame({
     required this.level,
     required this.gameKey,
+    required this.previousShots,
     this.onWin,
     this.onLose,
+    this.onShot,
   }) : super(
           gravity: Vector2(0, 0),
           zoom: 1,
@@ -91,7 +96,11 @@ class SpaceBallsGame extends Forge2DGame {
     Offset position = box.localToGlobal(Offset.zero);
     add(
       ControlsComponent(
-        onShoot: shoot,
+        previousShots: previousShots,
+        onShoot: (force, startPosition, endPosition) {
+          onShot?.call(Shot(start: startPosition, end: endPosition));
+          shoot(force);
+        },
         size: camera.viewport.virtualSize,
         widgetStartOffset: Vector2(position.dx, position.dy),
       ),

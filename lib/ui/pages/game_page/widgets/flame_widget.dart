@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/business/user_bloc.dart';
+import 'package:space_balls/data/shot_repository.dart';
 import 'package:space_balls/game/space_balls_game.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/ui/pages/game_page/game_page.dart';
@@ -36,6 +37,7 @@ class _FlameWidgetState extends State<FlameWidget> {
   late final game = SpaceBallsGame(
     gameKey: _gameKey,
     level: widget.level,
+    previousShots: context.read<ShotRepository>().getShots(widget.level.id),
     onWin: () {
       final userBloc = context.read<UserBloc>();
       final user = userBloc.state.user;
@@ -140,6 +142,10 @@ class _FlameWidgetState extends State<FlameWidget> {
           },
         );
       }
+    },
+    onShot: (shot) {
+      final shotRepo = context.read<ShotRepository>();
+      shotRepo.addShot(widget.level.id, shot);
     },
   );
 

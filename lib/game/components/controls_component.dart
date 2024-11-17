@@ -5,14 +5,20 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:logging/logging.dart';
+import 'package:space_balls/data/shot_repository.dart';
 
 class ControlsComponent extends PositionComponent with DragCallbacks {
   final _log = Logger('ControlsComponent');
 
-  final Function(Vector2) onShoot;
+  final Function(
+    Vector2 force,
+    Vector2 startPosition,
+    Vector2 endPosition,
+  ) onShoot;
 
   Vector2? startPosition;
   bool tookAShot = false;
+  List<Shot> previousShots;
 
   Vector2? get endPosition {
     if (startPosition == null ||
@@ -37,6 +43,7 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
     required this.onShoot,
     required super.size,
     required this.widgetStartOffset,
+    required this.previousShots,
   }) : super(priority: 100);
 
   @override
@@ -44,6 +51,11 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
     add(
       ShotPreviewComponent(
         controlsComponent: this,
+      ),
+    );
+    add(
+      PreviousShotsComponent(
+        previousShots: previousShots,
       ),
     );
     return super.onLoad();
@@ -72,7 +84,7 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
         endDevicePosition != null &&
         startDevicePosition != null) {
       final force = startPosition! - endPosition!;
-      onShoot(force);
+      onShoot(force, startPosition!, endPosition!);
       startPosition = null;
       startDevicePosition = null;
       endDevicePosition = null;
@@ -221,6 +233,29 @@ class ShotPreviewComponent extends Component {
         Paint()
           ..strokeWidth = 0.02
           ..color = color,
+      );
+    }
+  }
+}
+
+class PreviousShotsComponent extends Component {
+  final List<Shot> previousShots;
+
+  PreviousShotsComponent({
+    required this.previousShots,
+  }) : super(priority: 100);
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    for (final shot in previousShots) {
+      canvas.drawLine(
+        shot.start.toOffset(),
+        shot.end.toOffset(),
+        Paint()
+          ..color = const Color(0xFF00FF00) // The color of the photon trail.
+          ..strokeWidth =
+              0.03, // Adjust the thickness of the photon trail as needed.
       );
     }
   }
