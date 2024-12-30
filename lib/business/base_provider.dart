@@ -2,16 +2,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
-import 'package:space_balls/data/shot_repository.dart';
+import 'package:space_balls/data/shot/shot_bloc.dart';
 import 'package:space_balls/data/user_repository.dart';
 
 class BaseProvider extends StatelessWidget {
   final Widget child;
 
   const BaseProvider({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +23,20 @@ class BaseProvider extends StatelessWidget {
         RepositoryProvider(
           create: (context) => LevelRepository(),
         ),
-        RepositoryProvider(
-          create: (context) => ShotRepository(),
-        ),
       ],
-      child: BlocProvider(
-        create: (context) => UserBloc(
-          userRepository: context.read<UserRepository>(),
-        )..add(
-            LoadUser(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => UserBloc(
+              userRepository: context.read<UserRepository>(),
+            )..add(
+                LoadUser(),
+              ),
           ),
+          BlocProvider(
+            create: (context) => ShotBloc(),
+          ),
+        ],
         child: child,
       ),
     );

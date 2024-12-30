@@ -5,10 +5,11 @@ import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:flame/particles.dart' as flame_particles;
 import 'package:flame/particles.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:space_balls/data/shot_repository.dart';
+import 'package:space_balls/data/shot/shot_bloc.dart';
 import 'package:space_balls/game/components/ball_sprite_animation_component.dart';
 import 'package:space_balls/game/components/ball_sprite_coponent.dart';
 import 'package:space_balls/game/components/controls_component.dart';
@@ -20,6 +21,7 @@ import 'package:space_balls/game/contact/wormhole_contact_resolver.dart';
 import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
+import 'package:space_balls/model/shot.dart';
 import 'package:space_balls/model/wall.dart';
 
 import '../model/game_object.dart';
@@ -35,20 +37,18 @@ class SpaceBallsGame extends Forge2DGame {
   bool won = false;
   VoidCallback? onWin;
   VoidCallback? onLose;
-  Function(Shot)? onShot;
-  List<Shot> previousShots;
 
   final GlobalKey gameKey;
+  final ShotBloc shotBloc;
 
   PlayerBall get player => children.whereType<PlayerBall>().first;
 
   SpaceBallsGame({
     required this.level,
     required this.gameKey,
-    required this.previousShots,
+    required this.shotBloc,
     this.onWin,
     this.onLose,
-    this.onShot,
   }) : super(
           gravity: Vector2(0, 0),
           zoom: 1,
@@ -95,14 +95,23 @@ class SpaceBallsGame extends Forge2DGame {
     RenderBox box = gameKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = box.localToGlobal(Offset.zero);
     add(
-      ControlsComponent(
-        previousShots: previousShots,
-        onShoot: (force, startPosition, endPosition) {
-          onShot?.call(Shot(start: startPosition, end: endPosition));
-          shoot(force);
-        },
-        size: camera.viewport.virtualSize,
-        widgetStartOffset: Vector2(position.dx, position.dy),
+      FlameBlocProvider<ShotBloc, ShotState>(
+        create: () => shotBloc,
+        children: [
+          ControlsComponent(
+            levelId: level.id,
+            onShoot: (force, startPosition, endPosition) {
+              shotBloc.add(
+                AddShot(
+                    shot: Shot(start: startPosition, end: endPosition),
+                    levelId: level.id),
+              );
+              shoot(force);
+            },
+            size: camera.viewport.virtualSize,
+            widgetStartOffset: Vector2(position.dx, position.dy),
+          )
+        ],
       ),
     );
     return super.onLoad();

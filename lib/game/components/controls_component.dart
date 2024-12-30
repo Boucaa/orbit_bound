@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:logging/logging.dart';
-import 'package:space_balls/data/shot_repository.dart';
+import 'package:space_balls/game/components/previous_shots_component.dart';
 
 class ControlsComponent extends PositionComponent with DragCallbacks {
   final _log = Logger('ControlsComponent');
@@ -18,7 +18,7 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
 
   Vector2? startPosition;
   bool tookAShot = false;
-  List<Shot> previousShots;
+  String levelId;
 
   Vector2? get endPosition {
     if (startPosition == null ||
@@ -43,7 +43,7 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
     required this.onShoot,
     required super.size,
     required this.widgetStartOffset,
-    required this.previousShots,
+    required this.levelId,
   }) : super(priority: 100);
 
   @override
@@ -54,9 +54,7 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
       ),
     );
     add(
-      PreviousShotsComponent(
-        previousShots: previousShots,
-      ),
+      PreviousShotsComponent(levelId: levelId),
     );
     return super.onLoad();
   }
@@ -129,68 +127,6 @@ class ShotPreviewComponent extends Component {
             0.03, // Adjust the thickness of the photon trail as needed.
     );
 
-    // // Drawing x and y components
-    // final componentPaint = Paint()
-    //   ..color = const Color(0xFF9999FF) // The color for components.
-    //   ..strokeWidth = 0.01;
-    //
-    // // Draw the horizontal (x-component) line
-    // canvas.drawLine(
-    //   startPosition,
-    //   Offset(endPosition.dx, startPosition.dy),
-    //   componentPaint,
-    // );
-    //
-    // // Draw the vertical (y-component) line
-    // canvas.drawLine(
-    //   Offset(endPosition.dx, startPosition.dy),
-    //   endPosition,
-    //   componentPaint,
-    // );
-    //
-    // // Calculate the x and y components
-    // final double xComponent = endPosition.dx - startPosition.dx;
-    // final double yComponent = endPosition.dy - startPosition.dy;
-    //
-    // // Create a TextPainter
-    // final textSpanX = TextSpan(
-    //   text: "X: ${xComponent.toStringAsFixed(2)}",
-    //   style: const TextStyle(color: Colors.blue, fontSize: 0.1),
-    // );
-    // final textPainterX = TextPainter(
-    //   text: textSpanX,
-    //   textDirection: TextDirection.ltr,
-    // );
-    // textPainterX.layout();
-    //
-    // final textSpanY = TextSpan(
-    //   text: "Y: ${yComponent.toStringAsFixed(2)}",
-    //   style: const TextStyle(color: Colors.blue, fontSize: 0.1),
-    // );
-    // final textPainterY = TextPainter(
-    //   text: textSpanY,
-    //   textDirection: TextDirection.ltr,
-    // );
-    // textPainterY.layout();
-    //
-    // // Paint the text
-    // textPainterX.paint(
-    //   canvas,
-    //   Offset(
-    //     startPosition.dx + (endPosition.dx - startPosition.dx) / 2,
-    //     startPosition.dy - 0.02,
-    //   ), // Change the offset as needed
-    // );
-    //
-    // textPainterY.paint(
-    //     canvas,
-    //     Offset(
-    //         endPosition.dx + 0.02,
-    //         startPosition.dy +
-    //             (endPosition.dy - startPosition.dy) /
-    //                 2) // Change the offset as needed
-    //     );
-
     // Calculate direction of the main line.
     final direction = endPosition - startPosition;
     final normalizedDirection = direction / direction.distance;
@@ -200,7 +136,7 @@ class ShotPreviewComponent extends Component {
         Offset(-normalizedDirection.dy, normalizedDirection.dx);
 
     // Draw particles along the line.
-    final particleCount = 30;
+    const particleCount = 30;
     for (var i = 0; i < particleCount; ++i) {
       final t = i / (particleCount - 1);
       final position = Offset(
@@ -233,29 +169,6 @@ class ShotPreviewComponent extends Component {
         Paint()
           ..strokeWidth = 0.02
           ..color = color,
-      );
-    }
-  }
-}
-
-class PreviousShotsComponent extends Component {
-  final List<Shot> previousShots;
-
-  PreviousShotsComponent({
-    required this.previousShots,
-  }) : super(priority: 100);
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    for (final shot in previousShots) {
-      canvas.drawLine(
-        shot.start.toOffset(),
-        shot.end.toOffset(),
-        Paint()
-          ..color = const Color(0xFF00FF00) // The color of the photon trail.
-          ..strokeWidth =
-              0.03, // Adjust the thickness of the photon trail as needed.
       );
     }
   }
