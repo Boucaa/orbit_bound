@@ -5,9 +5,11 @@ import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:flame/particles.dart' as flame_particles;
 import 'package:flame/particles.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:space_balls/data/shot/shot_bloc.dart';
 import 'package:space_balls/game/components/ball_sprite_animation_component.dart';
 import 'package:space_balls/game/components/ball_sprite_coponent.dart';
 import 'package:space_balls/game/components/controls_component.dart';
@@ -19,6 +21,7 @@ import 'package:space_balls/game/contact/wormhole_contact_resolver.dart';
 import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
+import 'package:space_balls/model/shot.dart';
 import 'package:space_balls/model/wall.dart';
 
 import '../model/game_object.dart';
@@ -36,12 +39,14 @@ class SpaceBallsGame extends Forge2DGame {
   VoidCallback? onLose;
 
   final GlobalKey gameKey;
+  final ShotBloc shotBloc;
 
   PlayerBall get player => children.whereType<PlayerBall>().first;
 
   SpaceBallsGame({
     required this.level,
     required this.gameKey,
+    required this.shotBloc,
     this.onWin,
     this.onLose,
   }) : super(
@@ -68,7 +73,7 @@ class SpaceBallsGame extends Forge2DGame {
     addAll(level.nonPhysicalComponents);
     await createGameObjects(level.gameObjects);
     addAll(createBoundaries());
-    world.setContactListener(
+    world.physicsWorld.setContactListener(
       GameContactListener(
         contactResolvers: [
           WinContactResolver(onWin: win),
@@ -90,10 +95,23 @@ class SpaceBallsGame extends Forge2DGame {
     RenderBox box = gameKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = box.localToGlobal(Offset.zero);
     add(
-      ControlsComponent(
-        onShoot: shoot,
-        size: camera.viewport.effectiveSize,
-        widgetStartOffset: Vector2(position.dx, position.dy),
+      FlameBlocProvider<ShotBloc, ShotState>(
+        create: () => shotBloc,
+        children: [
+          ControlsComponent(
+            levelId: level.id,
+            onShoot: (force, startPosition, endPosition) {
+              shotBloc.add(
+                AddShot(
+                    shot: Shot(start: startPosition, end: endPosition),
+                    levelId: level.id),
+              );
+              shoot(force);
+            },
+            size: camera.viewport.virtualSize,
+            widgetStartOffset: Vector2(position.dx, position.dy),
+          )
+        ],
       ),
     );
     return super.onLoad();
@@ -213,16 +231,22 @@ class SpaceBallsGame extends Forge2DGame {
   }
 
   List<Component> createBoundaries() {
-    final topLeft = Vector2.all(WallLine.wallWidth / 2);
-    final bottomRight = screenToWorld(camera.viewport.effectiveSize) - topLeft;
-    final topRight = Vector2(bottomRight.x, topLeft.y);
-    final bottomLeft = Vector2(topLeft.x, bottomRight.y);
+    // Get the actual screen dimensions using RenderBox
+    RenderBox box = gameKey.currentContext!.findRenderObject() as RenderBox;
+    final screenSize = box.size;
 
+    // Create vectors for each corner using the actual screen dimensions
+    final topLeft = Vector2.zero();
+    final bottomRight = Vector2(screenSize.width, screenSize.height);
+    final topRight = Vector2(screenSize.width, 0);
+    final bottomLeft = Vector2(0, screenSize.height);
+
+    final xOffset = Vector2(WallLine.wallWidth / 2, 0);
     return [
       WallLine(topLeft, topRight),
-      WallLine(topRight, bottomRight),
+      WallLine(topRight - xOffset, bottomRight - xOffset),
       WallLine(bottomLeft, bottomRight),
-      WallLine(topLeft, bottomLeft)
+      WallLine(topLeft + xOffset, bottomLeft + xOffset),
     ];
   }
 
@@ -273,8 +297,8 @@ class SpaceBallsGame extends Forge2DGame {
         text: text,
         anchor: Anchor.center,
         position: Vector2(
-          camera.viewport.effectiveSize.x / 2,
-          camera.viewport.effectiveSize.y / 2,
+          camera.viewport.virtualSize.x / 2,
+          camera.viewport.virtualSize.y / 2,
         ),
         textRenderer: regular,
       ),
