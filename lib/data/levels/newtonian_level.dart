@@ -4,7 +4,7 @@ import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:space_balls/l10n/app_localizations.dart';
 
 class NewtonianLevel extends GameLevel {
   NewtonianLevel(BuildContext context)

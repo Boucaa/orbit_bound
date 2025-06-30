@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:space_balls/l10n/app_localizations.dart';
 import 'package:space_balls/ui/pages/levels_page/levels_page.dart';
 import 'package:space_balls/ui/pages/home_page/widgets/locale_flag_button.dart';
 import 'package:space_balls/ui/theme/text_style.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:space_balls/l10n/app_localizations.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
 import 'package:space_balls/ui/pages/game_page/game_page.dart';

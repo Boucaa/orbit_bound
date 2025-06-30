@@ -1,7 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:space_balls/l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:space_balls/business/user_bloc.dart';
 import 'package:space_balls/data/shot/shot_bloc.dart';
