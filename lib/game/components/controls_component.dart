@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:math' hide log;
 import 'dart:ui';
 
 import 'package:flame/components.dart';
@@ -15,6 +15,8 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
     Vector2 startPosition,
     Vector2 endPosition,
   ) onShoot;
+
+  final void Function(double power, double angle)? onAimUpdate;
 
   Vector2? startPosition;
   bool tookAShot = false;
@@ -44,6 +46,7 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
     required super.size,
     required this.widgetStartOffset,
     required this.levelId,
+    this.onAimUpdate,
   }) : super(priority: 100);
 
   @override
@@ -69,6 +72,13 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
   @override
   void onDragUpdate(DragUpdateEvent event) {
     endDevicePosition = event.devicePosition - widgetStartOffset;
+    if (onAimUpdate != null && startPosition != null && endPosition != null) {
+      final force = startPosition! - endPosition!;
+      final power = force.length * 1.5;
+      var angle = atan2(force.y, force.x) * 180 / pi + 90;
+      if (angle > 180) angle -= 360;
+      onAimUpdate!(power, angle);
+    }
     super.onDragUpdate(event);
   }
 

@@ -37,6 +37,8 @@ class SpaceBallsGame extends Forge2DGame {
   bool won = false;
   VoidCallback? onWin;
   VoidCallback? onLose;
+  final void Function(double power, double angle)? onAimUpdate;
+  final void Function(double power, double angle)? onShotFired;
 
   final GlobalKey gameKey;
   final ShotBloc shotBloc;
@@ -49,6 +51,8 @@ class SpaceBallsGame extends Forge2DGame {
     required this.shotBloc,
     this.onWin,
     this.onLose,
+    this.onAimUpdate,
+    this.onShotFired,
   }) : super(
           gravity: Vector2(0, 0),
           zoom: 1,
@@ -107,9 +111,16 @@ class SpaceBallsGame extends Forge2DGame {
                     levelId: level.id),
               );
               shoot(force);
+              if (onShotFired != null) {
+                final power = force.length * 1.5;
+                var angle = atan2(force.y, force.x) * 180 / pi + 90;
+                if (angle > 180) angle -= 360;
+                onShotFired!(power, angle);
+              }
             },
             size: camera.viewport.virtualSize,
             widgetStartOffset: Vector2(position.dx, position.dy),
+            onAimUpdate: onAimUpdate,
           )
         ],
       ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,11 +35,18 @@ class FlameWidget extends StatefulWidget {
 
 class _FlameWidgetState extends State<FlameWidget> {
   final GlobalKey _gameKey = GlobalKey();
+  final _currentAim = ValueNotifier<({double power, double angle})?>(null);
 
   late final game = SpaceBallsGame(
     gameKey: _gameKey,
     level: widget.level,
     shotBloc: context.read<ShotBloc>(),
+    onAimUpdate: (power, angle) {
+      _currentAim.value = (power: power, angle: angle);
+    },
+    onShotFired: (_, __) {
+      _currentAim.value = null;
+    },
     onWin: () {
       final userBloc = context.read<UserBloc>();
       final user = userBloc.state.user;
@@ -161,6 +170,12 @@ class _FlameWidgetState extends State<FlameWidget> {
   }
 
   @override
+  void dispose() {
+    _currentAim.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xFF2D2D2D),
@@ -182,6 +197,70 @@ class _FlameWidgetState extends State<FlameWidget> {
                   ),
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            bottom: 72,
+            right: 8,
+            child: ValueListenableBuilder<({double power, double angle})?>(
+              valueListenable: _currentAim,
+              builder: (context, aim, _) {
+                return BlocBuilder<ShotBloc, ShotState>(
+                  builder: (context, shotState) {
+                    final shots = shotState.shots[widget.level.id];
+                    final lastShot = shots != null && shots.isNotEmpty
+                        ? shots.last
+                        : null;
+                    ({double power, double angle})? lastShotData;
+                    if (lastShot != null) {
+                      final force = lastShot.start - lastShot.end;
+                      var angle = atan2(force.y, force.x) * 180 / pi + 90;
+                      if (angle > 180) angle -= 360;
+                      lastShotData = (
+                        power: force.length * 1.5,
+                        angle: angle,
+                      );
+                    }
+                    if (aim == null && lastShotData == null) {
+                      return const SizedBox.shrink();
+                    }
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (aim != null)
+                            Text(
+                              'Power ${aim.power.toStringAsFixed(2)}  Angle ${aim.angle.toStringAsFixed(1)}°',
+                              style: const TextStyle(
+                                color: Colors.greenAccent,
+                                fontSize: 12,
+                                fontFamily: 'monospace',
+                              ),
+                            ),
+                          if (lastShotData != null)
+                            Text(
+                              'Last shot: ${lastShotData.power.toStringAsFixed(2)} @ ${lastShotData.angle.toStringAsFixed(1)}°',
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                fontFamily: 'monospace',
+                              ),
+                            ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ),
           Align(
@@ -234,7 +313,7 @@ class _FlameWidgetState extends State<FlameWidget> {
                       color: Colors.white,
                     ),
                   ),
-                  const Spacer(), // Add this to fill remaining space
+                  const Spacer(),
                   BlocBuilder<UserBloc, UserState>(
                     builder: (context, state) {
                       final user = state.user;
