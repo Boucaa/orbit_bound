@@ -71,7 +71,7 @@ class ControlsComponent extends PositionComponent with DragCallbacks {
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
-    endDevicePosition = event.devicePosition - widgetStartOffset;
+    endDevicePosition = event.deviceStartPosition - widgetStartOffset;
     if (onAimUpdate != null && startPosition != null && endPosition != null) {
       final force = startPosition! - endPosition!;
       final power = force.length * 1.5;
