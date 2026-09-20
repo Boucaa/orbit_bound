@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:space_balls/model/ball_object.dart';
 import 'package:space_balls/model/game_object.dart';
-import 'package:vector_math/vector_math_64.dart';
+import 'package:vector_math/vector_math.dart';
 
 class SchwardschildHole extends BallObject {
   SchwardschildHole({

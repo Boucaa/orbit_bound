@@ -18,10 +18,17 @@ import 'physics_harness.dart';
 /// Regenerate with:
 ///   UPDATE_PHYSICS_GOLDENS=1 flutter test test/physics
 void main() {
-  /// How far a sampled position may drift, in world units. The world is 3
-  /// units wide, so this is ~1% of the screen - far below what a player could
-  /// notice, and far below what would change whether a level is solvable.
-  const positionTolerance = 0.03;
+  /// How far a sampled position may drift, in world units.
+  ///
+  /// Free flight is bit-identical between the two engines, because the game
+  /// integrates gravity itself and the engine only moves bodies along the
+  /// velocity it is given. Every difference comes from a bounce: Box2D v3
+  /// resolves the contact a fraction of a frame earlier or later, which
+  /// shifts the path sideways by about a centimetre and leaves it running
+  /// parallel to the old one afterwards. The worst of the 66 recorded shots
+  /// drifts 0.067 after three bounces, so this is a little above that - ~2%
+  /// of the 3-unit-wide world, and well below what changes a level.
+  const positionTolerance = 0.08;
 
   /// How many frames later or earlier a level may be won or lost.
   const outcomeFrameTolerance = 3;

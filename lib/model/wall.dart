@@ -19,14 +19,19 @@ class WallLine extends GameObject {
 
   @override
   Body createBody() {
-    final shape = EdgeShape()..set(_start, _end);
-    final fixtureDef = FixtureDef(shape, friction: 0.0);
     final bodyDef = BodyDef(
       userData: this,
       position: Vector2.zero(),
     );
 
-    return world.createBody(bodyDef)..createFixture(fixtureDef);
+    final shapeDef = ShapeDef(
+      material: SurfaceMaterial(friction: 0.0),
+      enableContactEvents: true,
+      enableSensorEvents: true,
+    );
+
+    return world.createBody(bodyDef)
+      ..createShape(Segment(point1: _start, point2: _end), shapeDef);
   }
 
   @override

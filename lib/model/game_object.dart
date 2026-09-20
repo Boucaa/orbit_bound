@@ -1,5 +1,5 @@
 import 'package:flame_forge2d/body_component.dart';
-import 'package:vector_math/vector_math_64.dart';
+import 'package:vector_math/vector_math.dart';
 
 abstract class GameObject extends BodyComponent {
   final double mass;

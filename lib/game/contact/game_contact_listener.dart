@@ -1,47 +1,30 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:space_balls/model/game_object.dart';
 
-class GameContactListener extends ContactListener {
-  final List<GameObjectContactResolver> contactResolvers;
-  final Function(List<GameObject> object) onCreateObjects;
-  final Function(List<GameObject> object) onDeleteObjects;
-
-  GameContactListener({
-    required this.contactResolvers,
-    required this.onCreateObjects,
-    required this.onDeleteObjects,
-  });
+/// Routes every contact the physics world reports to the [contactResolvers],
+/// once per contact.
+///
+/// Forge2D's own dispatcher hands a contact to each side of it separately,
+/// which would run a resolver twice for a single collision, so the events are
+/// intercepted here instead of through [ContactCallbacks] on the bodies.
+class GameContactListener extends ContactEventsDispatcher {
+  late final List<GameObjectContactResolver> contactResolvers;
+  late final void Function(List<GameObject> objects) onCreateObjects;
+  late final void Function(List<GameObject> objects) onDeleteObjects;
 
   @override
   void beginContact(Contact contact) {
-    final fixtureA = contact.fixtureA;
-    final fixtureB = contact.fixtureB;
-
-    final bodyA = fixtureA.body;
-    final bodyB = fixtureB.body;
-
-    final objectA = bodyA.userData;
-    final objectB = bodyB.userData;
-
-    if (objectA is! GameObject || objectB is! GameObject) {
+    final objects = contact.userDatas.whereType<GameObject>().toList();
+    if (objects.length != 2) {
       return;
     }
 
     for (final resolver in contactResolvers) {
-      final resolution = resolver.resolveContact(objectA, objectB);
+      final resolution = resolver.resolveContact(objects.first, objects.last);
       onCreateObjects(resolution.objectsToCreate);
       onDeleteObjects(resolution.objectsToDelete);
     }
   }
-
-  @override
-  void endContact(Contact contact) {}
-
-  @override
-  void postSolve(Contact contact, ContactImpulse impulse) {}
-
-  @override
-  void preSolve(Contact contact, Manifold oldManifold) {}
 }
 
 abstract class GameObjectContactResolver {

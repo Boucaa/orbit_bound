@@ -29,22 +29,11 @@ abstract class BallObject extends GameObject {
   @override
   set isStatic(bool value) {
     super.isStatic = value;
-    body.setType(value ? BodyType.static : BodyType.dynamic);
+    body.type = value ? BodyType.static : BodyType.dynamic;
   }
 
   @override
   Body createBody() {
-    final shape = CircleShape();
-    shape.radius = radius;
-
-    final fixtureDef = FixtureDef(
-      shape,
-      restitution: 0.8,
-      density: 1.0,
-      friction: 0.4,
-      isSensor: isSensor,
-    );
-
     final bodyDef = BodyDef(
       userData: this,
       angularDamping: 0.8,
@@ -53,8 +42,17 @@ abstract class BallObject extends GameObject {
       linearVelocity: initialVelocity,
     );
 
+    final shapeDef = ShapeDef(
+      material: SurfaceMaterial(restitution: 0.8, friction: 0.4),
+      density: 1.0,
+      isSensor: isSensor,
+      // Forge2D only reports events for shapes that ask for them, and every
+      // game object is routed through GameContactListener.
+      enableContactEvents: true,
+      enableSensorEvents: true,
+    );
+
     return world.createBody(bodyDef)
-      ..createFixture(fixtureDef)
-      ..userData = this;
+      ..createShape(Circle(radius: radius), shapeDef);
   }
 }

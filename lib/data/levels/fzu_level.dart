@@ -3,7 +3,7 @@ import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/wall.dart';
-import 'package:vector_math/vector_math_64.dart';
+import 'package:vector_math/vector_math.dart';
 import 'package:space_balls/l10n/app_localizations.dart';
 
 class FzuLevel extends GameLevel {

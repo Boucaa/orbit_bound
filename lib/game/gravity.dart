@@ -1,5 +1,5 @@
 import 'package:space_balls/model/game_object.dart';
-import 'package:vector_math/vector_math_64.dart';
+import 'package:vector_math/vector_math.dart';
 
 /// The physics engine is stepped with this instead of the real frame time, so
 /// that trajectories are reproducible and independent of the frame rate.

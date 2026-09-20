@@ -61,7 +61,8 @@ class SpaceBallsGame extends Forge2DGame {
     this.onShotFired,
   }) : super(
           gravity: Vector2(0, 0),
-          zoom: 1,
+          metersToPixels: 1,
+          contactEventsDispatcher: GameContactListener(),
         );
 
   @override
@@ -84,24 +85,21 @@ class SpaceBallsGame extends Forge2DGame {
     addAll(level.nonPhysicalComponents);
     await createGameObjects(level.gameObjects);
     addAll(createBoundaries());
-    world.physicsWorld.setContactListener(
-      GameContactListener(
-        contactResolvers: [
-          WinContactResolver(onWin: win),
-          LoseContactResolver(onLose: onGameOver),
-          SchwardschildContactResolver(),
-          WormholeContactResolver(),
-        ],
-        onDeleteObjects: (objects) {
-          for (var object in objects) {
-            removeGameObject(object);
-          }
-        },
-        onCreateObjects: (objects) {
-          createGameObjects(objects);
-        },
-      ),
-    );
+    (world.contactEventsDispatcher as GameContactListener)
+      ..contactResolvers = [
+        WinContactResolver(onWin: win),
+        LoseContactResolver(onLose: onGameOver),
+        SchwardschildContactResolver(),
+        WormholeContactResolver(),
+      ]
+      ..onDeleteObjects = (objects) {
+        for (var object in objects) {
+          removeGameObject(object);
+        }
+      }
+      ..onCreateObjects = (objects) {
+        createGameObjects(objects);
+      };
     addControls();
   }
 
