@@ -1,17 +1,16 @@
-import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/kerr_hole.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
-import 'package:vector_math/vector_math_64.dart';
+import 'package:vector_math/vector_math.dart';
 import 'package:space_balls/l10n/app_localizations.dart';
 
 class KerrLevel extends GameLevel {
-  KerrLevel(BuildContext context)
+  KerrLevel(AppLocalizations l10n)
       : super(
           id: 'kerr',
-          name: AppLocalizations.of(context)!.kerr_name,
-          description: AppLocalizations.of(context)!.kerr_description,
+          name: l10n.kerr_name,
+          description: l10n.kerr_description,
           gameObjects: [
             PlayerBall(
               mass: 1,

@@ -1,5 +1,4 @@
 import 'package:flame/game.dart';
-import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
@@ -8,11 +7,11 @@ import 'package:space_balls/model/wall.dart';
 import 'package:space_balls/l10n/app_localizations.dart';
 
 class NegativeMassLevel extends GameLevel {
-  NegativeMassLevel(BuildContext context)
+  NegativeMassLevel(AppLocalizations l10n)
       : super(
     id: 'negative_mass_level',
-    name: AppLocalizations.of(context)!.negative_mass_level_name,
-    description: AppLocalizations.of(context)!.negative_mass_level_description,
+    name: l10n.negative_mass_level_name,
+    description: l10n.negative_mass_level_description,
      gameObjects: [
             PlayerBall(
               mass: 1,

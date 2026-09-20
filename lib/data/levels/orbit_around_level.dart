@@ -1,5 +1,4 @@
 import 'package:flame/game.dart';
-import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
@@ -8,11 +7,11 @@ import 'package:space_balls/model/wall.dart';
 import 'package:space_balls/l10n/app_localizations.dart';
 
 class OrbitAroundLevel extends GameLevel {
-  OrbitAroundLevel(BuildContext context)
+  OrbitAroundLevel(AppLocalizations l10n)
       : super(
     id: 'orbitaround',
-    name: AppLocalizations.of(context)!.orbitaround_name,
-    description: AppLocalizations.of(context)!.orbitaround_description,
+    name: l10n.orbitaround_name,
+    description: l10n.orbitaround_description,
     gameObjects: [
             PlayerBall(
               mass: 1,

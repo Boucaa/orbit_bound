@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:space_balls/l10n/app_localizations.dart';
 import 'package:space_balls/data/levels/black_hole_merger_level.dart';
 import 'package:space_balls/data/levels/fzu_level.dart';
 import 'package:space_balls/data/levels/kerr_level.dart';
@@ -15,29 +15,29 @@ import 'package:space_balls/data/levels/wormhole_level.dart';
 import 'package:space_balls/model/game_level.dart';
 
 class LevelRepository {
-  static List<GameLevel Function(BuildContext)> get _levels => [
+  static List<GameLevel Function(AppLocalizations)> get _levels => [
         //() => TestLevel(),
-        (context) => TutorialLevel(context),
-        (context) => WallBounceLevel(context),
-        (context) => NewtonianLevel(context),
-        (context) => SunWithPlanetLevel(context),
-        (context) => OrbitAroundLevel(context),
-        (context) => SlalomLevel(context),
-        (context) => SchwardschildLevel(context),
-        (context) => KerrLevel(context),
-        (context) => BlackHoleMergerLevel(context),
-        (context) => VariableGravityLevel(context),
-        (context) => NegativeMassLevel(context),
-        (context) => FzuLevel(context),
-        (context) => WormholeLevel(context),
+        (l10n) => TutorialLevel(l10n),
+        (l10n) => WallBounceLevel(l10n),
+        (l10n) => NewtonianLevel(l10n),
+        (l10n) => SunWithPlanetLevel(l10n),
+        (l10n) => OrbitAroundLevel(l10n),
+        (l10n) => SlalomLevel(l10n),
+        (l10n) => SchwardschildLevel(l10n),
+        (l10n) => KerrLevel(l10n),
+        (l10n) => BlackHoleMergerLevel(l10n),
+        (l10n) => VariableGravityLevel(l10n),
+        (l10n) => NegativeMassLevel(l10n),
+        (l10n) => FzuLevel(l10n),
+        (l10n) => WormholeLevel(l10n),
       ];
 
   int get levelCount => _levels.length;
 
-  GameLevel? getLevel(int levelIndex, BuildContext context) {
+  GameLevel? getLevel(int levelIndex, AppLocalizations l10n) {
     if (levelIndex < 0 || levelIndex >= _levels.length) {
       return null;
     }
-    return _levels[levelIndex](context);
+    return _levels[levelIndex](l10n);
   }
 }

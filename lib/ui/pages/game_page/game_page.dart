@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:space_balls/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_balls/data/level_repository.dart';
 import 'package:space_balls/ui/pages/game_page/widgets/flame_widget.dart';
@@ -15,7 +16,7 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final level = context.read<LevelRepository>().getLevel(levelId, context);
+    final level = context.read<LevelRepository>().getLevel(levelId, AppLocalizations.of(context)!);
     if (level == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).pop();

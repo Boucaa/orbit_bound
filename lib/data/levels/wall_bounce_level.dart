@@ -7,11 +7,11 @@ import 'package:space_balls/model/target.dart';
 import 'package:space_balls/model/wall.dart';
 
 class WallBounceLevel extends GameLevel {
-  WallBounceLevel(BuildContext context)
+  WallBounceLevel(AppLocalizations l10n)
       : super(
           id: 'wall_bounce',
-          name: AppLocalizations.of(context)!.wall_bounce_name,
-          description: AppLocalizations.of(context)!.wall_bounce_description,
+          name: l10n.wall_bounce_name,
+          description: l10n.wall_bounce_description,
           gameObjects: [
             PlayerBall(
               mass: 1,
@@ -34,7 +34,7 @@ class WallBounceLevel extends GameLevel {
           ],
           nonPhysicalComponents: [
             TextComponent(
-              text: AppLocalizations.of(context)!.good_walls_description_0,
+              text: l10n.good_walls_description_0,
               anchor: Anchor.center,
               position: Vector2(1.5, 3.5),
               scale: Vector2.all(1 / 220.0),
@@ -46,7 +46,7 @@ class WallBounceLevel extends GameLevel {
               ),
             ),
             TextComponent(
-              text: AppLocalizations.of(context)!.good_walls_description_1,
+              text: l10n.good_walls_description_1,
               anchor: Anchor.center,
               position: Vector2(1.5, 3.7),
               scale: Vector2.all(1 / 220.0),

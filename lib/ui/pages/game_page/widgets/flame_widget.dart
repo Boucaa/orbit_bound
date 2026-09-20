@@ -189,8 +189,8 @@ class _FlameWidgetState extends State<FlameWidget> {
                 fit: BoxFit.contain,
                 alignment: Alignment.topCenter,
                 child: SizedBox(
-                  width: 3,
-                  height: 3.0 * 16.0 / 9.0,
+                  width: SpaceBallsGame.worldWidth,
+                  height: SpaceBallsGame.worldHeight,
                   child: GameWidget(
                     game: game,
                     key: _gameKey,

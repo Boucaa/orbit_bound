@@ -1,5 +1,4 @@
 import 'package:flame/game.dart';
-import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
@@ -7,11 +6,11 @@ import 'package:space_balls/model/target.dart';
 import 'package:space_balls/l10n/app_localizations.dart';
 
 class NewtonianLevel extends GameLevel {
-  NewtonianLevel(BuildContext context)
+  NewtonianLevel(AppLocalizations l10n)
       : super(
     id: 'newtonian_object',
-    name: AppLocalizations.of(context)!.newtonian_object_name,
-    description: AppLocalizations.of(context)!.newtonian_object_description,
+    name: l10n.newtonian_object_name,
+    description: l10n.newtonian_object_description,
   gameObjects: [
             PlayerBall(
               mass: 1,

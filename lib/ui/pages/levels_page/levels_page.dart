@@ -43,7 +43,7 @@ class LevelsPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final level = context.read<LevelRepository>().getLevel(
                             index,
-                            context,
+                            AppLocalizations.of(context)!,
                           );
                       return BlocBuilder<UserBloc, UserState>(
                         builder: (context, state) {
