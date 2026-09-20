@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/newton_object.dart';
 import 'package:space_balls/model/player_ball.dart';
@@ -7,11 +6,11 @@ import 'package:vector_math/vector_math_64.dart';
 import 'package:space_balls/l10n/app_localizations.dart';
 
 class SunWithPlanetLevel extends GameLevel {
-  SunWithPlanetLevel(BuildContext context)
+  SunWithPlanetLevel(AppLocalizations l10n)
       : super(
     id: 'sun_with_planet',
-    name: AppLocalizations.of(context)!.sun_with_planet_name,
-    description: AppLocalizations.of(context)!.sun_with_planet_description,
+    name: l10n.sun_with_planet_name,
+    description: l10n.sun_with_planet_description,
      gameObjects: [
             PlayerBall(
               mass: 1,

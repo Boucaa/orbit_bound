@@ -8,11 +8,11 @@ import 'package:space_balls/model/target.dart';
 import '../../game/components/tutorial_animation_component.dart';
 
 class TutorialLevel extends GameLevel {
-  TutorialLevel(BuildContext context)
+  TutorialLevel(AppLocalizations l10n)
       : super(
           id: 'tutorial',
-          name: AppLocalizations.of(context)!.tutorial_name,
-          description: AppLocalizations.of(context)!.tutorial_description,
+          name: l10n.tutorial_name,
+          description: l10n.tutorial_description,
           gameObjects: [
             PlayerBall(
               mass: 1,
@@ -25,7 +25,7 @@ class TutorialLevel extends GameLevel {
           ],
           nonPhysicalComponents: [
             TextComponent(
-              text: AppLocalizations.of(context)!.target_description,
+              text: l10n.target_description,
               position: Vector2(1.5, 1.3),
               anchor: Anchor.center,
               // this is necessary to get the correct position, it's broken somehow
@@ -38,7 +38,7 @@ class TutorialLevel extends GameLevel {
               ),
             ),
             TextComponent(
-              text: AppLocalizations.of(context)!.ball_description,
+              text: l10n.ball_description,
               // 'test',
               anchor: Anchor.center,
               position: Vector2(1.5, 2.75),
@@ -51,7 +51,7 @@ class TutorialLevel extends GameLevel {
               ),
             ),
             // TextComponent(
-            //   text: AppLocalizations.of(context)!.wall_warning,
+            //   text: l10n.wall_warning,
             //   // 'test',
             //   anchor: Anchor.center,
             //   position: Vector2(1.5, 1.7),
@@ -64,7 +64,7 @@ class TutorialLevel extends GameLevel {
             //   ),
             // ),
             TextComponent(
-              text: AppLocalizations.of(context)!.shooting_instruction,
+              text: l10n.shooting_instruction,
               // 'test',
               anchor: Anchor.center,
               position: Vector2(1.5, 3),

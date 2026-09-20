@@ -14,6 +14,7 @@ import 'package:space_balls/game/components/ball_sprite_animation_component.dart
 import 'package:space_balls/game/components/ball_sprite_coponent.dart';
 import 'package:space_balls/game/components/controls_component.dart';
 import 'package:space_balls/game/contact/game_contact_listener.dart';
+import 'package:space_balls/game/gravity.dart';
 import 'package:space_balls/game/contact/lose_contact_resolver.dart';
 import 'package:space_balls/game/contact/schwardschild_hole_contact_resolver.dart';
 import 'package:space_balls/game/contact/win_contact_resolver.dart';
@@ -30,6 +31,11 @@ final _log = Logger('SpaceBallsGame');
 
 class SpaceBallsGame extends Forge2DGame {
   static const particleCount = 200;
+
+  /// The game is laid out in a fixed 9:16 world that the widget scales to
+  /// fit the screen, so the boundaries never depend on the device size.
+  static const worldWidth = 3.0;
+  static const worldHeight = worldWidth * 16 / 9;
 
   var frameCount = 0;
   final GameLevel level;
@@ -74,6 +80,7 @@ class SpaceBallsGame extends Forge2DGame {
 
   @override
   Future<void> onLoad() async {
+    await super.onLoad();
     addAll(level.nonPhysicalComponents);
     await createGameObjects(level.gameObjects);
     addAll(createBoundaries());
@@ -95,6 +102,11 @@ class SpaceBallsGame extends Forge2DGame {
         },
       ),
     );
+    addControls();
+  }
+
+  @protected
+  void addControls() {
     // TODO update this when the screen size changes or figure out a cleaner way
     RenderBox box = gameKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = box.localToGlobal(Offset.zero);
@@ -125,7 +137,6 @@ class SpaceBallsGame extends Forge2DGame {
         ],
       ),
     );
-    return super.onLoad();
   }
 
   Future<void> createGameObjects(List<GameObject> gameObjects) async {
@@ -242,15 +253,10 @@ class SpaceBallsGame extends Forge2DGame {
   }
 
   List<Component> createBoundaries() {
-    // Get the actual screen dimensions using RenderBox
-    RenderBox box = gameKey.currentContext!.findRenderObject() as RenderBox;
-    final screenSize = box.size;
-
-    // Create vectors for each corner using the actual screen dimensions
     final topLeft = Vector2.zero();
-    final bottomRight = Vector2(screenSize.width, screenSize.height);
-    final topRight = Vector2(screenSize.width, 0);
-    final bottomLeft = Vector2(0, screenSize.height);
+    final bottomRight = Vector2(worldWidth, worldHeight);
+    final topRight = Vector2(worldWidth, 0);
+    final bottomLeft = Vector2(0, worldHeight);
 
     final xOffset = Vector2(WallLine.wallWidth / 2, 0);
     return [
@@ -264,38 +270,8 @@ class SpaceBallsGame extends Forge2DGame {
   @override
   void update(double dt) {
     frameCount++;
-    // _log.fine('frame $frameCount with dt $dt');
-    final objects = children.whereType<GameObject>().toList();
-    dt = 0.016;
-
-    for (var i = 0; i < objects.length; i++) {
-      if (objects[i].isStatic) {
-        // newObjects.add(objects[i]);
-        continue;
-      }
-      var acceleration = Vector2.zero();
-      Vector2 calcAcceleration(Vector2 testPosition) {
-        for (var j = 0; j < objects.length; j++) {
-          if (i == j) {
-            continue;
-          }
-
-          final objectA = objects[i];
-          final objectB = objects[j];
-
-          final interaction = objectB.calculateInteraction(objectA);
-          acceleration += interaction;
-        }
-        return acceleration;
-      }
-
-      final velocityChange = calcAcceleration(objects[i].position) * dt;
-
-      final newVelocity = objects[i].velocity + velocityChange;
-      objects[i].body.linearVelocity = newVelocity;
-    }
-
-    super.update(dt);
+    applyGravity(children.whereType<GameObject>().toList(), fixedTimeStep);
+    super.update(fixedTimeStep);
   }
 
   void addLargeText(String text) {

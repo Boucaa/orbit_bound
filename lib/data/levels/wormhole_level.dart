@@ -1,5 +1,4 @@
 import 'package:flame/game.dart';
-import 'package:flutter/widgets.dart';
 import 'package:space_balls/l10n/app_localizations.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/game_object.dart';
@@ -9,11 +8,11 @@ import 'package:space_balls/model/wall.dart';
 import 'package:space_balls/model/wormhole.dart';
 
 class WormholeLevel extends GameLevel {
-  WormholeLevel(BuildContext context)
+  WormholeLevel(AppLocalizations l10n)
       : super(
           id: 'wormhole',
-          name: AppLocalizations.of(context)!.wormhole_name,
-          description: AppLocalizations.of(context)!.wormhole_description,
+          name: l10n.wormhole_name,
+          description: l10n.wormhole_description,
           gameObjects: buildObjects(),
         );
 

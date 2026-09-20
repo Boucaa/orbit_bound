@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:space_balls/model/game_level.dart';
 import 'package:space_balls/model/player_ball.dart';
 import 'package:space_balls/model/target.dart';
@@ -8,11 +7,11 @@ import 'package:vector_math/vector_math_64.dart';
 import 'package:space_balls/l10n/app_localizations.dart';
 
 class VariableGravityLevel extends GameLevel {
-  VariableGravityLevel(BuildContext context)
+  VariableGravityLevel(AppLocalizations l10n)
       : super(
     id: 'variable_gravity',
-    name: AppLocalizations.of(context)!.variable_gravity_name,
-    description: AppLocalizations.of(context)!.variable_gravity_description,
+    name: l10n.variable_gravity_name,
+    description: l10n.variable_gravity_description,
  gameObjects: [
             PlayerBall(
               mass: 1,
